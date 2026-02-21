@@ -1,0 +1,29 @@
+[tools]
+flux2 = "2.7.5"
+kubectl = "1.35.1"
+talhelper = "3.0.43"
+talosctl = "1.12.4"
+usage = "2.12.0"
+helmfile = "1.2.3"
+helm = "4.1.1"
+
+[tasks."talos:genconfig"]
+dir = "talos"
+run = "talhelper genconfig --secret-file <(op inject -i talsecret.yaml)"
+outputs = ["talos/clusterconfig"]
+
+[tasks."talos:apply"]
+dir = "talos"
+depends = ["talos:genconfig"]
+confirm = "Are you sure you want to apply the talos config to all nodes?"
+run = "talhelper gencommand apply | bash"
+
+[tasks."talos:bootstrap-k8s"]
+dir = "talos"
+depends = ["talos:genconfig"]
+run = """
+KUBECONFIG=$(mktemp)
+trap 'rm -f "$KUBECONFIG"' EXIT
+talhelper gencommand kubeconfig --extra-flags - | bash > "$KUBECONFIG"
+helmfile --kubeconfig "$KUBECONFIG" --file '{{ config_root }}/bootstrap/helmfile.yaml' sync
+"""

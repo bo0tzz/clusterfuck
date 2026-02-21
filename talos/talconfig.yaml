@@ -1,0 +1,68 @@
+clusterName: clusterfuck
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
+endpoint: https://10.0.10.10:6443
+additionalApiServerCertSans:
+  - clusterfuck.bo0tzz.me
+allowSchedulingOnControlPlanes: true
+
+cniConfig:
+  name: none
+
+patches:
+  - |-
+    apiVersion: v1alpha1
+    kind: LinkConfig
+    name: trunk
+    up: true
+  - |-
+    apiVersion: v1alpha1
+    kind: Layer2VIPConfig
+    name: 10.0.10.10
+    link: trunk.16
+
+nodes:
+  # - hostname: sketchy
+  #   ipAddress: 10.0.10.11
+#  - hostname: janky
+#    controlPlane: true
+#    ipAddress: 10.0.10.12
+#  - hostname: wonky
+#    controlPlane: true
+#    ipAddress: 10.0.10.13
+
+  - hostname: tiny
+    controlPlane: true
+    ipAddress: 10.0.10.14
+
+    installDiskSelector:
+      serial: 23294BEE1C17
+
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/intel-ucode
+            - siderolabs/i915
+
+    patches:
+      - |-
+        apiVersion: v1alpha1
+        kind: LinkAliasConfig
+        name: trunk
+        selector:
+          match: mac(link.permanent_addr) == "58:47:ca:7a:bf:e7"
+      - |-
+        apiVersion: v1alpha1
+        kind: VLANConfig
+        name: trunk.16
+        vlanID: 16
+        vlanMode: 802.1q
+        parent: trunk
+        up: true
+        addresses:
+          - address: 10.0.10.14/24
+        routes:
+          - gateway: 10.0.10.1
