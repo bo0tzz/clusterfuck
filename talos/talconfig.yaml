@@ -22,6 +22,20 @@ patches:
     kind: Layer2VIPConfig
     name: 10.0.10.10
     link: trunk.16
+  - |-
+    cluster:
+      proxy:
+        disabled: true
+  - |-
+    machine:
+      kubelet:
+        extraConfig:
+          serializeImagePulls: false
+      network:
+        disableSearchDomain: true
+      sysctls:
+        fs.inotify.max_user_watches: "1048576"
+        fs.inotify.max_user_instances: "8192"
 
 nodes:
   # - hostname: sketchy

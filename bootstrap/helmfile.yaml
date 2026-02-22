@@ -1,0 +1,26 @@
+---
+
+helmDefaults:
+  cleanupOnFail: true
+  wait: true
+  waitForJobs: true
+
+releases:
+  - name: cilium
+    namespace: kube-system
+    chart: oci://quay.io/cilium/charts/cilium
+    version: 1.19.0
+    values: ['../kubernetes/apps/infrastructure/kube-system/cilium/app/values.yaml']
+
+  - name: flux-operator
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+    version: 0.37.1
+    values: ['../kubernetes/apps/flux-system/flux-operator/app/values.yaml']
+
+  - name: flux-instance
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
+    version: 0.37.1
+    values: ['../kubernetes/apps/flux-system/flux-instance/app/values.yaml']
+    needs: ['flux-system/flux-operator']

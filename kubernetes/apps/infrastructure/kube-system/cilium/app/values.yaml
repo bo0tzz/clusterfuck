@@ -1,0 +1,69 @@
+ipam:
+  mode: kubernetes
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+securityContext:
+  capabilities:
+    ciliumAgent:
+      - CHOWN
+      - KILL
+      - NET_ADMIN
+      - NET_RAW
+      - IPC_LOCK
+      - SYS_ADMIN
+      - SYS_RESOURCE
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+      - PERFMON
+      - BPF
+    cleanCiliumState:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - SYS_RESOURCE
+
+kubeProxyReplacement: true
+kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+k8sServiceHost: localhost
+k8sServicePort: 7445
+
+routingMode: native
+autoDirectNodeRoutes: true
+ipv4NativeRoutingCIDR: "10.244.0.0/16"
+
+bpf:
+  masquerade: true
+  hostLegacyRouting: true
+
+socketLB:
+  enabled: true
+  hostNamespaceOnly: true
+endpointRoutes:
+  enabled: true
+localRedirectPolicies:
+  enabled: true
+
+l2announcements:
+  enabled: true
+loadBalancer:
+  algorithm: maglev
+k8sClientRateLimit:
+  qps: 10
+  burst: 20
+
+gatewayAPI:
+  enabled: true
+  enableAlpn: true
+  enableAppProtocol: true
+
+cni:
+  exclusive: false
+
+operator:
+  replicas: 2
+  rollOutPods: true
+
+rollOutCiliumPods: true
