@@ -12,7 +12,7 @@ instance:
   sync:
     kind: GitRepository
     url: "https://github.com/bo0tzz/clusterfuck.git"
-    ref: "main"
+    ref: "refs/heads/main"
     path: kubernetes/flux/cluster
   commonMetadata:
     labels:
