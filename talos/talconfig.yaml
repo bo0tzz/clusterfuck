@@ -26,12 +26,72 @@ patches:
 nodes:
   # - hostname: sketchy
   #   ipAddress: 10.0.10.11
-#  - hostname: janky
-#    controlPlane: true
-#    ipAddress: 10.0.10.12
-#  - hostname: wonky
-#    controlPlane: true
-#    ipAddress: 10.0.10.13
+  - hostname: janky
+    controlPlane: true
+    ipAddress: 10.0.10.12
+
+    installDiskSelector:
+      serial: 23294BEE189B
+
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/intel-ucode
+            - siderolabs/xe
+
+    patches:
+      - |-
+        apiVersion: v1alpha1
+        kind: LinkAliasConfig
+        name: trunk
+        selector:
+          match: mac(link.permanent_addr) == "28:80:23:91:3a:ac"
+      - |-
+        apiVersion: v1alpha1
+        kind: VLANConfig
+        name: trunk.16
+        vlanID: 16
+        vlanMode: 802.1q
+        parent: trunk
+        up: true
+        addresses:
+          - address: 10.0.10.12/24
+        routes:
+          - gateway: 10.0.10.1
+
+  - hostname: wonky
+    controlPlane: true
+    ipAddress: 10.0.10.13
+
+    installDiskSelector:
+      serial: 25034DD0804C
+
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/amd-ucode
+
+    patches:
+      - |-
+        apiVersion: v1alpha1
+        kind: LinkAliasConfig
+        name: trunk
+        selector:
+          match: mac(link.permanent_addr) == "28:80:23:91:3f:64"
+      - |-
+        apiVersion: v1alpha1
+        kind: VLANConfig
+        name: trunk.16
+        vlanID: 16
+        vlanMode: 802.1q
+        parent: trunk
+        up: true
+        addresses:
+          - address: 10.0.10.13/24
+        routes:
+          - gateway: 10.0.10.1
 
   - hostname: tiny
     controlPlane: true
