@@ -46,7 +46,7 @@ spec:
               - name: "/dev/disk/by-id/wwn-0x55cd2e414ffe0f23"
               - name: "/dev/disk/by-id/wwn-0x55cd2e4150087cad"
               - name: "/dev/disk/by-id/wwn-0x55cd2e415008873f"
-          - name: "surge"
+          - name: "wonky"
             devices:
               - name: "/dev/disk/by-id/wwn-0x55cd2e414ffe0f78"
               - name: "/dev/disk/by-id/wwn-0x55cd2e41500887af"
