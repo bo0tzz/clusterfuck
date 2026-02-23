@@ -40,7 +40,6 @@ spec:
       storage:
         useAllNodes: false
         useAllDevices: false
-        allowDeviceClassUpdate: true
         nodes:
           - name: "janky"
             devices:
