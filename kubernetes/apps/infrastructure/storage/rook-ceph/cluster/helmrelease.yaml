@@ -55,7 +55,8 @@ spec:
             devices:
               - name: "/dev/disk/by-id/nvme-eui.e8238fa6bf530001001b444a467856b0"
                 config:
-                  crushDeviceClass: ssd
+                  deviceClass: ssd
+                  initialWeight: "1"
         config:
           osdsPerDevice: "1"
     cephBlockPools:
