@@ -56,7 +56,9 @@ spec:
               - name: "/dev/disk/by-id/nvme-eui.e8238fa6bf530001001b444a467856b0"
                 config:
                   deviceClass: ssd
-                  initialWeight: "1"
+              - name: "/dev/disk/by-id/nvme-eui.34373130527000340025384100000003"
+                config:
+                  deviceClass: ssd
         config:
           osdsPerDevice: "1"
     cephBlockPools:
