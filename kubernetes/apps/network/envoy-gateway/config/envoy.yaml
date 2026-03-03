@@ -49,8 +49,11 @@ metadata:
 spec:
   targetRefs:
     - group: gateway.networking.k8s.io
-      kind: GatewayClass
-      name: envoy
+      kind: Gateway
+      name: envoy-external
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
   compression:
     - type: Zstd
     - type: Brotli
@@ -73,8 +76,11 @@ metadata:
 spec:
   targetRefs:
     - group: gateway.networking.k8s.io
-      kind: GatewayClass
-      name: envoy
+      kind: Gateway
+      name: envoy-external
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
   clientIPDetection:
     xForwardedFor:
       trustedCIDRs:
