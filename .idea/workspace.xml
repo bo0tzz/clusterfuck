@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="023130b4-e9eb-432c-80a6-d52b6867f46e" name="Changes" comment="feat: deploy envoy gateway" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="39zatQkq3HejvuSe9GOS6hhLrga" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;KUBERNETES_SUPPRESS_CONFIG_CLUSTER_SUGGESTION&quot;: &quot;true&quot;,
+    &quot;Mise Toml Task.Run talos:apply.executor&quot;: &quot;Run&quot;,
+    &quot;Mise Toml Task.Run talos:genconfig.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore_missing_gitignore&quot;: &quot;true&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/boet/git/clusterfuck&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Mise Toml Task.Run talos:apply">
+    <configuration name="Run talos:apply" type="MiseTomlTaskRunConfigurationType" factoryName="MiseTomlTask" temporary="true">
+      <mise configEnvironment="" taskName="talos:apply" workingDirectory="$PROJECT_DIR$" taskParams="">
+        <envs />
+      </mise>
+      <method v="2" />
+    </configuration>
+    <configuration name="Run talos:genconfig" type="MiseTomlTaskRunConfigurationType" factoryName="MiseTomlTask" temporary="true">
+      <mise configEnvironment="" taskName="talos:genconfig" workingDirectory="$PROJECT_DIR$" taskParams="">
+        <envs />
+      </mise>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Mise Toml Task.Run talos:apply" />
+        <item itemvalue="Mise Toml Task.Run talos:genconfig" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.31033.133" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="023130b4-e9eb-432c-80a6-d52b6867f46e" name="Changes" comment="" />
+      <created>1771701566641</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1771701566641</updated>
+      <workItem from="1771701567726" duration="33709000" />
+      <workItem from="1772040632578" duration="2000" />
+      <workItem from="1772480161357" duration="9275000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat: deploy envoy gateway">
+      <option name="closed" value="true" />
+      <created>1772534827606</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1772534827606</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: deploy envoy gateway" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: deploy envoy gateway" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>
