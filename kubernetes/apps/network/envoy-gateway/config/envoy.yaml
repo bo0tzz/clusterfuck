@@ -59,7 +59,7 @@ spec:
     numRetries: 2
     retryOn:
       triggers:
-        - Reset
+        - reset
   timeout:
     http:
       requestTimeout: 0s
