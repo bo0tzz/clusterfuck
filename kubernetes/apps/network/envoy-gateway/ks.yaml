@@ -1,0 +1,33 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: envoy-gateway
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/network/envoy-gateway/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: network
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: envoy-gateway-config
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/network/envoy-gateway/config
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: network
+  dependsOn:
+    - name: envoy-gateway
+    - name: cert-manager-issuers
+  wait: true

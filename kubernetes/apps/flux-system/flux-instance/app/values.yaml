@@ -113,3 +113,11 @@ instance:
         target:
           kind: Deployment
           name: kustomize-controller
+      - # Controller-level SOPS decryption
+        patch: |
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --sops-age-secret=sops-age
+        target:
+          kind: Deployment
+          name: kustomize-controller

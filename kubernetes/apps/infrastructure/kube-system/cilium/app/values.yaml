@@ -54,11 +54,6 @@ k8sClientRateLimit:
   qps: 10
   burst: 20
 
-gatewayAPI:
-  enabled: true
-  enableAlpn: true
-  enableAppProtocol: true
-
 cni:
   exclusive: false
 

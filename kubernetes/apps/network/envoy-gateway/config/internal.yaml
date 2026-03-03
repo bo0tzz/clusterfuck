@@ -1,0 +1,54 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: envoy-internal
+  namespace: network
+spec:
+  gatewayClassName: envoy
+  infrastructure:
+    annotations:
+      lbipam.cilium.io/ips: "10.0.10.101"
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https
+      protocol: HTTPS
+      port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: bo0tzz-me-production-tls
+          - name: zijlein-de-production-tls
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyPatchPolicy
+metadata:
+  name: envoy-internal
+  namespace: network
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: envoy-internal
+  type: JSONPatch
+  jsonPatches:
+    - type: "type.googleapis.com/envoy.config.listener.v3.Listener"
+      name: "network/envoy-internal/https"
+      operation:
+        op: add
+        path: "/filter_chains/0/filters/0/typed_config/http_filters/0/typed_config/compressor_library/typed_config/choose_first"
+        value: true
+    - type: "type.googleapis.com/envoy.config.listener.v3.Listener"
+      name: "network/envoy-internal/https-quic"
+      operation:
+        op: add
+        path: "/filter_chains/0/filters/0/typed_config/http_filters/0/typed_config/compressor_library/typed_config/choose_first"
+        value: true
