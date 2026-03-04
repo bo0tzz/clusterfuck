@@ -36,6 +36,13 @@ patches:
       sysctls:
         fs.inotify.max_user_watches: "1048576"
         fs.inotify.max_user_instances: "8192"
+      files:
+        - op: create
+          path: /etc/cri/conf.d/20-customization.part
+          content: |
+            [plugins."io.containerd.cri.v1.runtime"]
+              cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
+              device_ownership_from_security_context = true
 
 nodes:
   # - hostname: sketchy
