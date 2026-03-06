@@ -4,7 +4,7 @@ kubectl = "1.35.2"
 talhelper = "3.1.5"
 talosctl = "1.12.4"
 usage = "2.18.2"
-helmfile = "1.4.0"
+helmfile = "1.4.1"
 helm = "4.1.1"
 
 [tasks."talos:genconfig"]
