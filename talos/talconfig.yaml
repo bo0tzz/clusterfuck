@@ -44,6 +44,18 @@ patches:
               cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
               device_ownership_from_security_context = true
 
+controlPlane:
+  patches:
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedKubernetesNamespaces:
+              - system-upgrade
+            allowedRoles:
+              - os:admin
+
 nodes:
   # - hostname: sketchy
   #   ipAddress: 10.0.10.11
