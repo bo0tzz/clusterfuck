@@ -47,7 +47,7 @@
     {
       description: "Kubernetes Group",
       groupName: "kubernetes",
-      matchPackageNames: [
+      matchDepNames: [
         "/kubectl/",
         "/kubelet/",
       ],
