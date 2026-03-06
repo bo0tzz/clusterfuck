@@ -45,6 +45,17 @@
       minimumGroupSize: 3,
     },
     {
+      description: "Kubernetes Group",
+      groupName: "kubernetes",
+      matchPackageNames: [
+        "/kubectl/",
+        "/kubelet/",
+      ],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
       matchUpdateTypes: ["major"],
       semanticCommitType: "feat",
       commitMessagePrefix: "{{semanticCommitType}}({{semanticCommitScope}})!:",
