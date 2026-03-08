@@ -1,0 +1,33 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: network
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: external-dns
+  interval: 1h
+  values:
+    provider:
+      name: cloudflare
+    env:
+      - name: CF_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: cloudflare-api-token
+            key: api-token
+    extraArgs:
+      - --cloudflare-dns-records-per-page=1000
+      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+      - --crd-source-kind=DNSEndpoint
+    policy: sync
+    sources: ["crd", "gateway-httproute"]
+    txtOwnerId: clusterfuck
+    resources:
+      requests:
+        cpu: 15m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
