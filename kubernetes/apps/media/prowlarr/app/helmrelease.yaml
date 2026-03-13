@@ -16,7 +16,7 @@ spec:
           main:
             image:
               repository: ghcr.io/home-operations/prowlarr
-              tag: "1.31.2"
+              tag: "2.3.3.5296"
             env:
               TZ: Europe/Amsterdam
             securityContext:
