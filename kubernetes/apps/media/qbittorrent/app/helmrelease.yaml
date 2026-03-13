@@ -1,0 +1,65 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+  namespace: media
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: qbittorrent
+    namespace: media
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/home-operations/qbittorrent
+              tag: "5.0.4"
+            env:
+              TZ: Europe/Amsterdam
+              QBITTORRENT__PORT: "8080"
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              runAsNonRoot: true
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8080
+              readiness: *probes
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8080
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - qbittorrent.next.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 8080
+    persistence:
+      config:
+        existingClaim: qbittorrent-config
+        globalMounts:
+          - path: /config
+      media:
+        existingClaim: media-library
+        globalMounts:
+          - path: /media

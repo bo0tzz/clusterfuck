@@ -1,0 +1,16 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: media-recyclarr
+  namespace: flux-system
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/media/recyclarr/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  dependsOn:
+    - name: media-sonarr
+    - name: media-radarr

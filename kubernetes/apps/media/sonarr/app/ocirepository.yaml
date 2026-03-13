@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: sonarr
+  namespace: media
+spec:
+  interval: 1h
+  url: oci://ghcr.io/bjw-s-labs/helm-charts/app-template
+  ref:
+    tag: "4.6.2"

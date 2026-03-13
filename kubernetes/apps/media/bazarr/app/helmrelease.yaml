@@ -1,0 +1,64 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bazarr
+  namespace: media
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: bazarr
+    namespace: media
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/home-operations/bazarr
+              tag: "1.5.1"
+            env:
+              TZ: Europe/Amsterdam
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              runAsNonRoot: true
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 6767
+              readiness: *probes
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 6767
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - bazarr.next.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 6767
+    persistence:
+      config:
+        existingClaim: bazarr-config
+        globalMounts:
+          - path: /config
+      media:
+        existingClaim: media-library
+        globalMounts:
+          - path: /media
