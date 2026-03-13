@@ -21,7 +21,7 @@ spec:
           main:
             image:
               repository: ghcr.io/recyclarr/recyclarr
-              tag: "7.4.1"
+              tag: "8.5.0"
             args:
               - sync
             env:
