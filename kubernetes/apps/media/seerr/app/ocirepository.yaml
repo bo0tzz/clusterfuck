@@ -5,6 +5,6 @@ metadata:
   namespace: media
 spec:
   interval: 1h
-  url: oci://ghcr.io/seerr-team/seerr
+  url: oci://ghcr.io/seerr-team/seerr/seerr-chart
   ref:
     tag: "3.3.0"
