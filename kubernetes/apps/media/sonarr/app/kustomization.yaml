@@ -4,4 +4,4 @@ resources:
   - ocirepository.yaml
   - helmrelease.yaml
   - pvc.yaml
-  - secret.yaml
+  - secret.sops.yaml
