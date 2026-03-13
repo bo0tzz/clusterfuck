@@ -58,6 +58,12 @@ spec:
             memory: 256Mi
 
     grafana:
+      route:
+        main:
+          enabled: true
+          hostnames: ["monitoring.next.zijlein.de"]
+          parentRefs: ["envoy-internal"]
+
       resources:
         requests:
           cpu: 100m
