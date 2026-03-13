@@ -62,7 +62,9 @@ spec:
         main:
           enabled: true
           hostnames: ["monitoring.next.zijlein.de"]
-          parentRefs: ["envoy-internal"]
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
 
       resources:
         requests:
