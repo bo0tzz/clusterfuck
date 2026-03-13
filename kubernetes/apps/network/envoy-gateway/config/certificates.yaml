@@ -9,6 +9,7 @@ spec:
   dnsNames:
     - "bo0tzz.me"
     - "*.bo0tzz.me"
+    - "*.next.bo0tzz.me"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
