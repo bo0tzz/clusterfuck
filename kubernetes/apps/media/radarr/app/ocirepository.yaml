@@ -5,6 +5,6 @@ metadata:
   namespace: media
 spec:
   interval: 1h
-  url: oci://ghcr.io/bjw-s-labs/helm-charts/app-template
+  url: oci://ghcr.io/bjw-s-labs/helm/app-template
   ref:
     tag: "4.6.2"
