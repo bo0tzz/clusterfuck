@@ -4,6 +4,8 @@ kind: Grafana
 metadata:
   name: grafana
   namespace: monitoring
+  labels:
+    dashboards: grafana
 spec:
   config:
     server:

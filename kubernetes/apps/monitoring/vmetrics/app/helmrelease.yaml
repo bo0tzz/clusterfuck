@@ -64,12 +64,16 @@ spec:
       grafanaOperator:
         enabled: true
         spec:
-          instanceSelector: {}
+          instanceSelector:
+            matchLabels:
+              dashboards: grafana
           allowCrossNamespaceImport: true
 
     defaultDatasources:
       grafanaOperator:
         enabled: true
         spec:
-          instanceSelector: {}
+          instanceSelector:
+            matchLabels:
+              dashboards: grafana
           allowCrossNamespaceImport: true
