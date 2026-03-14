@@ -6,6 +6,8 @@ metadata:
 spec:
   dependsOn:
     - name: snapshot-controller
+    - name: prometheus-operator-crds
+      namespace: monitoring
   interval: 1h
   path: ./kubernetes/apps/infrastructure/storage/rook-ceph/operator
   prune: true
