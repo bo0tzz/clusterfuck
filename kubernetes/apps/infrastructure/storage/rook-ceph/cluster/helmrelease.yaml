@@ -8,6 +8,7 @@ spec:
     kind: OCIRepository
     name: rook-ceph-cluster
   interval: 1h
+  timeout: 30m
   values:
     monitoring:
       enabled: true
