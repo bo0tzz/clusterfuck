@@ -9,9 +9,6 @@ spec:
     name: victoria-metrics-k8s-stack
   interval: 1h
   values:
-    prometheus-operator-crds:
-      enabled: true
-
     vmsingle:
       spec:
         retentionPeriod: "2y"

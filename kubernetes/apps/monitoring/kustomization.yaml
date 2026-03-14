@@ -5,4 +5,5 @@ namespace: monitoring
 
 resources:
   - namespace.yaml
+  - ./prometheus-operator-crds/ks.yaml
   - ./vmetrics/ks.yaml
