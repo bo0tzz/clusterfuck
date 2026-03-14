@@ -9,6 +9,15 @@ spec:
     name: rook-ceph-cluster
   interval: 1h
   values:
+    monitoring:
+      enabled: true
+      createPrometheusRules: true
+
+    dashboards:
+      enabled: true
+      labels:
+        grafana_dashboard: "1"
+
     cephClusterSpec:
       cephConfig:
         global:

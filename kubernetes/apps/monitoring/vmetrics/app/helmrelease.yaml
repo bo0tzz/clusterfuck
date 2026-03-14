@@ -58,6 +58,10 @@ spec:
             memory: 256Mi
 
     grafana:
+      sidecar:
+        dashboards:
+          searchNamespace: ALL
+
       route:
         main:
           enabled: true
