@@ -59,6 +59,7 @@ spec:
 
     grafana:
       enabled: false
+      forceDeployDatasource: true
 
     defaultDashboards:
       grafanaOperator:
