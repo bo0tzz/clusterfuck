@@ -6,6 +6,7 @@ metadata:
 spec:
   dependsOn:
     - name: prometheus-operator-crds
+    - name: grafana-operator
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h

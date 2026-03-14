@@ -58,22 +58,18 @@ spec:
             memory: 256Mi
 
     grafana:
-      sidecar:
-        dashboards:
-          searchNamespace: ALL
+      enabled: false
 
-      route:
-        main:
-          enabled: true
-          hostnames: ["monitoring.next.zijlein.de"]
-          parentRefs:
-            - name: envoy-internal
-              namespace: network
+    defaultDashboards:
+      grafanaOperator:
+        enabled: true
+        spec:
+          instanceSelector: {}
+          allowCrossNamespaceImport: true
 
-      resources:
-        requests:
-          cpu: 100m
-          memory: 256Mi
-        limits:
-          cpu: 500m
-          memory: 512Mi
+    defaultDatasources:
+      grafanaOperator:
+        enabled: true
+        spec:
+          instanceSelector: {}
+          allowCrossNamespaceImport: true

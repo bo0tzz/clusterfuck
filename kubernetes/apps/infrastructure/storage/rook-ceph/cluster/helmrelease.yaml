@@ -14,11 +14,6 @@ spec:
       enabled: true
       createPrometheusRules: false
 
-    dashboards:
-      enabled: true
-      labels:
-        grafana_dashboard: "1"
-
     cephClusterSpec:
       cephConfig:
         global:
