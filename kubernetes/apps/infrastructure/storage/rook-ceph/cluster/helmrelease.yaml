@@ -23,6 +23,9 @@ spec:
       csi:
         readAffinity:
           enabled: true
+      network:
+        connections:
+          requireMsgr2: true
       mgr:
         modules:
           - name: insights
