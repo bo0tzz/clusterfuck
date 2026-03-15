@@ -19,6 +19,12 @@ spec:
               tag: "2.3.3.5296"
             env:
               TZ: Europe/Amsterdam
+              PROWLARR__APP__INSTANCENAME: Sonarr
+              PROWLARR__APP__THEME: dark
+              PROWLARR__AUTH__METHOD: External
+              PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              PROWLARR__LOG__DBENABLED: "False"
+              PROWLARR__LOG__LEVEL: info
             securityContext:
               runAsUser: 568
               runAsGroup: 568
