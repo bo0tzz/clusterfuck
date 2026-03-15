@@ -13,4 +13,3 @@ resources:
   - qbittorrent/ks.yaml
   - recyclarr/ks.yaml
   - seerr/ks.yaml
-  - unpackerr/ks.yaml
