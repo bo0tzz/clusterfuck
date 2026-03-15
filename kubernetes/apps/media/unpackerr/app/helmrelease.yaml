@@ -1,0 +1,73 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: unpackerr
+  namespace: media
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: unpackerr
+    namespace: media
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/unpackerr/unpackerr
+              tag: "0.15.2"
+            env:
+              TZ: Europe/Amsterdam
+              UN_SONARR_0_URL: http://sonarr.media.svc.cluster.local:8989
+              UN_RADARR_0_URL: http://radarr.media.svc.cluster.local:7878
+              UN_SONARR_0_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: sonarr-secret
+                    key: SONARR__AUTH__APIKEY
+              UN_RADARR_0_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: radarr-secret
+                    key: RADARR__AUTH__APIKEY
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              runAsNonRoot: true
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 5656
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - unpackerr.next.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 5656
+    persistence:
+      config:
+        type: emptyDir
+        globalMounts:
+          - path: /config
+      tmp:
+        type: emptyDir
+        medium: Memory
+        globalMounts:
+          - path: /tmp
+      media:
+        existingClaim: media-library
+        globalMounts:
+          - path: /media
