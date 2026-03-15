@@ -26,6 +26,7 @@ spec:
               - sync
             env:
               TZ: Europe/Amsterdam
+              RECYCLARR_DATA_DIR: /tmp
             envFrom:
               - secretRef:
                   name: sonarr-secret
