@@ -6,7 +6,7 @@ metadata:
 data:
   recyclarr.yml: |
     sonarr:
-      main:
+      tv:
         base_url: http://sonarr.media.svc.cluster.local:8989
         api_key: !env_var SONARR__AUTH__APIKEY
         quality_definition:
@@ -17,7 +17,7 @@ data:
               enabled: true
     
     radarr:
-      main:
+      movies:
         base_url: http://radarr.media.svc.cluster.local:7878
         api_key: !env_var RADARR__AUTH__APIKEY
         quality_definition:
