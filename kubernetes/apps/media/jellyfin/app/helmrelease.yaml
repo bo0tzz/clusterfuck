@@ -65,8 +65,8 @@ spec:
       tmpfs:
         type: emptyDir
         advancedMounts:
-          jellyfin:
-            app:
+          main:
+            main:
               - path: /cache
                 subPath: cache
               - path: /tmp
