@@ -47,6 +47,8 @@ spec:
           - path: /config/recyclarr.yml
             subPath: recyclarr.yml
       state:
-        type: emptyDir
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 100Mi
         globalMounts:
           - path: /config/state
