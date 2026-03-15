@@ -16,7 +16,7 @@ spec:
           main:
             image:
               repository: ghcr.io/home-operations/prowlarr
-              tag: "2.3.3.5296"
+              tag: "2.3.4.5307"
             env:
               TZ: Europe/Amsterdam
               PROWLARR__APP__INSTANCENAME: Sonarr
