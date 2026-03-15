@@ -1,0 +1,11 @@
+apiVersion: resource.k8s.io/v1beta1
+kind: ResourceClaimTemplate
+metadata:
+  name: jellyfin-gpu
+  namespace: media
+spec:
+  spec:
+    devices:
+      requests:
+        - name: gpu
+          deviceClassName: gpu.intel.com

@@ -23,6 +23,9 @@ spec:
               runAsUser: 568
               runAsGroup: 568
               runAsNonRoot: true
+            resources:
+              claims:
+                - name: gpu
             probes:
               liveness: &probes
                 enabled: true
@@ -33,6 +36,9 @@ spec:
                     port: 8096
               readiness: *probes
     defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: jellyfin-gpu
       securityContext:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch

@@ -4,3 +4,4 @@ resources:
   - ocirepository.yaml
   - helmrelease.yaml
   - pvc.yaml
+  - resourceclaim.yaml
