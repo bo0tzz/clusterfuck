@@ -35,10 +35,9 @@
       overrideDepName: "{{packageName}}",
     },
     {
-      description: "Flux Operator Group",
-      groupName: "flux-operator",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/flux-operator/", "/flux-instance/", "/flux-operator-manifests/"],
+      description: "Flux Group",
+      groupName: "flux",
+      matchPackageNames: ["/flux/"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
@@ -54,6 +53,15 @@
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
+    },
+    {
+      description: "Talos Group",
+      groupName: "talos",
+      matchPackageNames: ["/installer/", "/talos/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      minimumGroupSize: 2,
     },
     {
       description: "Rook-Ceph Group",
