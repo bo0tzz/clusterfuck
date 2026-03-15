@@ -26,7 +26,6 @@ spec:
               - sync
             env:
               TZ: Europe/Amsterdam
-              RECYCLARR_DATA_DIR: /tmp
             envFrom:
               - secretRef:
                   name: sonarr-secret
@@ -50,6 +49,6 @@ spec:
       state:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
-        size: 100Mi
+        size: 1Gi
         globalMounts:
-          - path: /config/state
+          - path: /config
