@@ -74,6 +74,15 @@
       minimumGroupSize: 2,
     },
     {
+      description: "Envoy Group",
+      groupName: "envoy",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/envoy/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
       matchUpdateTypes: ["major"],
       semanticCommitType: "feat",
       commitMessagePrefix: "{{semanticCommitType}}({{semanticCommitScope}})!:",
