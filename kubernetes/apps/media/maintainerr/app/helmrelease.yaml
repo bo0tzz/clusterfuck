@@ -29,8 +29,8 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /health
-                    port: 6767
+                    path: /
+                    port: &port 6246
               readiness: *probes
             resources:
               requests:
@@ -47,7 +47,7 @@ spec:
         controller: main
         ports:
           http:
-            port: 6246
+            port: *port
     route:
       main:
         parentRefs:
