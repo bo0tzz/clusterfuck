@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - grafana-admin.sops.yaml
   - grafana.yaml
+  - grafanadashboard.yaml
   - httproute.yaml
