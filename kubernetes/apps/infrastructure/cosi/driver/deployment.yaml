@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: b2-cosi-driver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: b2-cosi-driver
+  template:
+    metadata:
+      labels:
+        app: b2-cosi-driver
+    spec:
+      serviceAccountName: b2-cosi-driver
+      volumes:
+        - name: cosi-socket
+          emptyDir: {}
+      containers:
+        - name: objectstorage-sidecar
+          image: registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2
+          volumeMounts:
+            - name: cosi-socket
+              mountPath: /var/lib/cosi
+        - name: b2-cosi-driver
+          image: ghcr.io/bo0tzz/b2-cosi-driver:v0.0.1
+          env:
+            - name: B2_APPLICATION_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: b2-credentials
+                  key: applicationKeyId
+            - name: B2_APPLICATION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: b2-credentials
+                  key: applicationKey
+          volumeMounts:
+            - name: cosi-socket
+              mountPath: /var/lib/cosi

@@ -1,0 +1,30 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cosi-controller
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/infrastructure/cosi/controller
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: cosi-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: b2-cosi-driver
+spec:
+  dependsOn:
+    - name: cosi-controller
+  interval: 1h
+  path: ./kubernetes/apps/infrastructure/cosi/driver
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: cosi-system
