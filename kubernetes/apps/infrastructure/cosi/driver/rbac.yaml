@@ -17,6 +17,12 @@ rules:
       - bucketaccessclasses
       - bucketclasses
     verbs: ["get", "list", "watch", "update"]
+  - apiGroups: ["objectstorage.k8s.io"]
+    resources:
+      - buckets/status
+      - bucketaccesses/status
+      - bucketclaims/status
+    verbs: ["update"]
   - apiGroups: ["coordination.k8s.io"]
     resources:
       - leases
