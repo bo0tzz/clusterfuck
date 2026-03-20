@@ -1,6 +1,6 @@
 [tools]
 flux2 = "2.8.3"
-kubectl = "1.35.2"
+kubectl = "1.35.3"
 talhelper = "3.1.7"
 talosctl = "1.12.6"
 usage = "3.0.0"
