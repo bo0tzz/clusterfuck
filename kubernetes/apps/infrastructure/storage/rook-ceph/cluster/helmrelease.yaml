@@ -70,6 +70,16 @@ spec:
         config:
           osdsPerDevice: "1"
     cephBlockPools:
+      - name: builtin-mgr
+        spec:
+          name: .mgr
+          failureDomain: host
+          deviceClass: ssd
+          enableCrushUpdates: true
+          replicated:
+            size: 3
+        storageClass:
+          enabled: false
       - name: ssd-block
         spec:
           failureDomain: host
