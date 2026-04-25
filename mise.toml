@@ -3,7 +3,7 @@ flux2 = "2.8.6"
 kubectl = "1.35.3"
 talhelper = "3.1.7"
 talosctl = "1.12.6"
-usage = "3.2.0"
+usage = "3.2.1"
 helmfile = "1.4.4"
 helm = "4.1.4"
 
