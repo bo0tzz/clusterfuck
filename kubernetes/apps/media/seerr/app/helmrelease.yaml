@@ -12,7 +12,7 @@ spec:
   values:
     image:
       repository: ghcr.io/seerr-team/seerr
-      tag: "v3.1.1"
+      tag: "v3.2.0"
     env:
       TZ: Europe/Amsterdam
     persistence:
