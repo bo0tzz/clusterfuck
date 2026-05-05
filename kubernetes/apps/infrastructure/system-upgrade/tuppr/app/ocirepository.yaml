@@ -12,3 +12,12 @@ spec:
   ref:
     tag: 0.1.19
   url: oci://ghcr.io/home-operations/charts/tuppr
+  values:
+    monitoring:
+      serviceMonitor:
+        enabled: true
+      dashboards:
+        enabled: true
+        grafanaOperator:
+          enabled: true
+          allowCrossNamespaceImport: true
