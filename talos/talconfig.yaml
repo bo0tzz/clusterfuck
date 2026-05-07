@@ -23,6 +23,26 @@ patches:
     name: 10.0.10.10
     link: trunk.16
   - |-
+    apiVersion: v1alpha1
+    kind: VolumeConfig
+    name: EPHEMERAL
+    provisioning:
+      diskSelector:
+        match: system_disk
+      maxSize: 300GiB
+  - |-
+    apiVersion: v1alpha1
+    kind: UserVolumeConfig
+    name: local-path-provisioner
+    provisioning:
+      diskSelector:
+        match: system_disk
+      minSize: 10GiB
+      maxSize: 500GiB
+      grow: true
+    filesystem:
+      type: xfs
+  - |-
     cluster:
       proxy:
         disabled: true
