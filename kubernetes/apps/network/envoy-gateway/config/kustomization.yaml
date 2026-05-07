@@ -6,3 +6,4 @@ resources:
   - ./certificates.yaml
   - ./external.yaml
   - ./internal.yaml
+  - ./old-cluster.yaml

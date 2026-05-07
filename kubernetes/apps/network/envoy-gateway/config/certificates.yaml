@@ -28,3 +28,31 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: bo0-tz-production
+  namespace: network
+spec:
+  secretName: bo0-tz-production-tls
+  dnsNames:
+    - "bo0.tz"
+    - "*.bo0.tz"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: loc-place-production
+  namespace: network
+spec:
+  secretName: loc-place-production-tls
+  dnsNames:
+    - "loc.place"
+    - "*.loc.place"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer

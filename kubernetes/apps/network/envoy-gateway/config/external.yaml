@@ -28,6 +28,8 @@ spec:
         certificateRefs:
           - name: bo0tzz-me-production-tls
           - name: zijlein-de-production-tls
+          - name: bo0-tz-production-tls
+          - name: loc-place-production-tls
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyPatchPolicy
