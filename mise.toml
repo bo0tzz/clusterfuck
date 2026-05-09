@@ -6,6 +6,8 @@ talosctl = "1.13.0"
 usage = "3.3.0"
 helmfile = "1.5.0"
 helm = "4.1.4"
+yamlfmt = "0.21.0"
+"pipx:flux-local" = "8.2.0"
 
 [tasks."talos:genconfig"]
 dir = "talos"
@@ -27,3 +29,11 @@ trap 'rm -f "$KUBECONFIG"' EXIT
 talhelper gencommand kubeconfig --extra-flags - | bash > "$KUBECONFIG"
 helmfile --kubeconfig "$KUBECONFIG" --file '{{ config_root }}/bootstrap/helmfile.yaml' sync
 """
+
+[tasks."kube:fmt"]
+run = "yamlfmt ."
+description = "Format kubernetes manifests"
+
+[tasks."kube:diff"]
+run = "flux-local diff hr --path ./kubernetes/flux/cluster -A --branch-orig main"
+description = "Diff kubernetes helm releases"
