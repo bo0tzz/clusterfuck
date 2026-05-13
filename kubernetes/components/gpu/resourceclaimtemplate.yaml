@@ -1,0 +1,18 @@
+---
+apiVersion: resource.k8s.io/v1
+kind: ResourceClaimTemplate
+metadata:
+  name: ${APP}-gpu
+spec:
+  spec:
+    devices:
+      requests:
+        - name: gpu
+          exactly:
+            deviceClassName: gpu.intel.com
+            selectors:
+              # Never claim a parent PF — always leave it to its VFs.
+              - cel:
+                  expression: device.attributes["gpu.intel.com"].sriov == false
+              - cel:
+                  expression: '${GPU_CEL:=true}'

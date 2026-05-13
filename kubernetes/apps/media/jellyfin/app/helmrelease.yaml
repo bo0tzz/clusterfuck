@@ -38,7 +38,7 @@ spec:
     defaultPodOptions:
       resourceClaims:
         - name: gpu
-          resourceClaimTemplateName: jellyfin-gpu
+          resourceClaimTemplateName: ${APP}-gpu
       securityContext:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
