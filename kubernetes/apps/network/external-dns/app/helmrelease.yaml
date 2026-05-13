@@ -22,7 +22,8 @@ spec:
       - --cloudflare-dns-records-per-page=1000
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
-    policy: sync
+      - --migrate-from-txt-owner=default
+    policy: upsert-only
     sources: ["crd", "gateway-httproute"]
     txtOwnerId: clusterfuck
     resources:
