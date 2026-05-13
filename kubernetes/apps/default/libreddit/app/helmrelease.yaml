@@ -1,0 +1,53 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: libreddit
+  namespace: default
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: libreddit
+    namespace: default
+  values:
+    controllers:
+      main:
+        strategy: RollingUpdate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/silvenga/redlib
+              tag: latest@sha256:5b7b92744ca153c75bef1f5b6b5ffb6985a230c91019d722a88ec758b15f502d
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /settings
+                    port: 8080
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              limits:
+                cpu: 50m
+                memory: 64Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8080
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - libreddit.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 8080
