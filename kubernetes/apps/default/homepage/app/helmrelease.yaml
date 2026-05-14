@@ -20,7 +20,7 @@ spec:
               tag: main@sha256:2d63b6f34608ff9c550a15c8ea59fb397973fe1bccf360299d803810490e0858
               pullPolicy: Always
             resources:
-              limits:
+              requests:
                 cpu: 20m
                 memory: 200Mi
     service:
