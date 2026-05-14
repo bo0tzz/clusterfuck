@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: homepage
+  namespace: default
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: homepage
+    namespace: default
+  values:
+    controllers:
+      main:
+        strategy: RollingUpdate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/bo0tzz/homepage
+              tag: main@sha256:2d63b6f34608ff9c550a15c8ea59fb397973fe1bccf360299d803810490e0858
+              pullPolicy: Always
+            resources:
+              limits:
+                cpu: 20m
+                memory: 200Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 4000
+    route:
+      main:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: zijlein.de
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        hostnames:
+          - bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 4000

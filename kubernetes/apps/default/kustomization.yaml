@@ -5,3 +5,4 @@ namespace: default
 resources:
   - namespace.yaml
   - libreddit/ks.yaml
+  - homepage/ks.yaml
