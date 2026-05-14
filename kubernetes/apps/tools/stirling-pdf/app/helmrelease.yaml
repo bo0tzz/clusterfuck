@@ -21,8 +21,8 @@ spec:
             env:
               SYSTEM_ENABLEANALYTICS: "false"
             resources:
-              limits:
-                cpu: 150m
+              requests:
+                cpu: 50m
                 memory: 512Mi
     service:
       main:
