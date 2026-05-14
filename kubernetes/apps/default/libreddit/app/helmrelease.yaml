@@ -31,7 +31,7 @@ spec:
                   failureThreshold: 3
               readiness: *probes
             resources:
-              limits:
+              requests:
                 cpu: 50m
                 memory: 64Mi
     service:
