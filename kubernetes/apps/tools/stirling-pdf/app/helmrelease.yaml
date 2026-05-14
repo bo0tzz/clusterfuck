@@ -20,6 +20,9 @@ spec:
               tag: "2.10.1"
             env:
               SYSTEM_ENABLEANALYTICS: "false"
+              SYSTEM_ENABLEPOSTHOG: "false"
+              SYSTEM_ENABLESCARF: "false"
+              SECURITY_ENABLELOGIN: "false"
             resources:
               requests:
                 cpu: 50m
