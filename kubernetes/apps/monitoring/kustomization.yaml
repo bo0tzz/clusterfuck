@@ -8,3 +8,4 @@ resources:
   - ./prometheus-operator-crds/ks.yaml
   - ./grafana/ks.yaml
   - ./vmetrics/ks.yaml
+  - ./victoria-logs/ks.yaml
