@@ -155,12 +155,21 @@ nodes:
 
     schematic:
       customization:
+        extraKernelArgs:
+          - xe.force_probe=46a6
+          - i915.force_probe=!46a6
         systemExtensions:
           officialExtensions:
             - siderolabs/intel-ucode
             - siderolabs/i915
+            - siderolabs/xe
 
     patches:
+      - |-
+        machine:
+          udev:
+            rules:
+              - 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{device}=="0x46a6", ATTR{sriov_numvfs}="3"'
       - |-
         apiVersion: v1alpha1
         kind: LinkAliasConfig
