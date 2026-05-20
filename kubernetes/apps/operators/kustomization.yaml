@@ -6,3 +6,4 @@ namespace: operators
 resources:
   - namespace.yaml
   - ./cloudnative-pg/ks.yaml
+  - ./external-secrets/ks.yaml
