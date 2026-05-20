@@ -11,3 +11,10 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  components:
+    - ../../../../components/gpu
+  postBuild:
+    substitute:
+      APP: jellyfin
+      # Pin to tiny's ADL-P iGPU; hwaccel is somehow broken on janky's xe Battlemage.
+      GPU_CEL: 'device.attributes["gpu.intel.com"].pciId == "0x46a6"'
