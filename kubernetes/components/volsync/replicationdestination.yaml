@@ -8,6 +8,8 @@ spec:
     manual: restore-once
   kopia:
     repository: ${APP}-kopia-config
+    sourceIdentity:
+      sourceName: ${APP}
     copyMethod: Snapshot
     capacity: ${VOLSYNC_CAPACITY:=5Gi}
     storageClassName: ${VOLSYNC_STORAGECLASS:=ssd-block}
