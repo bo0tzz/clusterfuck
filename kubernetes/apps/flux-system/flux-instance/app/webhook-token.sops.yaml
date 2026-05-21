@@ -2,7 +2,6 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: github-webhook-token-secret
-  namespace: flux-system
 stringData:
   token: ENC[AES256_GCM,data:45ZuQutpv8jMXNzRqW/f9nCl1MzRKabj0+sAU/sl5LTdKcUUbw3aTEIAi7k01NJiXzRhW3mK0f0olo639RTFmA==,iv:AwDfTg8XJLZhH94M6bNubKP2PrsL7y/Jyw8Z2pudUUo=,tag:K4JSrdn55s3RgAEEfZHgjQ==,type:str]
 sops:

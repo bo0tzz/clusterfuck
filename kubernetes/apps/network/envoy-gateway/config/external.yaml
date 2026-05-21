@@ -3,7 +3,6 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: envoy-external
-  namespace: network
   annotations:
     external-dns.alpha.kubernetes.io/target: "45.142.19.143"
 spec:
@@ -36,7 +35,6 @@ apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyPatchPolicy
 metadata:
   name: envoy-external
-  namespace: network
 spec:
   targetRef:
     group: gateway.networking.k8s.io

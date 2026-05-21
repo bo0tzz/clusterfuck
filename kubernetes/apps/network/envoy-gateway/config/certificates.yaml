@@ -3,7 +3,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: bo0tzz-me-production
-  namespace: network
 spec:
   secretName: bo0tzz-me-production-tls
   dnsNames:
@@ -18,7 +17,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: zijlein-de-production
-  namespace: network
 spec:
   secretName: zijlein-de-production-tls
   dnsNames:
@@ -33,7 +31,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: bo0-tz-production
-  namespace: network
 spec:
   secretName: bo0-tz-production-tls
   dnsNames:
@@ -47,7 +44,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: loc-place-production
-  namespace: network
 spec:
   secretName: loc-place-production-tls
   dnsNames:

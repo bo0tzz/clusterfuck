@@ -2,7 +2,6 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: grafana-admin-credentials
-  namespace: monitoring
 stringData:
   GF_SECURITY_ADMIN_USER: ENC[AES256_GCM,data:5x/pzyE=,iv:e+HinG26E76GpQdPhJU2eSEUXl79kDgGrzcgj81L8b4=,tag:H57+EsNpsBvHxR+kYM4A1g==,type:str]
   GF_SECURITY_ADMIN_PASSWORD: ENC[AES256_GCM,data:lnB9Lgq3rOxUqRJJAn1cgw==,iv:ZdTNoNula6LOdBowytZiQk9j478A3kCp7jtq0EKDQkg=,tag:WjcY39uZTs55YDuygSRPRw==,type:str]
