@@ -1,0 +1,9 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: cluster-secrets
+resources:
+  - ./serviceaccount.yaml
+  - ./role.yaml
+  - ./rolebinding.yaml
+  - ./clustersecretstore.yaml
