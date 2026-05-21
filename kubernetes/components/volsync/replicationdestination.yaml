@@ -11,6 +11,8 @@ spec:
     sourceIdentity:
       sourceName: ${APP}
     copyMethod: Snapshot
+    cleanupTempPVC: true
+    enableFileDeletion: true
     capacity: ${VOLSYNC_CAPACITY:=5Gi}
     storageClassName: ${VOLSYNC_STORAGECLASS:=ssd-block}
     accessModes: ["${VOLSYNC_ACCESSMODES:=ReadWriteOnce}"]

@@ -9,6 +9,7 @@ spec:
     schedule: ${VOLSYNC_SCHEDULE:=0 3 * * *}
   kopia:
     repository: ${APP}-kopia-config
+    compression: zstd-fastest
     copyMethod: Snapshot
     cacheCapacity: ${VOLSYNC_CACHE_CAPACITY:=2Gi}
     cacheStorageClassName: ${VOLSYNC_STORAGECLASS:=ssd-block}
