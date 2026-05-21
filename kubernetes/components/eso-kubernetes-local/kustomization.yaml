@@ -7,3 +7,16 @@ resources:
   - ./role.yaml
   - ./rolebinding.yaml
   - ./secretstore.yaml
+# Copy the consuming namespace's name into the SecretStore's
+# remoteNamespace. Requires that the consuming kustomization renders
+# exactly one Namespace alongside this component.
+replacements:
+  - source:
+      kind: Namespace
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: SecretStore
+          name: kubernetes-local
+        fieldPaths:
+          - spec.provider.kubernetes.remoteNamespace

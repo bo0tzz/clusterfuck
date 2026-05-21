@@ -1,0 +1,10 @@
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketAccess
+metadata:
+  name: ${BUCKET}
+spec:
+  bucketAccessClassName: ${BUCKETACCESSCLASS:=backblaze}
+  bucketClaimName: ${BUCKET}
+  protocol: s3
+  credentialsSecretName: ${BUCKET}-raw
