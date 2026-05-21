@@ -3,7 +3,6 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: envoy-internal
-  namespace: network
 spec:
   gatewayClassName: envoy
   infrastructure:
@@ -32,7 +31,6 @@ apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyPatchPolicy
 metadata:
   name: envoy-internal
-  namespace: network
 spec:
   targetRef:
     group: gateway.networking.k8s.io

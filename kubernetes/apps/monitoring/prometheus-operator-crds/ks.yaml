@@ -11,5 +11,4 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: monitoring
   wait: true
