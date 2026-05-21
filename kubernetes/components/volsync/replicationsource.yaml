@@ -1,0 +1,23 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: ${APP}
+spec:
+  sourcePVC: ${APP}
+  trigger:
+    schedule: ${VOLSYNC_SCHEDULE:=0 3 * * *}
+  kopia:
+    repository: ${APP}-kopia-config
+    copyMethod: Snapshot
+    cacheCapacity: ${VOLSYNC_CACHE_CAPACITY:=2Gi}
+    cacheStorageClassName: ${VOLSYNC_STORAGECLASS:=ssd-block}
+    storageClassName: ${VOLSYNC_STORAGECLASS:=ssd-block}
+    accessModes: ["${VOLSYNC_ACCESSMODES:=ReadWriteOnce}"]
+    moverSecurityContext:
+      runAsUser: ${VOLSYNC_PUID:=568}
+      runAsGroup: ${VOLSYNC_PGID:=568}
+      fsGroup: ${VOLSYNC_PGID:=568}
+    retain:
+      hourly: 24
+      daily: 7
