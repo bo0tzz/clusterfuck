@@ -2,8 +2,6 @@ name: Flux Local
 
 on:
   pull_request:
-    branches:
-      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -61,12 +59,12 @@ jobs:
           path: pull
           persist-credentials: false
 
-      - name: Checkout Default Branch
+      - name: Checkout Target Branch
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           path: default
           persist-credentials: false
-          ref: ${{ github.event.repository.default_branch }}
+          ref: ${{ github.event.pull_request.base.ref }}
 
       - name: Run flux-local diff
         uses: docker://ghcr.io/allenporter/flux-local:v8.2.0
