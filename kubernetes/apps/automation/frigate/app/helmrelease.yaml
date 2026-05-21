@@ -63,6 +63,7 @@ spec:
           - path: /config
       media:
         type: persistentVolumeClaim
+        forceRename: frigate-media
         accessMode: ReadWriteOnce
         size: 20Gi
         storageClass: ssd-block
