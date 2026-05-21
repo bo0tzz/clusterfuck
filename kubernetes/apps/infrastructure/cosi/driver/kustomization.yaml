@@ -6,3 +6,5 @@ resources:
   - rbac.yaml
   - deployment.yaml
   - b2-credentials.sops.yaml
+  - bucketclass.yaml
+  - bucketaccessclass.yaml
