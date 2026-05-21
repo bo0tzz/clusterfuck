@@ -1,0 +1,9 @@
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketClaim
+metadata:
+  name: ${BUCKET}
+spec:
+  bucketClassName: ${BUCKETCLASS:=backblaze}
+  protocols:
+    - s3
