@@ -29,7 +29,7 @@ spec:
               OIDC_REDIRECT_URI: https://bo0kkeeper.bo0tzz.me/api/auth/callback
               OIDC_CLIENT_ID: "TojptaxabZ0DoBpkW1axJihsGeeiiTnUWM30FMxK"
               WISE_WEBHOOK_VERIFY: "true"
-              WISE_PROFILE_ID: "72987770"
+              WISE_PROFILE_ID: "55534210"
               WISE_TARGET_RECIPIENT_ID: "828454270"
               PAPERLESS_BASE_URL: https://paperless.bo0tzz.me
               ENABLE_BANKING_REDIRECT_URI: https://bo0kkeeper.bo0tzz.me/api/banking/auth/callback
