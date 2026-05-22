@@ -1,0 +1,99 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bo0kkeeper
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: bo0kkeeper
+    namespace: paperwork
+  values:
+    controllers:
+      main:
+        replicas: 1
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/bo0tzz/bo0kkeeper
+              tag: latest
+              pullPolicy: Always
+            env:
+              TZ: Europe/Amsterdam
+              NODE_ENV: production
+              COOKIE_SECURE: "true"
+              CUTOVER_DATE: "2026-05-23"
+              OIDC_ISSUER: https://auth.bo0tzz.me/application/o/bo0kkeeper/
+              OIDC_REDIRECT_URI: https://bo0kkeeper.bo0tzz.me/api/auth/callback
+              OIDC_CLIENT_ID: "TojptaxabZ0DoBpkW1axJihsGeeiiTnUWM30FMxK"
+              WISE_WEBHOOK_VERIFY: "true"
+              WISE_PROFILE_ID: "72987770"
+              WISE_TARGET_RECIPIENT_ID: "828454270"
+              PAPERLESS_BASE_URL: https://paperless.bo0tzz.me
+              ENABLE_BANKING_REDIRECT_URI: https://bo0kkeeper.bo0tzz.me/api/banking/auth/callback
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: bo0kkeeper-app
+                    key: uri
+            envFrom:
+              - secretRef:
+                  name: bo0kkeeper-secrets
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: &port 2283
+                  initialDelaySeconds: 10
+                  periodSeconds: 30
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health/ready
+                    port: *port
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: *port
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - bo0kkeeper.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: *port
+      wise-webhook:
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        hostnames:
+          - bo0kkeeper-wise.bo0tzz.me
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /api/webhooks/wise
+            backendRefs:
+              - identifier: main
+                port: *port

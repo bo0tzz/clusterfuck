@@ -1,0 +1,36 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: paperwork-bo0kkeeper
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/paperwork/bo0kkeeper/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+    - ../../../../components/postgres
+  dependsOn:
+    - name: cnpg-barman-cloud
+      namespace: operators
+  postBuild:
+    substitute:
+      APP: bo0kkeeper
+      BUCKET: bo0kkeeper
+    substituteFrom:
+      - kind: Secret
+        name: bo0kkeeper
+  patches:
+    # Fresh deploy: keep plain initdb, strip recovery + the migration import scaffold.
+    - target:
+        group: postgresql.cnpg.io
+        kind: Cluster
+      patch: |
+        - op: remove
+          path: /spec/bootstrap/recovery
+        - op: remove
+          path: /spec/bootstrap/initdb/import
