@@ -18,8 +18,8 @@ spec:
           main:
             image:
               repository: ghcr.io/bo0tzz/bo0kkeeper
-              tag: latest
-              pullPolicy: Always
+              tag: sha-44c85e0@sha256:8190ff32943216825335d0a654273a69ffd545bb0f8892f494c9ef67f5a62fba
+              pullPolicy: IfNotPresent
             env:
               TZ: Europe/Amsterdam
               NODE_ENV: production
