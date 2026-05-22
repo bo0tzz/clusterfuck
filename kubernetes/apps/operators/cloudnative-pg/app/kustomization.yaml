@@ -5,3 +5,4 @@ namespace: operators
 resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
+  - ./grafanadashboard.yaml
