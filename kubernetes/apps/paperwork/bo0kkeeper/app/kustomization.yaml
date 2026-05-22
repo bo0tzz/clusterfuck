@@ -6,3 +6,12 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./secret.sops.yaml
+patches:
+  - target:
+      group: postgresql.cnpg.io
+      kind: Cluster
+    patch: |-
+      - op: remove
+        path: /spec/bootstrap/recovery
+      - op: remove
+        path: /spec/bootstrap/initdb/import

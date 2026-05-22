@@ -43,13 +43,3 @@ spec:
     substituteFrom:
       - kind: Secret
         name: bo0kkeeper
-  patches:
-    # Fresh deploy: keep plain initdb, strip recovery + the migration import scaffold.
-    - target:
-        group: postgresql.cnpg.io
-        kind: Cluster
-      patch: |
-        - op: remove
-          path: /spec/bootstrap/recovery
-        - op: remove
-          path: /spec/bootstrap/initdb/import
