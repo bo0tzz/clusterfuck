@@ -1,0 +1,28 @@
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: ${APP}
+spec:
+  retentionPolicy: ${PG_RETENTION:=30d}
+  configuration:
+    destinationPath: s3://${BUCKET_NAME}/cnpg
+    endpointURL: ${BUCKET_ENDPOINT}
+    s3Credentials:
+      accessKeyId:
+        name: ${BUCKET}
+        key: AWS_ACCESS_KEY_ID
+      secretAccessKey:
+        name: ${BUCKET}
+        key: AWS_SECRET_ACCESS_KEY
+    wal:
+      compression: zstd
+    data:
+      compression: zstd
+  instanceSidecarConfiguration:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        memory: 1Gi

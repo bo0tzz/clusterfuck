@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: cnpg-barman-cloud
+spec:
+  interval: 1h
+  url: oci://ghcr.io/cloudnative-pg/charts/plugin-barman-cloud
+  ref:
+    tag: 0.6.0

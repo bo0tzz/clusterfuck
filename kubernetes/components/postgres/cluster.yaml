@@ -1,0 +1,68 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: ${APP}
+  annotations:
+    cnpg.io/skipEmptyWalArchiveCheck: enabled
+spec:
+  instances: 3
+  imageName: ${PG_IMAGE:=ghcr.io/cloudnative-pg/postgresql:18.4-standard-trixie}
+  primaryUpdateStrategy: unsupervised
+  primaryUpdateMethod: switchover
+  storage:
+    size: ${PG_STORAGE:=10Gi}
+    storageClass: ${PG_STORAGECLASS:=ssd-block}
+  monitoring:
+    enablePodMonitor: true
+  bootstrap:
+    initdb:
+      database: ${APP}
+      owner: ${APP}
+      import:
+        type: microservice
+        databases:
+          - placeholder
+        source:
+          externalCluster: old-cluster
+    recovery:
+      source: backups
+      database: ${APP}
+      owner: ${APP}
+  externalClusters:
+    - name: backups
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: ${APP}
+          serverName: ${APP}
+    - name: old-cluster
+      connectionParameters:
+        host: 192.168.4.105
+        user: importer
+        dbname: postgres
+      password:
+        name: old-cluster-migrator
+        key: password
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: ${APP}
+  postgresql:
+    shared_preload_libraries:
+      - pg_stat_statements
+    synchronous:
+      method: any
+      number: 1
+      failoverQuorum: true
+      dataDurability: required
+  affinity:
+    enablePodAntiAffinity: true
+    podAntiAffinityType: required
+  resources:
+    requests:
+      cpu: ${PG_CPU_REQ:=50m}
+      memory: ${PG_MEM_REQ:=256Mi}
+    limits:
+      memory: ${PG_MEM_LIMIT:=1Gi}
