@@ -31,6 +31,11 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  healthCheckExprs:
+    - apiVersion: volsync.backube/v1alpha1
+      kind: ReplicationDestination
+      current: has(status.lastManualSync) && status.lastManualSync == 'restore-once'
+      inProgress: has(status.conditions) && status.conditions.exists(c, c.type == 'Synchronizing' && c.status == 'True')
   postBuild:
     substitute:
       APP: imagebot

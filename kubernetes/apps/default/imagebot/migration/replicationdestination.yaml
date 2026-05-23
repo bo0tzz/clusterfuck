@@ -14,5 +14,3 @@ spec:
     capacity: 1Gi
     storageClassName: ssd-block
     accessModes: ["ReadWriteOnce"]
-    moverSecurityContext:
-      runAsUser: 0
