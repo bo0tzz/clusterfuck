@@ -54,7 +54,9 @@ PVC-to-PVC cloning is a CSI feature — Ceph RBD and CephFS both support it. RBD
 
 ## Pattern A: restic restore from B2
 
-Fully chainable — `dependsOn + wait: true` does the cutover automatically.
+Fully chainable — `dependsOn + wait: true` plus `healthCheckExprs` does the cutover automatically.
+
+The `healthCheckExprs` block on the migration KS is **required**, not optional. Flux's default `wait: true` uses kstatus, which for a `ReplicationDestination` only checks the object exists — it does *not* wait for the restic restore to complete. Without the custom health check, the migration KS reports Ready as soon as the RD is applied, the app KS unblocks immediately, the main PVC clones from a still-empty source, and the app comes up with no data.
 
 `ks.yaml` shape:
 
@@ -71,6 +73,11 @@ spec:
   prune: true
   wait: true
   sourceRef: { kind: GitRepository, name: flux-system, namespace: flux-system }
+  healthCheckExprs:
+    - apiVersion: volsync.backube/v1alpha1
+      kind: ReplicationDestination
+      current: has(status.lastManualSync) && status.lastManualSync == 'restore-once'
+      inProgress: has(status.conditions) && status.conditions.exists(c, c.type == 'Synchronizing' && c.status == 'True')
   postBuild:
     substitute:
       APP: <app>
@@ -87,6 +94,8 @@ spec:
     - name: <ns>-<app>-migration
   # ... usual app substitutions
 ```
+
+The `current` expression keys on `status.lastManualSync` — volsync only sets this field once the manual-trigger sync (`restore-once`) actually completes successfully. While restic is still running the `Synchronizing` condition is True; the `inProgress` expression keeps the KS in a clean reporting state during that window.
 
 The shared restic credentials live in `cluster-secrets` as the `old-restic` Secret (keys: `RESTIC_REPOSITORY_BASE`, `RESTIC_PASSWORD`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`). Per-app migration pulls them via ExternalSecret and constructs the per-app restic env, appending `/${APP}` to the base path (matches the old cluster's per-app repo layout).
 
@@ -137,7 +146,31 @@ spec:
     accessModes: ["ReadWriteOnce"]
 ```
 
-Restore completes → RD reports Ready=True → migration KS goes Ready → app KS unblocks → main PVC clones from temp PVC → app comes up populated. End-to-end automated.
+Restore completes → `lastManualSync` is set on the RD → `current` expression evaluates true → migration KS goes Ready → app KS unblocks → main PVC clones from temp PVC → app comes up populated. End-to-end automated *with* the health check; without it the chain races and the app gets an empty PVC (see above).
+
+### Source ownership mismatch (lchown failures)
+
+The volsync restic mover container drops all Linux capabilities by default. If the source-side restic snapshot recorded ownership the mover can't reproduce (e.g. files owned by `root` because the old-cluster app ran as uid 0), the restore will print
+
+```
+ignoring error for /some/path: lchown ...: operation not permitted
+…
+Fatal: There were 1 errors
+```
+
+and the RD stays `Synchronizing` forever — `lastManualSync` never gets set, the migration KS never goes Ready.
+
+The clean escape hatch is an opt-in namespace annotation that volsync ships specifically for this:
+
+```
+kubectl annotate ns <ns> volsync.backube/privileged-movers=true
+```
+
+When that's present, the controller adds `CHOWN`, `FOWNER`, `DAC_OVERRIDE` to the mover container's capabilities and runs it as uid 0 — lchown succeeds, restore completes.
+
+Treat this as **a one-shot manual step, not part of the committed pattern**: it's only needed to escape the *first* restore. The volsync component's PVC mounts the app pod with `fsGroup: 568` + `fsGroupChangePolicy: OnRootMismatch`, so on first mount kubelet recursively chgrps the volume contents to gid 568. From that point on the data ownership matches the LSIO default the ongoing-backup mover uses, and any future kopia-from-bucket restore via the volsync component works without elevated privileges. Removing the annotation after migration is fine but not required.
+
+Apply via `kubectl`, don't bake into `namespace.yaml`. Keeps the privilege footprint visible and short-lived.
 
 ## Pattern B: rsync-TLS pre-sync
 
@@ -220,7 +253,9 @@ For most coupled stacks the data is small enough that pattern A's window is shor
 
 ## Gotchas summary
 
-- `dependsOn + wait: true` only works as a chain gate for one-shot movers (restic/kopia restore). Long-running listeners (rsync-TLS) need manual gating.
+- `dependsOn + wait: true` is **not enough** to gate on one-shot movers — the KS goes Ready as soon as the RD is applied, not when restic finishes. The Pattern A KS needs the `healthCheckExprs` block above.
+- `dependsOn + wait: true` doesn't work at all for long-running listeners (rsync-TLS) — they never report a clean "done" status. Use manual gating (suspend or commit-on-cutover).
 - `dataSourceRef` is immutable — patches that set it stay in the manifest forever.
 - PVC-to-PVC cloning requires the same StorageClass on source and destination.
 - The old cluster's RS is out-of-band — neither cluster's GitOps fully owns the migration period.
+- Source data owned by something the mover can't chown to (e.g. `root`) requires the namespace `volsync.backube/privileged-movers=true` annotation for the first restore. See above; one-shot manual application is preferred.
