@@ -22,10 +22,18 @@ spec:
             envFrom:
               - secretRef:
                   name: imagebot-token
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              runAsNonRoot: true
             resources:
               requests:
                 cpu: 20m
                 memory: 200Mi
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
     persistence:
       data:
         existingClaim: imagebot
