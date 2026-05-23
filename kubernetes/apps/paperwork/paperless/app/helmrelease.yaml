@@ -1,0 +1,111 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: paperless
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: paperless
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/paperless-ngx/paperless-ngx
+              tag: "2.20.15"
+            env:
+              PAPERLESS_URL: https://paperless.bo0tzz.me
+              PAPERLESS_TIME_ZONE: "Europe/Amsterdam"
+              PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
+              PAPERLESS_ACCOUNT_EMAIL_VERIFICATION: none
+              PAPERLESS_SOCIAL_AUTO_SIGNUP: "true"
+              PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
+              PAPERLESS_DBENGINE: postgresql
+              PAPERLESS_DBHOST:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-app
+                    key: host
+              PAPERLESS_DBNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-app
+                    key: dbname
+              PAPERLESS_DBUSER:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-app
+                    key: username
+              PAPERLESS_DBPASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-app
+                    key: password
+              PAPERLESS_CONSUMPTION_DIR: /data/incoming
+              PAPERLESS_DATA_DIR: /data/data
+              PAPERLESS_EXPORT_DIR: /data/export
+              PAPERLESS_MEDIA_ROOT: /data/media
+              PAPERLESS_OCR_LANGUAGES: nld
+              PAPERLESS_OCR_LANGUAGE: nld
+              PAPERLESS_REDIS: redis://paperless-redis:6379
+              USERMAP_UID: "568"
+              USERMAP_GID: "568"
+            envFrom:
+              - secretRef:
+                  name: paperless-secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 25m
+                memory: 2Gi
+      redis:
+        containers:
+          main:
+            image:
+              repository: docker.io/valkey/valkey
+              tag: "9.1.0"
+            resources:
+              requests:
+                cpu: 5m
+                memory: 32Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8000
+      redis:
+        controller: redis
+        ports:
+          http:
+            port: 6379
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - paperless.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 8000
+    persistence:
+      data:
+        existingClaim: paperless
+        advancedMounts:
+          main:
+            main:
+              - path: /data
