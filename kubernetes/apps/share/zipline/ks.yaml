@@ -1,0 +1,66 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: share-zipline-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/share/zipline/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: zipline
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: share-zipline-migration
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/share/zipline/migration
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  postBuild:
+    substitute:
+      APP: zipline
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: share-zipline
+spec:
+  interval: 1h
+  # Suspended until cutover. See MIGRATION.md Pattern B.
+  suspend: true
+  path: ./kubernetes/apps/share/zipline/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/postgres
+    - ../../../../components/volsync
+  dependsOn:
+    - name: share-zipline-bucket
+    - name: cnpg-barman-cloud
+      namespace: operators
+  postBuild:
+    substitute:
+      APP: zipline
+      BUCKET: zipline
+      VOLSYNC_CAPACITY: 100Gi
+    substituteFrom:
+      - kind: Secret
+        name: zipline

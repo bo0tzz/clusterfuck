@@ -172,6 +172,8 @@ Treat this as **a one-shot manual step, not part of the committed pattern**: it'
 
 Apply via `kubectl`, don't bake into `namespace.yaml`. Keeps the privilege footprint visible and short-lived.
 
+**Race caveat:** Flux's reconcile of the namespace will re-render it from `namespace.yaml` (no annotation) and can strip the manual annotation off mid-restore. Whether it sticks depends on the field-manager identity of the tool that applied it (`kubectl annotate` vs `kubectl edit` vs IDE clients like Freelens differ here). For long restores: either commit the annotation to `namespace.yaml` for the duration and remove after, or apply via a client whose field-manager Flux's SSA respects. If the annotation vanishes mid-restore, the next mover pod retries un-privileged and the lchown error returns — usually obvious in the RD events.
+
 ## Pattern B: rsync-TLS pre-sync
 
 Used when pattern A's downtime is too long. rsync-TLS isn't literally continuous — the RD is a long-lived listener (Service + key Secret), and the RS on the source cluster runs the actual rsync as discrete push jobs on a schedule. Each push is incremental (rsync delta), so pre-sync at a tight cadence keeps the temp PVC close-to-current.
@@ -211,12 +213,7 @@ spec:
     copyMethod: Snapshot
 ```
 
-`dependsOn + wait: true` doesn't work for this — the listener never reports a clean "done" status. Two options for gating the app KS:
-
-1. Ship the app KS with `spec.suspend: true`. At cutover: stop old app, manual-trigger final RS, then `suspend: false` in a commit.
-2. Don't commit the app KS until cutover. Pre-sync runs against just `migration/`; commit the app KS when ready.
-
-Option 2 is simpler.
+`dependsOn + wait: true` doesn't work for this — the listener never reports a clean "done" status. Ship the app KS with `spec.suspend: true`; at cutover, stop the old app, manual-trigger the final RS, then flip `suspend: false` in a commit. One-line diff, the whole config is visible from the first push.
 
 ### Cutover steps
 

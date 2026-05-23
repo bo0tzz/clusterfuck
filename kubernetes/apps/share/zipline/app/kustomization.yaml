@@ -1,0 +1,26 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: share
+resources:
+  - ./ocirepository.yaml
+  - ./helmrelease.yaml
+  - ./secret.sops.yaml
+patches:
+  - target:
+      group: postgresql.cnpg.io
+      kind: Cluster
+    patch: |-
+      - op: remove
+        path: /spec/bootstrap/recovery
+      - op: remove
+        path: /spec/bootstrap/initdb/import
+  - target:
+      kind: PersistentVolumeClaim
+    # dataSourceRef is immutable post-creation; patch retained because reverting it errors.
+    patch: |-
+      - op: replace
+        path: /spec/dataSourceRef
+        value:
+          kind: PersistentVolumeClaim
+          name: volsync-${APP}-migration-dest
