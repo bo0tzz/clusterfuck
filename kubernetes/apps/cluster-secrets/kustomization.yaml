@@ -8,3 +8,4 @@ resources:
   - ./eso-source/ks.yaml
   - ./kopia/ks.yaml
   - ./pg-migrator/ks.yaml
+  - ./old-restic/ks.yaml

@@ -1,0 +1,41 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: imagebot
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: imagebot
+  values:
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/bo0tzz/image_bot
+              tag: main@sha256:99ecaec9251002d2e13681e2f501feed9f7d51fc4cd82d86bd3b47fa2fced037
+            env:
+              KEY_DB_PATH: /data/keys.db
+            envFrom:
+              - secretRef:
+                  name: imagebot-token
+            resources:
+              requests:
+                cpu: 20m
+                memory: 200Mi
+    persistence:
+      data:
+        existingClaim: imagebot
+        globalMounts:
+          - path: /data
+    podMonitor:
+      main:
+        controller:
+          identifier: main
+        podMetricsEndpoints:
+          - targetPort: 4000
+            path: /metrics
+            interval: 1m
