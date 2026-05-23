@@ -5,3 +5,5 @@ metadata:
   name: backblaze
 driverName: b2.backblaze.com
 deletionPolicy: Delete
+parameters:
+  lifecycleRules: '[{"daysFromHidingToDeleting": 1}]'
