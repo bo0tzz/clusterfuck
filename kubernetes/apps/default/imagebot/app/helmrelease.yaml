@@ -17,6 +17,9 @@ spec:
             image:
               repository: ghcr.io/bo0tzz/image_bot
               tag: main@sha256:99ecaec9251002d2e13681e2f501feed9f7d51fc4cd82d86bd3b47fa2fced037
+            ports:
+              - name: metrics
+                containerPort: 4000
             env:
               KEY_DB_PATH: /data/keys.db
             envFrom:
@@ -44,6 +47,6 @@ spec:
         controller:
           identifier: main
         podMetricsEndpoints:
-          - targetPort: 4000
+          - port: metrics
             path: /metrics
             interval: 1m
