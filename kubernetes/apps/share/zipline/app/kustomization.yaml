@@ -15,12 +15,18 @@ patches:
         path: /spec/bootstrap/recovery
       - op: remove
         path: /spec/bootstrap/initdb/import
+      - op: replace
+        path: /spec/instances
+        value: 1
+      - op: remove
+        path: /spec/postgresql/synchronous
   - target:
       kind: PersistentVolumeClaim
     # dataSourceRef is immutable post-creation; patch retained because reverting it errors.
+    # Note: rsync-TLS mover names its dest PVC volsync-<RD>-dst (restic/kopia/rclone use -dest).
     patch: |-
       - op: replace
         path: /spec/dataSourceRef
         value:
           kind: PersistentVolumeClaim
-          name: volsync-${APP}-migration-dest
+          name: volsync-${APP}-migration-dst

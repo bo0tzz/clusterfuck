@@ -35,14 +35,25 @@ The `app/kustomization.yaml` patch that makes the main PVC clone from the temp P
 
 ```yaml
 patches:
-  - target: { kind: PersistentVolumeClaim, name: ${APP} }
+  - target: { kind: PersistentVolumeClaim }
     patch: |-
       - op: replace
         path: /spec/dataSourceRef
         value:
           kind: PersistentVolumeClaim
-          name: ${APP}-migration
+          name: volsync-${APP}-migration-<suffix>
 ```
+
+**Suffix depends on the mover type** — volsync names the auto-created destination PVC differently per mover:
+
+| Mover | Suffix | Use case |
+| --- | --- | --- |
+| restic, kopia, rclone | `-dest` | Pattern A (B2 restore) |
+| rsync, rsync-TLS | `-dst` | Pattern B (rsync-TLS pre-sync) |
+
+Source: `internal/controller/mover/<mover>/mover.go::getDestinationPVCName`. Wrong suffix = patch references a PVC that never exists = main PVC stays Pending indefinitely.
+
+Targeting `kind: PersistentVolumeClaim` without `name:` is intentional — `name: ${APP}` looks reasonable but kustomize 5.x treats `target.name` as a Go regex where `$` is the end-of-string anchor, so the match silently no-ops. Kind-only works because each app folder renders exactly one PVC.
 
 PVC-to-PVC cloning is a CSI feature — Ceph RBD and CephFS both support it. RBD is CoW (near-instant even at hundreds of GB). CephFS clones are full RADOS object copies — proportional to data size. Measured on this cluster at ~280 MB/s sustained throughput for a multi-hundred-GB volume, so a 400G immich library should land in the 20–45 min range (the upper end accounts for metadata cost from immich's many-small-files shape).
 
