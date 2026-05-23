@@ -15,4 +15,4 @@ patches:
         path: /spec/dataSourceRef
         value:
           kind: PersistentVolumeClaim
-          name: ${APP}-migration
+          name: volsync-${APP}-migration-dest
