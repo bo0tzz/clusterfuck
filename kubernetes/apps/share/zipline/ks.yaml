@@ -41,8 +41,6 @@ metadata:
   name: share-zipline
 spec:
   interval: 1h
-  # Suspended until cutover. See MIGRATION.md Pattern B.
-  suspend: true
   path: ./kubernetes/apps/share/zipline/app
   prune: true
   sourceRef:
