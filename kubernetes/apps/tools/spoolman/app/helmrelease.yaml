@@ -1,0 +1,73 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: spoolman
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: spoolman
+    namespace: tools
+  values:
+    controllers:
+      main:
+        strategy: RollingUpdate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/donkie/spoolman
+              tag: "0.23.1"
+            env:
+              SPOOLMAN_DB_TYPE: postgres
+              SPOOLMAN_DB_HOST:
+                valueFrom:
+                  secretKeyRef:
+                    name: spoolman-app
+                    key: host
+              SPOOLMAN_DB_NAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: spoolman-app
+                    key: dbname
+              SPOOLMAN_DB_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: spoolman-app
+                    key: username
+              SPOOLMAN_DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: spoolman-app
+                    key: password
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                cpu: 25m
+                memory: 500Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8000
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - spoolman.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 8000
