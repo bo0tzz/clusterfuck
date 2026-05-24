@@ -1,0 +1,68 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: immich-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/immich/immich/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: immich
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: immich-migration
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/immich/immich/migration
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  postBuild:
+    substitute:
+      APP: immich
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: immich
+spec:
+  interval: 1h
+  # Suspended until cutover. See MIGRATION.md Pattern B.
+  suspend: true
+  path: ./kubernetes/apps/immich/immich/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/postgres
+    - ../../../../components/volsync
+  dependsOn:
+    - name: immich-bucket
+    - name: cnpg-barman-cloud
+      namespace: operators
+  postBuild:
+    substitute:
+      APP: immich
+      BUCKET: immich
+      VOLSYNC_CAPACITY: 1Ti
+      VOLSYNC_STORAGECLASS: ssd-fs
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+    substituteFrom:
+      - kind: Secret
+        name: immich

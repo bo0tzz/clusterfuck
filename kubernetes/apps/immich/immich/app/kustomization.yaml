@@ -1,0 +1,41 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: immich
+resources:
+  - ./ocirepository.yaml
+  - ./helmrelease.yaml
+  - ./database.yaml
+patches:
+  - target:
+      group: postgresql.cnpg.io
+      kind: Cluster
+    patch: |-
+      - op: remove
+        path: /spec/bootstrap/recovery
+      - op: replace
+        path: /spec/bootstrap/initdb/import/databases
+        value: [immich]
+      - op: add
+        path: /spec/postgresql/shared_preload_libraries/-
+        value: vchord.so
+      - op: add
+        path: /spec/postgresql/extensions
+        value:
+          - name: vchord
+            image:
+              reference: ghcr.io/tensorchord/vchord-scratch:pg18-v1.1.1
+            dynamic_library_path:
+              - /usr/lib/postgresql/18/lib
+            extension_control_path:
+              - /usr/share/postgresql/18/
+  - target:
+      kind: PersistentVolumeClaim
+    # dataSourceRef is immutable post-creation; patch retained because reverting it errors.
+    # rsync-TLS mover uses -dst suffix (restic/kopia/rclone use -dest).
+    patch: |-
+      - op: replace
+        path: /spec/dataSourceRef
+        value:
+          kind: PersistentVolumeClaim
+          name: volsync-${APP}-migration-dst
