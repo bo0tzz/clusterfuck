@@ -205,7 +205,7 @@ spec:
     accessModes: ["ReadWriteOnce"]
 ```
 
-The RD generates a TLS key Secret (named `${APP}-migration-key` by default) on first apply. Grab its contents and hand-apply on the old cluster via `kubectl`.
+The RD generates a TLS key Secret (named `volsync-rsync-tls-${APP}-migration` by default) on first apply. Grab its contents and hand-apply on the old cluster via `kubectl`.
 
 On the **old cluster** (out-of-band — one-shot kubectl apply):
 
@@ -219,7 +219,7 @@ spec:
   trigger:
     schedule: "*/15 * * * *"  # how often you want a delta push
   rsyncTLS:
-    keySecret: <app>-migration-key
+    keySecret: volsync-rsync-tls-<app>-migration
     address: <new-cluster-LB-ip>
     copyMethod: Snapshot
 ```

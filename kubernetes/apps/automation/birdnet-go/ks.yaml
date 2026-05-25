@@ -43,7 +43,6 @@ spec:
   interval: 1h
   path: ./kubernetes/apps/automation/birdnet-go/app
   prune: true
-  suspend: true
   sourceRef:
     kind: GitRepository
     name: flux-system
