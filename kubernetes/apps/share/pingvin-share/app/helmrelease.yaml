@@ -1,0 +1,92 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pingvin-share
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: pingvin-share
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      main:
+        strategy: Recreate
+        initContainers:
+          configure:
+            image:
+              repository: ghcr.io/dmfrey/bash
+              tag: 5.2.26-alpine3.20
+            command:
+              - "/usr/local/bin/bash"
+              - -c
+              - envsubst < /config-template/config.yaml > /config/config.yaml
+            env:
+              - name: PINGVIN_OIDC_CLIENT_ID
+                valueFrom:
+                  secretKeyRef:
+                    name: pingvin-share-oidc
+                    key: OIDC_CLIENT_ID
+              - name: PINGVIN_OIDC_CLIENT_SECRET
+                valueFrom:
+                  secretKeyRef:
+                    name: pingvin-share-oidc
+                    key: OIDC_CLIENT_SECRET
+        containers:
+          main:
+            image:
+              repository: ghcr.io/stonith404/pingvin-share
+              tag: v1.13.0
+            env:
+              TZ: Europe/Amsterdam
+              TRUST_PROXY: "true"
+              DATA_DIRECTORY: /data
+              CONFIG_FILE: /config/config.yaml
+              DATABASE_URL: file:/data/pingvin-share.db?connection_limit=1
+              PV_LOG_LEVEL: verbose
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 3000
+    persistence:
+      data:
+        existingClaim: pingvin-share
+        advancedMounts:
+          main:
+            main:
+              - path: /data
+      config:
+        type: emptyDir
+        advancedMounts:
+          main:
+            main:
+              - path: /config
+            configure:
+              - path: /config
+      config-template:
+        type: configMap
+        name: pingvin-share-config
+        advancedMounts:
+          main:
+            configure:
+              - path: /config-template
+    route:
+      main:
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        hostnames:
+          - share.zijlein.de
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 3000

@@ -9,3 +9,4 @@ components:
 resources:
   - namespace.yaml
   - ./zipline/ks.yaml
+  - ./pingvin-share/ks.yaml
