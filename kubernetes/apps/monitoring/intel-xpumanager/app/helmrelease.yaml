@@ -20,12 +20,14 @@ spec:
       namespace: monitoring
   postRenderers:
     # Chart 2.0.0-rc.0 has `appVersion: xpumd/v2.0.0-rc.0` (slash is invalid in label values),
-    # which it stamps into `app.kubernetes.io/version` on every resource. Overwrite it.
+    # which it stamps into `app.kubernetes.io/version` on the 4 resources that carry the
+    # full label set. ResourceClaimTemplate/ServiceMonitor don't carry that label.
     - kustomize:
         patches:
           - target:
-              name: ^(xpumd|xpumd-config)$
+              kind: ^(ServiceAccount|ConfigMap|Service|DaemonSet)$
+              name: ^xpumd(-config)?$
             patch: |
-              - op: add
+              - op: replace
                 path: /metadata/labels/app.kubernetes.io~1version
                 value: 2.0.0-rc.0
