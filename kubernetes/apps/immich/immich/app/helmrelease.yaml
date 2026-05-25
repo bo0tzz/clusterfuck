@@ -91,6 +91,8 @@ spec:
           strategy: Recreate
           containers:
             main:
+              env:
+                GUNICORN_CMD_ARGS: "--no-control-socket"
               resources:
                 requests:
                   cpu: 500m
