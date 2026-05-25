@@ -14,5 +14,11 @@ spec:
               # Never claim a parent PF — always leave it to its VFs.
               - cel:
                   expression: device.attributes["gpu.intel.com"].sriov == false
+              # Default `1==1` is a CEL always-true expression. A naive default
+              # of `true` doesn't survive kustomize: the YAML serializer drops
+              # the single quotes, Flux substitute replaces `${GPU_CEL:=true}`
+              # with bare `true`, and the k8s API rejects it because
+              # cel.expression is typed string (got bool). `1==1` is a plain
+              # YAML scalar that CEL evaluates to true.
               - cel:
-                  expression: '${GPU_CEL:=true}'
+                  expression: ${GPU_CEL:=1==1}
