@@ -21,23 +21,6 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: automation-birdnet-go-migration
-spec:
-  interval: 1h
-  path: ./kubernetes/apps/automation/birdnet-go/migration
-  prune: true
-  wait: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  postBuild:
-    substitute:
-      APP: birdnet-go
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: automation-birdnet-go
 spec:
   interval: 1h
