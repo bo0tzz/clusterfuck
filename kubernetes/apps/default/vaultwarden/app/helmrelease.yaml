@@ -1,0 +1,59 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vaultwarden
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: vaultwarden
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: vaultwarden/server
+              tag: 1.36.0-alpine
+            env:
+              SIGNUPS_ALLOWED: "false"
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: vaultwarden-app
+                    key: uri
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 80
+    persistence:
+      config:
+        existingClaim: vaultwarden
+        globalMounts:
+          - path: /config
+    route:
+      main:
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        hostnames:
+          - pass.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 80

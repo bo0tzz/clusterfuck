@@ -11,3 +11,4 @@ resources:
   - homepage/ks.yaml
   - imagebot/ks.yaml
   - miniflux/ks.yaml
+  - vaultwarden/ks.yaml
