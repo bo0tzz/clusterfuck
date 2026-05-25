@@ -65,11 +65,17 @@ spec:
               tag: "v2.7.5"
 
     server:
+      defaultPodOptions:
+        resourceClaims:
+          - name: gpu
+            resourceClaimTemplateName: immich-gpu
       controllers:
         main:
           containers:
             main:
               resources:
+                claims:
+                  - name: gpu
                 requests:
                   cpu: 1500m
                   memory: 2048M

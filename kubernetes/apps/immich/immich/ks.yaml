@@ -50,6 +50,7 @@ spec:
   components:
     - ../../../../components/postgres
     - ../../../../components/volsync
+    - ../../../../components/gpu
   dependsOn:
     - name: immich-bucket
     - name: cnpg-barman-cloud
