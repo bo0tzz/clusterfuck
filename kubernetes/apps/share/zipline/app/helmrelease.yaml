@@ -56,8 +56,6 @@ spec:
             port: 3000
     route:
       main:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: bo0tzz.me
         parentRefs:
           - name: envoy-external
             namespace: network
