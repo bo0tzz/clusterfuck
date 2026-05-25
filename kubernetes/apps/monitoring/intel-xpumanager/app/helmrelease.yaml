@@ -13,6 +13,17 @@ spec:
       tag: v2.0.0-rc.0
       pullPolicy: IfNotPresent
     gpuAccess: dra
+    # Scoped to tiny only:
+    # - janky: xpumd v2 L0 sysman fails (ReBAR off, BIOS-side; tracking)
+    # - wonky: no Intel GPU; chart's ResourceClaimTemplate (allocationMode: All) can't allocate -> Pending forever
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values: [tiny]
     prometheus:
       monitor: true
     grafana:
