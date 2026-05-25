@@ -1,0 +1,64 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: miniflux
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: miniflux
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+    controllers:
+      main:
+        strategy: RollingUpdate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/miniflux/miniflux
+              tag: "2.3.0"
+            env:
+              BASE_URL: https://feed.bo0tzz.me
+              POLLING_PARSING_ERROR_LIMIT: "0"
+              POLLING_SCHEDULER: entry_frequency
+              RUN_MIGRATIONS: "1"
+              CREATE_ADMIN: "1"
+              ADMIN_USERNAME: boet
+              OAUTH2_PROVIDER: oidc
+              OAUTH2_REDIRECT_URL: https://feed.bo0tzz.me/oauth2/oidc/callback
+              OAUTH2_OIDC_DISCOVERY_ENDPOINT: https://auth.bo0tzz.me/application/o/miniflux/
+              OAUTH2_USER_CREATION: "1"
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: miniflux-app
+                    key: uri
+            envFrom:
+              - secretRef:
+                  name: miniflux-secret
+            resources:
+              requests:
+                cpu: 200m
+                memory: 150Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8080
+    route:
+      main:
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        hostnames:
+          - feed.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 8080

@@ -10,3 +10,4 @@ resources:
   - libreddit/ks.yaml
   - homepage/ks.yaml
   - imagebot/ks.yaml
+  - miniflux/ks.yaml
