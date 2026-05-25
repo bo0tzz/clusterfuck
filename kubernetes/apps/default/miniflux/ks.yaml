@@ -40,3 +40,6 @@ spec:
     substitute:
       APP: miniflux
       BUCKET: miniflux
+    substituteFrom:
+      - kind: Secret
+        name: miniflux
