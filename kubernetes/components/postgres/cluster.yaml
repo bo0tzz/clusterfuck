@@ -50,6 +50,8 @@ spec:
       parameters:
         barmanObjectName: ${APP}
   postgresql:
+    parameters:
+      archive_timeout: 5min
     shared_preload_libraries:
       - pg_stat_statements
     synchronous:
