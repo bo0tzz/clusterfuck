@@ -1,0 +1,56 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich-kiosk
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: immich-kiosk
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/damongolding/immich-kiosk
+              tag: "0.38.1"
+            envFrom:
+              - secretRef:
+                  name: kiosk-secret
+            env:
+              TZ: Europe/Amsterdam
+              LANG: nl_NL
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 3000
+    persistence:
+      config:
+        type: configMap
+        name: kiosk-config
+        globalMounts:
+          - path: /config/config.yaml
+            subPath: config.yaml
+            readOnly: true
+    route:
+      main:
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        hostnames:
+          - immich-kiosk.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 3000

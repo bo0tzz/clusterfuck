@@ -9,3 +9,4 @@ components:
 resources:
   - namespace.yaml
   - ./immich/ks.yaml
+  - ./kiosk/ks.yaml
