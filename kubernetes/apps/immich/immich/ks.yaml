@@ -61,6 +61,7 @@ spec:
       VOLSYNC_CAPACITY: 1Ti
       VOLSYNC_STORAGECLASS: ssd-fs
       VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_COPY_METHOD: Direct
     substituteFrom:
       - kind: Secret
         name: immich

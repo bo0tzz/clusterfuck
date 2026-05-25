@@ -13,6 +13,7 @@ Per-app kopia backup of a PVC to the app's bucket. Ships a `ReplicationSource` (
 | `VOLSYNC_ACCESSMODES` | no | `ReadWriteOnce` |
 | `VOLSYNC_SCHEDULE` | no | `0 3 * * *` |
 | `VOLSYNC_CACHE_CAPACITY` | no | `2Gi` |
+| `VOLSYNC_COPY_METHOD` | no | `Snapshot` |
 | `VOLSYNC_PUID` / `VOLSYNC_PGID` | no | `568` (LSIO default) |
 
 ## Dependencies
@@ -38,3 +39,4 @@ To force a fresh restore: delete the PVC + RD, then let Flux re-create.
 - `retain: hourly: 24, daily: 7` — local retention only, not lifecycle on the bucket side.
 - The RD uses `cleanupTempPVC: true` + `enableFileDeletion: true`. The temp PVC is just for the restore mover; the cache PVC for the RS stays around (warm cache between runs).
 - Per-PVC backup, not per-app. An app with multiple PVCs needs the component included multiple times with distinct `APP` substitutions (or different naming) — there's no built-in multi-PVC handling.
+- `VOLSYNC_COPY_METHOD` controls how the RS prepares the source for kopia. Default `Snapshot` takes a CSI VolumeSnapshot of the source PVC and provisions a temp PVC from it — on RBD this is CoW and near-instant, but on **CephFS the snapshot-to-PVC step is a full RADOS object copy**, which makes every scheduled run take as long as the original restore. For large RWX CephFS volumes (immich-scale photo libraries) use `Direct`: the mover mounts the live source PVC directly. Kopia handles concurrent writes at file granularity, so brief inconsistency on in-flight files is benign — they get caught next run.

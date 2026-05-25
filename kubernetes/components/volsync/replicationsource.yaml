@@ -10,7 +10,7 @@ spec:
   kopia:
     repository: ${APP}-kopia-config
     compression: zstd-fastest
-    copyMethod: Snapshot
+    copyMethod: ${VOLSYNC_COPY_METHOD:=Snapshot}
     cacheCapacity: ${VOLSYNC_CACHE_CAPACITY:=2Gi}
     cacheStorageClassName: ${VOLSYNC_STORAGECLASS:=ssd-block}
     storageClassName: ${VOLSYNC_STORAGECLASS:=ssd-block}
