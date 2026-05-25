@@ -1,0 +1,29 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: social
+resources:
+  - ocirepository.yaml
+  - helmrelease.yaml
+  - oidc-secret.sops.yaml
+  - cors-policy.yaml
+patches:
+  - target:
+      group: postgresql.cnpg.io
+      kind: Cluster
+    patch: |-
+      - op: remove
+        path: /spec/bootstrap/recovery
+      - op: replace
+        path: /spec/bootstrap/initdb/import/databases
+        value: [gotosocial]
+  - target:
+      kind: PersistentVolumeClaim
+    # dataSourceRef is immutable post-creation; patch retained because reverting it errors.
+    # rsync-TLS mover uses -dst suffix (restic/kopia/rclone use -dest).
+    patch: |-
+      - op: replace
+        path: /spec/dataSourceRef
+        value:
+          kind: PersistentVolumeClaim
+          name: volsync-${APP}-migration-dst

@@ -1,0 +1,65 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: social-gotosocial-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/social/gotosocial/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: gotosocial
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: social-gotosocial-migration
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/social/gotosocial/migration
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  postBuild:
+    substitute:
+      APP: gotosocial
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: social-gotosocial
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/social/gotosocial/app
+  prune: true
+  suspend: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/postgres
+    - ../../../../components/volsync
+  dependsOn:
+    - name: social-gotosocial-bucket
+    - name: cnpg-barman-cloud
+      namespace: operators
+  postBuild:
+    substitute:
+      APP: gotosocial
+      BUCKET: gotosocial
+      VOLSYNC_CAPACITY: 100Gi
+    substituteFrom:
+      - kind: Secret
+        name: gotosocial
