@@ -1,0 +1,73 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: locplace
+spec:
+  interval: 1h
+  suspend: true
+  chartRef:
+    kind: OCIRepository
+    name: locplace
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/locplace/server
+              tag: "0.3.6"
+            env:
+              MAX_PENDING_BATCHES: "1000"
+              DB_MAX_CONNS: "50"
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: locplace-app
+                    key: uri
+              ADMIN_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: locplace-admin-key
+                    key: key
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: metrics
+                containerPort: 9090
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 80
+            targetPort: 8080
+          metrics:
+            port: 9090
+            targetPort: 9090
+    route:
+      main:
+        annotations:
+          external-dns.alpha.kubernetes.io/exclude: "true"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        hostnames:
+          - loc.place
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 80
+    podMonitor:
+      main:
+        serviceName: locplace
+        endpoints:
+          - port: metrics
+            interval: 30s
+            path: /metrics

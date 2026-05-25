@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: locplace-admin-key
+stringData:
+  key: ENC[AES256_GCM,data:X8i7vtzPXJoBD+sVctMDNCSNZiZAXXstEktSmYRzkZ/myxdHFvit6o85bm+SB2Rs0RDmgQsyzPLF36Mb19M=,iv:orKp+bo+4fBIpxfD2ONIAOh7Ixa3G44eY6kekFBrXqE=,tag:4thx1NNbO9SaQhu7SH62cg==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBmYTdQdW9mWFFCUXArWUxq
+        Nk5CMnF3dUkzbXpKR1RVT0IrVFhCVkt1TkU4CjMwemxseVR0VnZKck5zQ2w1Wm4v
+        U2dOenNFNk1XZGpuRFFkRTBsSGlwcDAKLS0tIHg0czBtUm01UWVCSzVqQmZCYTcz
+        TzBJMDZ5Y24vNStWMjNUUC8zUlhndG8Kz66DnTjqL2UIFGRT49yzedNJh/z6aJjV
+        z9alwFbQrbE3OGl8KK2DeiUAbjFzFTb/SRjbdVT6SYM0QIig5C9wRw==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1mqj2kqedv27ec0qe9wtwucv4qtgrlyjcj8u0pznmffmzxswsscus3q4tfj
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-05-25T18:55:04Z"
+  mac: ENC[AES256_GCM,data:Q9FcTkg3j2FlP1v7WwmUfYMbl445xXR2UA26Z0/ggZxfJdQ4QQiLV6KESdIqrB7mfROnW5hhONitYMGajbqW7OQNIwLeCrs8PxZ+HiLTPTkMNzzHCfciu6urBN2Q7nqWXiI5J4r27NsqwaO3FTRX78gVqDSP1ciGtE5j+Pcicus=,iv:S7W3fz91GWXPb1dWoeqsJHtSlNM0llA/35r/UDBDrNQ=,tag:ef6SkgWG44xg3vnmPBoN2g==,type:str]
+  mac_only_encrypted: true
+  version: 3.13.0

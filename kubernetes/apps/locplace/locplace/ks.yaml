@@ -1,0 +1,46 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: locplace-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/locplace/locplace/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: locplace
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: locplace
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/locplace/locplace/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/postgres
+  dependsOn:
+    - name: locplace-bucket
+    - name: cnpg-barman-cloud
+      namespace: operators
+  postBuild:
+    substitute:
+      APP: locplace
+      BUCKET: locplace
+      PG_STORAGE: 4Gi
+    substituteFrom:
+      - kind: Secret
+        name: locplace
