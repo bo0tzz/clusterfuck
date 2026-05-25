@@ -3,6 +3,8 @@ apiVersion: resource.k8s.io/v1
 kind: ResourceClaimTemplate
 metadata:
   name: ${APP}-gpu
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: enabled
 spec:
   spec:
     devices:
