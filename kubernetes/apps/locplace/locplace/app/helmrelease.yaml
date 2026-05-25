@@ -5,7 +5,6 @@ metadata:
   name: locplace
 spec:
   interval: 1h
-  suspend: true
   chartRef:
     kind: OCIRepository
     name: locplace
