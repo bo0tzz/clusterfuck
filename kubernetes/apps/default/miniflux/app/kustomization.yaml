@@ -13,3 +13,8 @@ patches:
     patch: |-
       - op: remove
         path: /spec/bootstrap/initdb
+      - op: replace
+        path: /spec/instances
+        value: 1
+      - op: remove
+        path: /spec/postgresql/synchronous

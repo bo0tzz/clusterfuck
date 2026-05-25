@@ -15,3 +15,8 @@ patches:
         path: /spec/bootstrap/recovery
       - op: remove
         path: /spec/bootstrap/initdb/import
+      - op: replace
+        path: /spec/instances
+        value: 1
+      - op: remove
+        path: /spec/postgresql/synchronous
