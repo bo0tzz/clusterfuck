@@ -26,6 +26,6 @@ spec:
           - target:
               name: ^(xpumd|xpumd-config)$
             patch: |
-              - op: replace
+              - op: add
                 path: /metadata/labels/app.kubernetes.io~1version
                 value: 2.0.0-rc.0
