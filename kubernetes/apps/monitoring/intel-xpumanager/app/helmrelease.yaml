@@ -18,3 +18,14 @@ spec:
     grafana:
       dashboards: true
       namespace: monitoring
+  postRenderers:
+    # Chart 2.0.0-rc.0 has `appVersion: xpumd/v2.0.0-rc.0` (slash is invalid in label values),
+    # which it stamps into `app.kubernetes.io/version` on every resource. Overwrite it.
+    - kustomize:
+        patches:
+          - target:
+              name: ^(xpumd|xpumd-config)$
+            patch: |
+              - op: replace
+                path: /metadata/labels/app.kubernetes.io~1version
+                value: 2.0.0-rc.0
