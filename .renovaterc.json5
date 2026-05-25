@@ -29,6 +29,12 @@
   },
   packageRules: [
     {
+      description: "phanpy uses YYYY.MM.DD.<sha> tag scheme",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["ghcr.io/jjgadgets/phanpy"],
+      versioning: "regex:^(?<major>\\d{4})\\.(?<minor>\\d{2})\\.(?<patch>\\d{2})\\.(?<build>[a-f0-9]+)$",
+    },
+    {
       description: "Override Helmfile Dependency Name",
       matchDatasources: ["docker"],
       matchManagers: ["helmfile"],
