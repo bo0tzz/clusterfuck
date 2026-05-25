@@ -1,0 +1,53 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: birdnet-go
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: birdnet-go
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/tphakala/birdnet-go
+              tag: nightly-20260524@sha256:45259f34f1d92170132eccb6e897af155e158366fc55f37bbb2188d083e7566e
+            env:
+              TZ: Europe/Amsterdam
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8080
+    persistence:
+      data:
+        existingClaim: birdnet-go
+        globalMounts:
+          - path: /config
+            subPath: config
+          - path: /data
+            subPath: data
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - birds.zijlein.de
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 8080
