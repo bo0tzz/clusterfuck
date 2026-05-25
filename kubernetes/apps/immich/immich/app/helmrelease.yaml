@@ -19,10 +19,23 @@ spec:
         library:
           existingClaim: immich
 
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+
     controllers:
       main:
         containers:
           main:
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - NET_RAW
             env:
               MACHINE_LEARNING_PRELOAD__CLIP__TEXTUAL: "ViT-H-14-378-quickgelu__dfn5b"
               DB_HOSTNAME:
