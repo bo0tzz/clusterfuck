@@ -12,9 +12,7 @@ patches:
       kind: Cluster
     patch: |-
       - op: remove
-        path: /spec/bootstrap/recovery
-      - op: remove
-        path: /spec/bootstrap/initdb/import
+        path: /spec/bootstrap/initdb
       - op: replace
         path: /spec/instances
         value: 1
