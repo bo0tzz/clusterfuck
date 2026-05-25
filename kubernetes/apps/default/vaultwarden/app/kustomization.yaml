@@ -11,10 +11,7 @@ patches:
       kind: Cluster
     patch: |-
       - op: remove
-        path: /spec/bootstrap/recovery
-      - op: replace
-        path: /spec/bootstrap/initdb/import/databases
-        value: [vaultwarden]
+        path: /spec/bootstrap/initdb
   - target:
       kind: PersistentVolumeClaim
     # dataSourceRef is immutable post-creation; patch retained because reverting it errors.
