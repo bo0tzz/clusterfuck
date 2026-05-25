@@ -26,6 +26,15 @@ spec:
                   values: [tiny]
     prometheus:
       monitor: true
+    # Chart 2.0.0-rc.0 configures the `prometheus` exporter but does not include it in any
+    # pipeline, so nothing actually listens on :8080. Add it to the metrics pipeline.
+    config:
+      service:
+        pipelines:
+          metrics:
+            receivers: [intelxpu]
+            processors: [intelxpustatus]
+            exporters: [intelxpuinfo, prometheus]
     grafana:
       dashboards: true
       namespace: monitoring
