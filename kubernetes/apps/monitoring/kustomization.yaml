@@ -10,3 +10,4 @@ resources:
   - ./vmetrics/ks.yaml
   - ./victoria-logs/ks.yaml
   - ./metrics-server/ks.yaml
+  - ./intel-xpumanager/ks.yaml

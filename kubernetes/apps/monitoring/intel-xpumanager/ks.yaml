@@ -1,0 +1,19 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: intel-xpumanager
+spec:
+  dependsOn:
+    - name: prometheus-operator-crds
+    - name: grafana-instance
+    - name: intel-gpu-resource-driver
+      namespace: kube-system
+  interval: 1h
+  path: ./kubernetes/apps/monitoring/intel-xpumanager/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: true
