@@ -92,14 +92,22 @@ spec:
                   port: 2283
 
     machine-learning:
+      defaultPodOptions:
+        resourceClaims:
+          - name: gpu
+            resourceClaimTemplateName: immich-ml-gpu
       controllers:
         main:
           strategy: Recreate
           containers:
             main:
+              image:
+                tag: v2.7.5-openvino
               env:
                 GUNICORN_CMD_ARGS: "--no-control-socket"
               resources:
+                claims:
+                  - name: gpu
                 requests:
                   cpu: 500m
                   memory: 4096M
