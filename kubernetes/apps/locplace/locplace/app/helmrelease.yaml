@@ -65,8 +65,9 @@ spec:
                 port: 80
     podMonitor:
       main:
-        serviceName: locplace
-        endpoints:
+        controller:
+          identifier: main
+        podMetricsEndpoints:
           - port: metrics
             interval: 30s
             path: /metrics
