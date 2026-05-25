@@ -41,8 +41,6 @@ metadata:
   name: immich
 spec:
   interval: 1h
-  # Suspended until cutover. See MIGRATION.md Pattern B.
-  suspend: true
   path: ./kubernetes/apps/immich/immich/app
   prune: true
   sourceRef:
