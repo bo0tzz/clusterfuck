@@ -46,6 +46,7 @@ spec:
       VOLSYNC_STORAGECLASS: ssd-fs
       VOLSYNC_ACCESSMODES: ReadWriteMany
       VOLSYNC_COPY_METHOD: Direct
+      GPU_CEL: 'device.attributes["gpu.intel.com"].pciId == "0x46a6"'
     substituteFrom:
       - kind: Secret
         name: immich
