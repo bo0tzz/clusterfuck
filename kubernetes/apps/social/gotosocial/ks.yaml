@@ -43,7 +43,6 @@ spec:
   interval: 1h
   path: ./kubernetes/apps/social/gotosocial/app
   prune: true
-  suspend: true
   sourceRef:
     kind: GitRepository
     name: flux-system
