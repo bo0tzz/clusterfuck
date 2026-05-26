@@ -10,3 +10,4 @@ resources:
   - namespace.yaml
   - ./frigate/ks.yaml
   - ./birdnet-go/ks.yaml
+  - ./pgmqtt/ks.yaml

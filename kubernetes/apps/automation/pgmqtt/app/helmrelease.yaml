@@ -1,0 +1,22 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pgmqtt
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: pgmqtt
+  values:
+    replicaCount: 3
+    database:
+      existingSecret: pgmqtt-app
+      existingSecretKey: uri
+    listeners:
+      ws:
+        enabled: false
+    serviceMonitor:
+      enabled: true
+    logging:
+      format: json

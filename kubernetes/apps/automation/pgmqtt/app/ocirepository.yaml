@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: pgmqtt
+spec:
+  interval: 1h
+  url: oci://ghcr.io/bo0tzz/charts/pgmqtt
+  ref:
+    tag: "0.1.1"
