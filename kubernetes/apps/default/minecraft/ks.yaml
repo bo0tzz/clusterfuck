@@ -1,0 +1,59 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: default-minecraft-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/default/minecraft/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: minecraft
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: default-minecraft-migration
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/default/minecraft/migration
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  postBuild:
+    substitute:
+      APP: minecraft
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: default-minecraft
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/default/minecraft/app
+  prune: true
+  suspend: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/volsync
+  dependsOn:
+    - name: default-minecraft-bucket
+  postBuild:
+    substitute:
+      APP: minecraft
+      BUCKET: minecraft
+      VOLSYNC_CAPACITY: 20Gi
