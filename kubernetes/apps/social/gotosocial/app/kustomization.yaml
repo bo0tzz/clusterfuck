@@ -6,7 +6,6 @@ resources:
   - ocirepository.yaml
   - helmrelease.yaml
   - oidc-secret.sops.yaml
-  - cors-policy.yaml
 patches:
   - target:
       group: postgresql.cnpg.io
