@@ -59,6 +59,7 @@ spec:
       APP: gotosocial
       BUCKET: gotosocial
       VOLSYNC_CAPACITY: 100Gi
+      PG_STORAGE: 50Gi
     substituteFrom:
       - kind: Secret
         name: gotosocial
