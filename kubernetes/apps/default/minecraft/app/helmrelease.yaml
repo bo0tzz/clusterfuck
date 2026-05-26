@@ -13,6 +13,12 @@ spec:
         kind: HelmRepository
         name: itzg-minecraft
   values:
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      runAsNonRoot: true
+      fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
     image:
       pullPolicy: Always
     resources:
