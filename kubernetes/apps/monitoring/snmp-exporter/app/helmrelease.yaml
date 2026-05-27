@@ -20,7 +20,7 @@ spec:
       enabled: true
       interval: 30s
       scrapeTimeout: 10s
-      targets:
+      params:
         - name: apc-ups
           target: 10.0.0.3
           module: [apcups]
