@@ -9,8 +9,30 @@ patches:
   - target:
       group: postgresql.cnpg.io
       kind: Cluster
+    # pgmqtt state is reconstructable from client reconnects; backups + WAL
+    # archiving aren't worth the B2 bandwidth.
     patch: |-
       - op: remove
         path: /spec/bootstrap/recovery
       - op: remove
         path: /spec/bootstrap/initdb/import
+      - op: remove
+        path: /spec/plugins
+  - patch: |-
+      $patch: delete
+      apiVersion: postgresql.cnpg.io/v1
+      kind: ScheduledBackup
+      metadata:
+        name: pgmqtt
+  - patch: |-
+      $patch: delete
+      apiVersion: postgresql.cnpg.io/v1
+      kind: Backup
+      metadata:
+        name: pgmqtt-init
+  - patch: |-
+      $patch: delete
+      apiVersion: barmancloud.cnpg.io/v1
+      kind: ObjectStore
+      metadata:
+        name: pgmqtt
