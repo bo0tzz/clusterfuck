@@ -13,4 +13,5 @@ resources:
   - ./pgmqtt/ks.yaml
   - ./home-assistant/ks.yaml
   - ./zigbee2mqtt/ks.yaml
+  - ./zigbee2mqtt-exporter/ks.yaml
   - ./esphome/ks.yaml
