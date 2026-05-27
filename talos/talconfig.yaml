@@ -174,7 +174,7 @@ nodes:
         machine:
           udev:
             rules:
-              - 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{device}=="0x46a6", ATTR{sriov_numvfs}="3"'
+              - 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{device}=="0x46a6", ATTR{sriov_numvfs}="4"'
       - |-
         apiVersion: v1alpha1
         kind: LinkAliasConfig
