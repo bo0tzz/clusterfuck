@@ -12,3 +12,6 @@ spec:
     fullnameOverride: smartctl-exporter
     serviceMonitor:
       enabled: true
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_endpoint_node_name]
+          targetLabel: nodename

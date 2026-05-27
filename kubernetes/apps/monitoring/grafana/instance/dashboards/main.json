@@ -482,8 +482,8 @@
     },
     {
       "id": 8,
-      "type": "stat",
-      "title": "Highest PVC usage",
+      "type": "table",
+      "title": "PVCs filling within 7 days",
       "gridPos": {
         "x": 18,
         "y": 4,
@@ -500,52 +500,50 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "max(100 * kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes)",
+          "expr": "predict_linear(kubelet_volume_stats_available_bytes[6h], 7*24*3600) <= 0",
           "refId": "A",
-          "legendFormat": ""
+          "format": "table",
+          "instant": true
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "percent",
-          "mappings": [],
+          "custom": {
+            "align": "auto"
+          },
+          "color": {
+            "mode": "thresholds"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "text",
                 "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
               }
             ]
-          },
-          "color": {
-            "mode": "thresholds"
           }
         },
         "overrides": []
       },
       "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "value",
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto"
-      }
+        "showHeader": true
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "namespace": 0,
+              "persistentvolumeclaim": 1
+            },
+            "includeByName": {
+              "namespace": true,
+              "persistentvolumeclaim": true
+            }
+          }
+        }
+      ]
     },
     {
       "id": 9,
@@ -742,9 +740,9 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "node_hwmon_temp_celsius{chip=\"platform_coretemp_0\"}",
+          "expr": "(node_hwmon_temp_celsius * on(instance,chip,sensor) group_left() node_hwmon_sensor_label{label=~\"Package id 0|Tctl\"}) * on(instance) group_left(nodename) node_uname_info",
           "refId": "A",
-          "legendFormat": "{{instance}} {{sensor}}"
+          "legendFormat": "{{nodename}}"
         }
       ],
       "fieldConfig": {
@@ -795,7 +793,7 @@
           },
           "expr": "smartctl_device_temperature{temperature_type=\"current\"}",
           "refId": "A",
-          "legendFormat": "{{node_name}} {{device}}"
+          "legendFormat": "{{nodename}} {{device}}"
         }
       ],
       "fieldConfig": {
