@@ -8,7 +8,6 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: grafana
-  folderRef: manual
   resyncPeriod: 30s
   configMapRef:
     name: grafana-dashboards
