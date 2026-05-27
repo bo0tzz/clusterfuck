@@ -61,6 +61,20 @@ spec:
       enabled: false
       forceDeployDatasource: true
 
+    kubeEtcd:
+      endpoints:
+        - 10.0.10.12
+        - 10.0.10.13
+        - 10.0.10.14
+      service:
+        port: 2381
+        targetPort: 2381
+      vmScrape:
+        spec:
+          endpoints:
+            - port: http-metrics
+              scheme: http
+
     defaultDashboards:
       grafanaOperator:
         enabled: true
