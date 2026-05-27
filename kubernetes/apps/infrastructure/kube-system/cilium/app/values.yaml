@@ -60,5 +60,12 @@ cni:
 operator:
   replicas: 2
   rollOutPods: true
+  dashboards:
+    enabled: true
 
 rollOutCiliumPods: true
+
+prometheus:
+  enabled: true
+dashboards:
+  enabled: true
