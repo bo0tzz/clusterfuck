@@ -48,7 +48,6 @@ spec:
   interval: 1h
   path: ./kubernetes/apps/automation/home-assistant/app
   prune: true
-  suspend: true
   sourceRef:
     kind: GitRepository
     name: flux-system
