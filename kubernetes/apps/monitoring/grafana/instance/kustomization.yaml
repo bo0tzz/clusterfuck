@@ -10,6 +10,7 @@ resources:
   - dashboards/folder.yaml
   - dashboards/home.yaml
   - dashboards/apc-ups.yaml
+  - dashboards/main.yaml
 configMapGenerator:
   - name: dashboard-home
     files:
@@ -17,5 +18,8 @@ configMapGenerator:
   - name: dashboard-apc-ups
     files:
       - dashboard.json=dashboards/apc-ups.json
+  - name: dashboard-main
+    files:
+      - dashboard.json=dashboards/main.json
 generatorOptions:
   disableNameSuffixHash: true
