@@ -500,7 +500,7 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "predict_linear(kubelet_volume_stats_available_bytes[6h], 7*24*3600) <= 0",
+          "expr": "min by(namespace, persistentvolumeclaim) (predict_linear(kubelet_volume_stats_available_bytes[6h], 7*24*3600)) <= 0",
           "refId": "A",
           "format": "table",
           "instant": true
