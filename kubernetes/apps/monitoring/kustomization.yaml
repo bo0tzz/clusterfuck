@@ -11,3 +11,4 @@ resources:
   - ./victoria-logs/ks.yaml
   - ./metrics-server/ks.yaml
   - ./intel-xpumanager/ks.yaml
+  - ./shelly-exporter/ks.yaml
