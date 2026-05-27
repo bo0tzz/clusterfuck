@@ -30,3 +30,5 @@ spec:
     - sourceLabels: [__meta_kubernetes_pod_name]
       targetLabel: pod
       action: replace
+    - regex: __meta_kubernetes_pod_label_(.+)
+      action: labelmap
