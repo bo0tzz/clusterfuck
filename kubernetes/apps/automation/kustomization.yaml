@@ -11,3 +11,6 @@ resources:
   - ./frigate/ks.yaml
   - ./birdnet-go/ks.yaml
   - ./pgmqtt/ks.yaml
+  - ./home-assistant/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
+  - ./esphome/ks.yaml

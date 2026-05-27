@@ -1,0 +1,44 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: esphome
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: esphome
+  values:
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: esphome/esphome
+              tag: "2026.5.1"
+            env:
+              TZ: Europe/Amsterdam
+              ESPHOME_DASHBOARD_USE_PING: "true"
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 6052
+    persistence:
+      config:
+        existingClaim: esphome
+        globalMounts:
+          - path: /config
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - esphome.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 6052

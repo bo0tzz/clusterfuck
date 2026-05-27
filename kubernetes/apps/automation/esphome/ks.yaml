@@ -1,0 +1,68 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: automation-esphome-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/automation/esphome/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: esphome
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: automation-esphome-migration
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/automation/esphome/migration
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  healthCheckExprs:
+    - apiVersion: volsync.backube/v1alpha1
+      kind: ReplicationDestination
+      current: has(status.lastManualSync) && status.lastManualSync == 'restore-once'
+      inProgress: has(status.conditions) && status.conditions.exists(c, c.type == 'Synchronizing' && c.status == 'True')
+  postBuild:
+    substitute:
+      APP: esphome
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: automation-esphome
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/automation/esphome/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/volsync
+  dependsOn:
+    - name: automation-esphome-bucket
+    - name: automation-esphome-migration
+  postBuild:
+    substitute:
+      APP: esphome
+      BUCKET: esphome
+      VOLSYNC_CAPACITY: 20Gi
+      # esphome image must run as root (platformio compilation requires /root).
+      # Upstream: https://github.com/esphome/issues/issues/2752
+      VOLSYNC_PUID: "0"
+      VOLSYNC_PGID: "0"
