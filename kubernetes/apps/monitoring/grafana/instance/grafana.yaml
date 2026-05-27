@@ -22,6 +22,10 @@ spec:
     spec:
       template:
         spec:
+          volumes:
+            - name: grafana-data
+              persistentVolumeClaim:
+                claimName: grafana-pvc
           containers:
             - name: grafana
               resources:
