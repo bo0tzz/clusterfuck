@@ -1,0 +1,15 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMStaticScrape
+metadata:
+  name: esphome-air-quality
+spec:
+  jobName: esphome
+  targetEndpoints:
+    - targets:
+        - "10.0.5.22"
+      path: /metrics
+      interval: 30s
+      labels:
+        device: air_quality_sensor
+        location: living_room

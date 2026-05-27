@@ -5,6 +5,7 @@ namespace: automation
 resources:
   - ocirepository.yaml
   - helmrelease.yaml
+  - vmstaticscrape.yaml
 patches:
   - target:
       kind: PersistentVolumeClaim
