@@ -9,6 +9,9 @@ spec:
     matchLabels:
       dashboards: grafana
   resyncPeriod: 30s
+  datasources:
+    - datasourceName: VictoriaMetrics
+      inputName: DS_PROMETHEUS
   configMapRef:
     name: cilium-dashboard
     key: cilium-dashboard.json
@@ -23,6 +26,9 @@ spec:
     matchLabels:
       dashboards: grafana
   resyncPeriod: 30s
+  datasources:
+    - datasourceName: VictoriaMetrics
+      inputName: DS_PROMETHEUS
   configMapRef:
     name: cilium-operator-dashboard
     key: cilium-operator-dashboard.json
