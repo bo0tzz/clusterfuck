@@ -60,7 +60,7 @@
             ]
           },
           "color": {
-            "mode": "value"
+            "mode": "thresholds"
           }
         },
         "overrides": []
@@ -188,7 +188,7 @@
             ]
           },
           "color": {
-            "mode": "value"
+            "mode": "thresholds"
           }
         },
         "overrides": []
@@ -247,7 +247,7 @@
             ]
           },
           "color": {
-            "mode": "value"
+            "mode": "thresholds"
           }
         },
         "overrides": []
@@ -314,7 +314,7 @@
             ]
           },
           "color": {
-            "mode": "value"
+            "mode": "thresholds"
           }
         },
         "overrides": []
@@ -373,7 +373,7 @@
             ]
           },
           "color": {
-            "mode": "value"
+            "mode": "thresholds"
           }
         },
         "overrides": []
@@ -432,7 +432,7 @@
             ]
           },
           "color": {
-            "mode": "value"
+            "mode": "thresholds"
           }
         },
         "overrides": []
@@ -491,7 +491,7 @@
             ]
           },
           "color": {
-            "mode": "value"
+            "mode": "thresholds"
           }
         },
         "overrides": []
