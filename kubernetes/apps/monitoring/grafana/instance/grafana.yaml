@@ -22,6 +22,8 @@ spec:
     spec:
       template:
         spec:
+          securityContext:
+            fsGroup: 472
           volumes:
             - name: grafana-data
               persistentVolumeClaim:

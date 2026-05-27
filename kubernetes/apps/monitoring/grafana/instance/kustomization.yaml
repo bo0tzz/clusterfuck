@@ -7,3 +7,10 @@ resources:
   - grafana.yaml
   - grafanadashboard.yaml
   - httproute.yaml
+  - dashboards/home.yaml
+configMapGenerator:
+  - name: dashboard-home
+    files:
+      - dashboard.json=dashboards/home.json
+generatorOptions:
+  disableNameSuffixHash: true
