@@ -5,3 +5,4 @@ namespace: network
 resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
+  - ./grafanadashboard.yaml

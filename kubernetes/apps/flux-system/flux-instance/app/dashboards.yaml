@@ -1,19 +1,7 @@
 ---
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  name: flux-cluster
-spec:
-  allowCrossNamespaceImport: true
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  resyncPeriod: 30s
-  datasources:
-    - datasourceName: VictoriaMetrics
-      inputName: DS_PROMETHEUS
-  url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/refs/heads/main/monitoring/configs/dashboards/cluster.json
----
+# Note: flux2-monitoring-example also publishes a "cluster.json" dashboard, but it
+# depends on `gotk_resource_info` from kube-state-metrics with custom-resource-state
+# rules — not enabled here. Skipping until KSM CRS is wired up.
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:

@@ -1,1 +1,5 @@
 ---
+web:
+  # Disabled so annotation-based scraping reaches port 8080 for /metrics.
+  networkPolicy:
+    create: false
