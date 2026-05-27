@@ -12,3 +12,4 @@ resources:
   - ./metrics-server/ks.yaml
   - ./intel-xpumanager/ks.yaml
   - ./shelly-exporter/ks.yaml
+  - ./snmp-exporter/ks.yaml

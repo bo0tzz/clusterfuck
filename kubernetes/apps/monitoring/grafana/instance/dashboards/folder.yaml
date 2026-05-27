@@ -1,15 +1,11 @@
 ---
 apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
+kind: GrafanaFolder
 metadata:
-  name: home
+  name: manual
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
       dashboards: grafana
-  folderRef: manual
-  resyncPeriod: 30s
-  configMapRef:
-    name: dashboard-home
-    key: dashboard.json
+  title: Manual

@@ -7,10 +7,15 @@ resources:
   - grafana.yaml
   - grafanadashboard.yaml
   - httproute.yaml
+  - dashboards/folder.yaml
   - dashboards/home.yaml
+  - dashboards/apc-ups.yaml
 configMapGenerator:
   - name: dashboard-home
     files:
       - dashboard.json=dashboards/home.json
+  - name: dashboard-apc-ups
+    files:
+      - dashboard.json=dashboards/apc-ups.json
 generatorOptions:
   disableNameSuffixHash: true

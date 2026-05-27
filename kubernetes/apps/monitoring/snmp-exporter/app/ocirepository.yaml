@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: prometheus-snmp-exporter
+spec:
+  interval: 1h
+  url: oci://ghcr.io/prometheus-community/charts/prometheus-snmp-exporter
+  ref:
+    tag: "9.14.0"
