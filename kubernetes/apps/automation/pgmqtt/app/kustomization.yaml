@@ -18,21 +18,30 @@ patches:
         path: /spec/bootstrap/initdb/import
       - op: remove
         path: /spec/plugins
-  - patch: |-
+  - target:
+      group: postgresql.cnpg.io
+      kind: ScheduledBackup
+    patch: |-
       $patch: delete
       apiVersion: postgresql.cnpg.io/v1
       kind: ScheduledBackup
       metadata:
-        name: pgmqtt
-  - patch: |-
+        name: _
+  - target:
+      group: postgresql.cnpg.io
+      kind: Backup
+    patch: |-
       $patch: delete
       apiVersion: postgresql.cnpg.io/v1
       kind: Backup
       metadata:
-        name: pgmqtt-init
-  - patch: |-
+        name: _
+  - target:
+      group: barmancloud.cnpg.io
+      kind: ObjectStore
+    patch: |-
       $patch: delete
       apiVersion: barmancloud.cnpg.io/v1
       kind: ObjectStore
       metadata:
-        name: pgmqtt
+        name: _
