@@ -1,0 +1,23 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: envoy-gateway-addons
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: envoy-gateway-addons
+  interval: 1h
+  values:
+    # Disable the bundled obs stack — we use VictoriaMetrics + grafana-operator instead.
+    # Leaves only the dashboards ConfigMap (templates/dashboards_config.yaml).
+    grafana:
+      enabled: false
+    prometheus:
+      enabled: false
+    fluent-bit:
+      enabled: false
+    loki:
+      enabled: false
+    tempo:
+      enabled: false

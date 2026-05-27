@@ -1,0 +1,32 @@
+---
+# Pick up any pod with `prometheus.io/scrape: 'true'` annotations.
+# Excludes rook-ceph (already covered by its chart-managed VMServiceScrapes).
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMScrapeConfig
+metadata:
+  name: kubernetes-pods
+spec:
+  kubernetesSDConfigs:
+    - role: pod
+  relabelConfigs:
+    - sourceLabels: [__meta_kubernetes_namespace]
+      regex: rook-ceph
+      action: drop
+    - sourceLabels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+      regex: "true"
+      action: keep
+    - sourceLabels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+      regex: (.+)
+      targetLabel: __metrics_path__
+      action: replace
+    - sourceLabels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+      regex: ([^:]+)(?::\d+)?;(\d+)
+      replacement: "$1:$2"
+      targetLabel: __address__
+      action: replace
+    - sourceLabels: [__meta_kubernetes_namespace]
+      targetLabel: namespace
+      action: replace
+    - sourceLabels: [__meta_kubernetes_pod_name]
+      targetLabel: pod
+      action: replace
