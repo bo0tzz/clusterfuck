@@ -11,6 +11,7 @@ resources:
   - dashboards/home.yaml
   - dashboards/apc-ups.yaml
   - dashboards/main.yaml
+  - dashboards/etcd.yaml
 configMapGenerator:
   - name: dashboard-home
     files:
