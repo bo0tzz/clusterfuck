@@ -10,6 +10,14 @@ spec:
     server:
       root_url: https://monitoring.next.zijlein.de
   disableDefaultAdminSecret: true
+  persistentVolumeClaim:
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: ssd-block
+      resources:
+        requests:
+          storage: 5Gi
   deployment:
     spec:
       template:
