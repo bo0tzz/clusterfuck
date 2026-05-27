@@ -13,3 +13,4 @@ resources:
   - ./intel-xpumanager/ks.yaml
   - ./shelly-exporter/ks.yaml
   - ./snmp-exporter/ks.yaml
+  - ./smartctl-exporter/ks.yaml

@@ -1,0 +1,14 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: smartctl-exporter
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: smartctl-exporter
+  values:
+    fullnameOverride: smartctl-exporter
+    serviceMonitor:
+      enabled: true
