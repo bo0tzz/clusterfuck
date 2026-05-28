@@ -12,7 +12,7 @@ spec:
     image:
       tag: v2.0.0-rc.0
       pullPolicy: IfNotPresent
-    resources:
+    resourcesOverride:
       requests:
         cpu: 10m
         memory: 192Mi
