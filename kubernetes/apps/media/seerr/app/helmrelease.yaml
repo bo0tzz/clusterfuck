@@ -14,6 +14,12 @@ spec:
       tag: "v3.2.0"
     env:
       TZ: Europe/Amsterdam
+    resources:
+      requests:
+        cpu: 25m
+        memory: 320Mi
+      limits:
+        memory: 512Mi
     persistence:
       config:
         enabled: true
