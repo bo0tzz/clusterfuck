@@ -13,6 +13,12 @@ spec:
     database:
       existingSecret: pgmqtt-app
       existingSecretKey: uri
+    resources:
+      requests:
+        cpu: 25m
+        memory: 160Mi
+      limits:
+        memory: 256Mi
     listeners:
       ws:
         enabled: false

@@ -26,6 +26,12 @@ spec:
               tag: "2026.5.4"
             env:
               TZ: Europe/Amsterdam
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 1Gi
     service:
       main:
         controller: main
