@@ -3,3 +3,9 @@ web:
   # Disabled so annotation-based scraping reaches port 8080 for /metrics.
   networkPolicy:
     create: false
+resources:
+  requests:
+    cpu: 25m
+    memory: 256Mi
+  limits:
+    memory: 512Mi

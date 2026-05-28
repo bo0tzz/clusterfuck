@@ -30,7 +30,7 @@ instance:
         target:
           kind: Deployment
           name: (kustomize-controller|helm-controller|source-controller)
-      - # Increase the memory limits
+      - # Resource requests and limits
         patch: |
           apiVersion: apps/v1
           kind: Deployment
@@ -42,11 +42,14 @@ instance:
                 containers:
                   - name: manager
                     resources:
+                      requests:
+                        cpu: 25m
+                        memory: 128Mi
                       limits:
-                        memory: 1Gi
+                        memory: 256Mi
         target:
           kind: Deployment
-          name: (kustomize-controller|helm-controller|source-controller)
+          name: (kustomize-controller|helm-controller|source-controller|notification-controller)
       - # Enable in-memory kustomize builds
         patch: |
           - op: add
