@@ -34,8 +34,10 @@ spec:
                     key: uri
             resources:
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 25m
+                memory: 160Mi
+              limits:
+                memory: 256Mi
     service:
       main:
         controller: main

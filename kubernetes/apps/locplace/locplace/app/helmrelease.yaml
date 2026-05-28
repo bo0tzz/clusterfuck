@@ -40,6 +40,12 @@ spec:
                 containerPort: 8080
               - name: metrics
                 containerPort: 9090
+            resources:
+              requests:
+                cpu: 10m
+                memory: 96Mi
+              limits:
+                memory: 192Mi
     service:
       main:
         controller: main

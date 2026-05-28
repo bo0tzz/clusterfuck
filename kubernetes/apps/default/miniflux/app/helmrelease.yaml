@@ -43,8 +43,10 @@ spec:
                   name: miniflux-secret
             resources:
               requests:
-                cpu: 200m
-                memory: 150Mi
+                cpu: 25m
+                memory: 64Mi
+              limits:
+                memory: 128Mi
     service:
       main:
         controller: main
