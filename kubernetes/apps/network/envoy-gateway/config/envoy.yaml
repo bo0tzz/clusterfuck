@@ -17,6 +17,15 @@ spec:
               memory: 128Mi
             limits:
               memory: 256Mi
+        pod:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    topologyKey: kubernetes.io/hostname
+                    matchLabelKeys:
+                      - gateway.envoyproxy.io/owning-gateway-name
       envoyService:
         patch:
           type: StrategicMerge
