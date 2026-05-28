@@ -15,7 +15,7 @@ spec:
     - ../../../../components/bucket
   postBuild:
     substitute:
-      BUCKET: authentik
+      BUCKET: authentik-backup
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -39,7 +39,7 @@ spec:
   postBuild:
     substitute:
       APP: authentik
-      BUCKET: authentik
+      BUCKET: authentik-backup
     substituteFrom:
       - kind: Secret
-        name: authentik
+        name: authentik-backup
