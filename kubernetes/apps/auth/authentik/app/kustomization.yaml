@@ -1,0 +1,19 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: auth
+resources:
+  - helmrepository.yaml
+  - helmrelease.yaml
+  - secret.sops.yaml
+  - httproute.yaml
+patches:
+  - target:
+      group: postgresql.cnpg.io
+      kind: Cluster
+    patch: |-
+      - op: remove
+        path: /spec/bootstrap/recovery
+      - op: replace
+        path: /spec/bootstrap/initdb/import/databases
+        value: [authentik]
