@@ -82,7 +82,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "zigbee2mqtt_temperature{topic=~\"zigbee2mqtt_sensor_climate_.*\", topic!=\"zigbee2mqtt_sensor_climate_rack\"}",
+          "expr": "avg by(topic) (zigbee2mqtt_temperature{topic=~\"zigbee2mqtt_sensor_climate_.*\", topic!=\"zigbee2mqtt_sensor_climate_rack\"})",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -98,7 +98,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "esphome_sensor_value{device=\"air_quality_sensor\", name=\"Temperature\"}",
+          "expr": "avg by(device, name) (esphome_sensor_value{device=\"air_quality_sensor\", name=\"Temperature\"})",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -183,7 +183,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "zigbee2mqtt_humidity{topic=~\"zigbee2mqtt_sensor_climate_.*\", topic!=\"zigbee2mqtt_sensor_climate_rack\"}",
+          "expr": "avg by(topic) (zigbee2mqtt_humidity{topic=~\"zigbee2mqtt_sensor_climate_.*\", topic!=\"zigbee2mqtt_sensor_climate_rack\"})",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -199,7 +199,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "esphome_sensor_value{device=\"air_quality_sensor\", name=\"Humidity\"}",
+          "expr": "avg by(device, name) (esphome_sensor_value{device=\"air_quality_sensor\", name=\"Humidity\"})",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -309,7 +309,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "zigbee2mqtt_temperature{topic=~\"zigbee2mqtt_sensor_climate_.*\", topic!=\"zigbee2mqtt_sensor_climate_rack\"}",
+          "expr": "avg by(topic) (zigbee2mqtt_temperature{topic=~\"zigbee2mqtt_sensor_climate_.*\", topic!=\"zigbee2mqtt_sensor_climate_rack\"})",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -324,7 +324,7 @@
             "uid": "VictoriaMetrics"
           },
           "editorMode": "code",
-          "expr": "esphome_sensor_value{device=\"air_quality_sensor\", name=\"Temperature\"}",
+          "expr": "avg by(device, name) (esphome_sensor_value{device=\"air_quality_sensor\", name=\"Temperature\"})",
           "hide": false,
           "instant": false,
           "legendFormat": "kitchen",
@@ -434,7 +434,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "zigbee2mqtt_humidity{topic=~\"zigbee2mqtt_sensor_climate_.*\", topic!=\"zigbee2mqtt_sensor_climate_rack\"}",
+          "expr": "avg by(topic) (zigbee2mqtt_humidity{topic=~\"zigbee2mqtt_sensor_climate_.*\", topic!=\"zigbee2mqtt_sensor_climate_rack\"})",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -450,7 +450,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "esphome_sensor_value{device=\"air_quality_sensor\", name=\"Humidity\"}",
+          "expr": "avg by(device, name) (esphome_sensor_value{device=\"air_quality_sensor\", name=\"Humidity\"})",
           "fullMetaSearch": false,
           "hide": false,
           "includeNullMetadata": true,
@@ -560,7 +560,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "sum(avg_over_time(shelly_power_w[10m]))",
+          "expr": "max(avg by(target, line) (avg_over_time(shelly_power_w[10m])))",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -654,7 +654,7 @@
             "uid": "VictoriaMetrics"
           },
           "editorMode": "code",
-          "expr": "esphome_sensor_value{id=\"pm__1__m_weight_concentration\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"pm__1__m_weight_concentration\"})",
           "legendFormat": "PM1",
           "range": true,
           "refId": "A"
@@ -731,7 +731,7 @@
             "uid": "VictoriaMetrics"
           },
           "editorMode": "code",
-          "expr": "esphome_sensor_value{id=\"pm__2_5__m_weight_concentration\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"pm__2_5__m_weight_concentration\"})",
           "legendFormat": "PM2.5",
           "range": true,
           "refId": "A"
@@ -808,7 +808,7 @@
             "uid": "VictoriaMetrics"
           },
           "editorMode": "code",
-          "expr": "esphome_sensor_value{id=\"pm__4__m_weight_concentration\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"pm__4__m_weight_concentration\"})",
           "legendFormat": "PM4",
           "range": true,
           "refId": "A"
@@ -885,7 +885,7 @@
             "uid": "VictoriaMetrics"
           },
           "editorMode": "code",
-          "expr": "esphome_sensor_value{id=\"pm__10__m_weight_concentration\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"pm__10__m_weight_concentration\"})",
           "legendFormat": "PM10",
           "range": true,
           "refId": "A"
@@ -961,7 +961,7 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "esphome_sensor_value{id=\"voc\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"voc\"})",
           "legendFormat": "VOC",
           "refId": "A"
         }
@@ -1036,7 +1036,7 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "esphome_sensor_value{id=\"nox\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"nox\"})",
           "legendFormat": "NOX",
           "refId": "A"
         }
@@ -1203,7 +1203,7 @@
             "uid": "VictoriaMetrics"
           },
           "editorMode": "code",
-          "expr": "esphome_sensor_value{id=\"pm__1__m_weight_concentration\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"pm__1__m_weight_concentration\"})",
           "legendFormat": "PM1",
           "range": true,
           "refId": "A"
@@ -1214,7 +1214,7 @@
             "uid": "VictoriaMetrics"
           },
           "editorMode": "code",
-          "expr": "esphome_sensor_value{id=\"pm__2_5__m_weight_concentration\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"pm__2_5__m_weight_concentration\"})",
           "legendFormat": "PM2.5",
           "range": true,
           "refId": "B"
@@ -1225,7 +1225,7 @@
             "uid": "VictoriaMetrics"
           },
           "editorMode": "code",
-          "expr": "esphome_sensor_value{id=\"pm__4__m_weight_concentration\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"pm__4__m_weight_concentration\"})",
           "legendFormat": "PM4",
           "range": true,
           "refId": "C"
@@ -1236,7 +1236,7 @@
             "uid": "VictoriaMetrics"
           },
           "editorMode": "code",
-          "expr": "esphome_sensor_value{id=\"pm__10__m_weight_concentration\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"pm__10__m_weight_concentration\"})",
           "legendFormat": "PM10",
           "range": true,
           "refId": "D"
@@ -1343,7 +1343,7 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "esphome_sensor_value{id=\"voc\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"voc\"})",
           "legendFormat": "VOC Index",
           "refId": "A"
         }
@@ -1449,7 +1449,7 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "esphome_sensor_value{id=\"nox\"}",
+          "expr": "avg by(id) (esphome_sensor_value{id=\"nox\"})",
           "legendFormat": "NOX Index",
           "refId": "A"
         }
