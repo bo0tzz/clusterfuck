@@ -10,3 +10,23 @@ spec:
   interval: 1h
   values:
     installCRDs: true
+    resources:
+      requests:
+        cpu: 25m
+        memory: 192Mi
+      limits:
+        memory: 384Mi
+    webhook:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 40Mi
+        limits:
+          memory: 80Mi
+    certController:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 80Mi
+        limits:
+          memory: 160Mi

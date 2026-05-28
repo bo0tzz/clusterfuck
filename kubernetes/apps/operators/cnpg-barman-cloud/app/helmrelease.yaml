@@ -8,3 +8,10 @@ spec:
     kind: OCIRepository
     name: cnpg-barman-cloud
   interval: 1h
+  values:
+    resources:
+      requests:
+        cpu: 25m
+        memory: 48Mi
+      limits:
+        memory: 96Mi
