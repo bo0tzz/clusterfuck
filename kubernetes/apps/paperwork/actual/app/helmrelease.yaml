@@ -26,6 +26,7 @@ spec:
               tag: "26.5.2"
             env:
               ACTUAL_LOGIN_METHOD: openid
+              ACTUAL_MULTIUSER: "true"
               ACTUAL_OPENID_DISCOVERY_URL: https://auth.bo0tzz.me/application/o/actual/.well-known/openid-configuration
               ACTUAL_OPENID_SERVER_HOSTNAME: https://actual.bo0tzz.me
             envFrom:
