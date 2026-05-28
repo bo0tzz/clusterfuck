@@ -44,7 +44,7 @@ spec:
         controller: main
         ports:
           http:
-            port: 5000
+            port: 8971
     route:
       main:
         parentRefs:
@@ -55,7 +55,7 @@ spec:
         rules:
           - backendRefs:
               - identifier: main
-                port: 5000
+                port: 8971
     persistence:
       config:
         existingClaim: ${APP}
