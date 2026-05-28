@@ -5,7 +5,6 @@ metadata:
   name: authentik
 spec:
   interval: 1h
-  suspend: true
   chart:
     spec:
       chart: authentik
