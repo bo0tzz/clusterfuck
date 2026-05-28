@@ -13,9 +13,10 @@ spec:
           image: mirror.gcr.io/envoyproxy/envoy:v1.38.0
           resources:
             requests:
-              cpu: 100m
+              cpu: 25m
+              memory: 128Mi
             limits:
-              memory: 1Gi
+              memory: 256Mi
       envoyService:
         patch:
           type: StrategicMerge

@@ -16,5 +16,18 @@ spec:
         cpu: 10m
         memory: 64Mi
       limits:
-        cpu: 200m
-        memory: 256Mi
+        memory: 128Mi
+    webhook:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32Mi
+        limits:
+          memory: 64Mi
+    cainjector:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 128Mi
+        limits:
+          memory: 256Mi

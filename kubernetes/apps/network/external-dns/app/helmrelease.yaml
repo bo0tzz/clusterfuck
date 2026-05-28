@@ -27,7 +27,7 @@ spec:
     txtOwnerId: clusterfuck
     resources:
       requests:
-        cpu: 15m
-        memory: 100Mi
+        cpu: 10m
+        memory: 64Mi
       limits:
-        memory: 100Mi
+        memory: 128Mi
