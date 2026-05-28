@@ -33,4 +33,4 @@ spec:
           - claim: preferred_username
             header: X-Forwarded-User
           - claim: role
-            header: X-Forwarded-Role
+            header: X-Forwarded-Groups
