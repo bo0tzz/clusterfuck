@@ -157,3 +157,8 @@ jobs:
             - When stuck (private repo, ambiguous package, no changelog anywhere), report what you
               found and what you could not find rather than fabricating information
             - Submit exactly one `gh pr review` at the end of your analysis
+            - When citing github.com URLs in the review body (PRs, issues, commits, releases, file
+              or blob links), rewrite the host to `redirect.github.com`. This suppresses the
+              cross-reference backlinks that would otherwise spam every linked issue/PR with a
+              "mentioned in" notification. Applies to inline references and the "Sources consulted"
+              section alike. Non-github.com URLs are unaffected.
