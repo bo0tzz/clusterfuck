@@ -1,0 +1,36 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: frigate
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: frigate
+  oidc:
+    provider:
+      issuer: https://auth.bo0tzz.me/application/o/frigate/
+    clientIDRef:
+      name: frigate-oidc
+    clientSecret:
+      name: frigate-oidc
+    redirectURL: https://camera.zijlein.de/oauth2/callback
+    logoutPath: /oauth2/sign_out
+    scopes:
+      - openid
+      - profile
+      - email
+      - frigate-role
+    forwardAccessToken: true
+  jwt:
+    providers:
+      - name: authentik
+        issuer: https://auth.bo0tzz.me/application/o/frigate/
+        remoteJWKS:
+          uri: https://auth.bo0tzz.me/application/o/frigate/jwks/
+        claimToHeaders:
+          - claim: preferred_username
+            header: X-Forwarded-User
+          - claim: role
+            header: X-Forwarded-Role

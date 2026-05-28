@@ -51,7 +51,7 @@ spec:
           - name: envoy-internal
             namespace: network
         hostnames:
-          - camera.next.bo0tzz.me
+          - camera.zijlein.de
         rules:
           - backendRefs:
               - identifier: main
