@@ -19,6 +19,7 @@ spec:
       repository: ghcr.io/rook/ceph
     resources:
       requests:
-        memory: 128Mi
-        cpu: 100m
-      limits: {}
+        cpu: 200m
+        memory: 320Mi
+      limits:
+        memory: 512Mi

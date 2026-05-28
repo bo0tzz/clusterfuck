@@ -40,11 +40,42 @@ spec:
           - name: rook
             enabled: true
       resources:
+        mon:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+          limits:
+            memory: 1Gi
+        mgr:
+          requests:
+            cpu: 100m
+            memory: 640Mi
+          limits:
+            memory: 1Gi
         osd:
           requests:
-            memory: 3Gi
+            cpu: 200m
+            memory: 4Gi
           limits:
-            memory: 3Gi
+            memory: 4Gi
+        mds:
+          requests:
+            cpu: 50m
+            memory: 256Mi
+          limits:
+            memory: 512Mi
+        exporter:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 64Mi
+        crashcollector:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 64Mi
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -138,10 +169,10 @@ spec:
                       app.kubernetes.io/part-of: *cephFileSystemName
             resources:
               requests:
-                cpu: 100m
-                memory: 1Gi
+                cpu: 50m
+                memory: 256Mi
               limits:
-                memory: 2Gi
+                memory: 512Mi
         storageClass:
           enabled: true
           isDefault: false
