@@ -1,0 +1,41 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: paperwork-actual-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/paperwork/actual/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: actual
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: paperwork-actual
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/paperwork/actual/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/volsync
+  dependsOn:
+    - name: paperwork-actual-bucket
+  postBuild:
+    substitute:
+      APP: actual
+      BUCKET: actual
+      VOLSYNC_CAPACITY: 5Gi

@@ -10,3 +10,4 @@ resources:
   - namespace.yaml
   - ./bo0kkeeper/ks.yaml
   - ./paperless/ks.yaml
+  - ./actual/ks.yaml
