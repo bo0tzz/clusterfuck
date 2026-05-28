@@ -7,7 +7,7 @@ usage = "3.3.0"
 helmfile = "1.5.2"
 helm = "4.2.0"
 yamlfmt = "0.21.0"
-"pipx:flux-local" = "8.2.0"
+"github:home-operations/flate" = "0.1.28"
 
 [tasks."talos:genconfig"]
 dir = "talos"
@@ -35,5 +35,5 @@ run = "yamlfmt ."
 description = "Format kubernetes manifests"
 
 [tasks."kube:diff"]
-run = "flux-local diff hr --path ./kubernetes/flux/cluster -A --branch-orig main"
-description = "Diff kubernetes helm releases"
+description = "Diff kubernetes resources against main"
+run = "flate diff all --path ./kubernetes/flux/cluster"
