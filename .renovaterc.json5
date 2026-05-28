@@ -4,8 +4,9 @@
     "github>home-operations/renovate-presets",
     ":semanticCommits",
   ],
-  // baseConfig pulls in :automergeBranch; we want PRs to review, not silent merges.
-  automerge: false,
+  automerge: true,
+  automergeType: "pr",
+  platformAutomerge: true,
   ignorePaths: ["**/*.sops.*"],
   rebaseWhen: "conflicted",
   pinDigests: true,
