@@ -1,0 +1,14 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: samba-operator
+  namespace: flux-system
+spec:
+  interval: 1h
+  ref:
+    tag: v0.8
+  url: https://github.com/samba-in-kubernetes/samba-operator.git
+  ignore: |
+    /*
+    !/config
