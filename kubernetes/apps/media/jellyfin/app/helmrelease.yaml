@@ -25,6 +25,11 @@ spec:
             resources:
               claims:
                 - name: gpu
+              requests:
+                cpu: 50m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
             probes:
               liveness: &probes
                 enabled: true
