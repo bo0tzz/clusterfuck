@@ -28,3 +28,7 @@ spec:
   dependsOn:
     - name: samba-operator-source
   wait: true
+  images:
+    - name: gcr.io/kubebuilder/kube-rbac-proxy
+      newName: quay.io/brancz/kube-rbac-proxy
+      newTag: v0.22.0
