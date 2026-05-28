@@ -62,6 +62,19 @@ operator:
   rollOutPods: true
   dashboards:
     enabled: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 192Mi
+    limits:
+      memory: 384Mi
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 512Mi
+  limits:
+    memory: 768Mi
 
 rollOutCiliumPods: true
 

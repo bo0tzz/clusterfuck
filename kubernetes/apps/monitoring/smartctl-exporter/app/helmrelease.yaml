@@ -15,3 +15,9 @@ spec:
       relabelings:
         - sourceLabels: [__meta_kubernetes_endpoint_node_name]
           targetLabel: nodename
+    resources:
+      requests:
+        cpu: 10m
+        memory: 16Mi
+      limits:
+        memory: 32Mi
