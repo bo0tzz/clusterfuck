@@ -69,7 +69,9 @@ spec:
             resources:
               requests:
                 cpu: 25m
-                memory: 2Gi
+                memory: 768Mi
+              limits:
+                memory: 1.5Gi
       redis:
         containers:
           main:
@@ -80,6 +82,8 @@ spec:
               requests:
                 cpu: 5m
                 memory: 32Mi
+              limits:
+                memory: 64Mi
     service:
       main:
         controller: main
