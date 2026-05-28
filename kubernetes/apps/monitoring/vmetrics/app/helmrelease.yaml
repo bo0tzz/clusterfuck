@@ -75,9 +75,9 @@ spec:
       resources:
         requests:
           cpu: 25m
-          memory: 96Mi
-        limits:
           memory: 192Mi
+        limits:
+          memory: 384Mi
       rbac:
         extraRules:
           - apiGroups:
