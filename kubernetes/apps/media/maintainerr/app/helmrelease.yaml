@@ -33,10 +33,10 @@ spec:
               readiness: *probes
             resources:
               requests:
-                cpu: 100m
-                memory: 512Mi
+                cpu: 25m
+                memory: 320Mi
               limits:
-                memory: 1000Mi
+                memory: 512Mi
     defaultPodOptions:
       securityContext:
         fsGroup: 568
