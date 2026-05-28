@@ -22,10 +22,10 @@ spec:
               claims:
                 - name: gpu
               requests:
-                cpu: 200m
-                memory: 2Gi
+                cpu: 150m
+                memory: 1Gi
               limits:
-                memory: 8Gi
+                memory: 1.5Gi
             probes:
               liveness: &probes
                 enabled: true
