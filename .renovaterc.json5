@@ -12,6 +12,11 @@
   pinDigests: true,
   packageRules: [
     {
+      description: "Flux OCIRepository tag is a single field — appending @sha256 makes the registry 404",
+      matchFileNames: ["**/*ocirepository.yaml"],
+      pinDigests: false,
+    },
+    {
       description: "Flux Group",
       groupName: "flux",
       matchPackageNames: ["/flux/"],
