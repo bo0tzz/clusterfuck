@@ -65,6 +65,9 @@ operator:
 
 rollOutCiliumPods: true
 
+envoy:
+  enabled: false
+
 prometheus:
   enabled: true
 dashboards:
