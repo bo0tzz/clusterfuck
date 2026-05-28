@@ -80,6 +80,23 @@ controlPlane:
         etcd:
           extraArgs:
             listen-metrics-urls: http://0.0.0.0:2381
+    - |-
+      cluster:
+        apiServer:
+          resources:
+            requests:
+              cpu: 200m
+              memory: 2560Mi
+        controllerManager:
+          resources:
+            requests:
+              cpu: 100m
+              memory: 320Mi
+        scheduler:
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128Mi
 
 nodes:
   # - hostname: sketchy
