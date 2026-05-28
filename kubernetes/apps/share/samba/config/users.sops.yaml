@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: samba-users
+type: Opaque
+stringData:
+  users.json: ENC[AES256_GCM,data:Kzsu7dI3ApyFk4FOtqCxHU3mV83b+LAUeIRLwa1UxFGTUMBd7eaThmDQ1jsjaQtUvuNNNJcGRMTYwKloIEedHHwplOec6weC9JgoQZwLhWATdKbhmFwh9U1Ec4FUX+pzNWGLf0NZ7p/dDZ/X2diPmQ5OXBD+2EBmOF4wPbGdTmmcMlYtw2UDxOXzY3KX9FY/MfuhF5XzO5VYrBNdIfY2BktYqLysvROKYB19NQ==,iv:cumacUb/DFnPOeqRdxqBTgvbyoQxl2XtDchTkIRR8nc=,tag:06sMJmyHdBD9x3wjCUT41Q==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWR09CMlNFKy9XMFZ6K0pW
+        OFY2V3ZHM0dYUHo4dGhiSkxSTGhUK2pqUUEwCjN5VGpUQkNLeXpKOGZtZVR1alE1
+        TTRMOUQzeExGNTN6NFNwRDBFS1loYkUKLS0tIGdWTGt0TUp0SFdSa3MwVUdrNGph
+        WjF2dDFHNFkweERwVzNlOTRySUh5VzAKufo9l9TmlIEMgpstcO7/T7y6u0/ZCvdt
+        kDHr/bZzEioVqpXBDCdR4XUWGEYknleNgcpyRQXdTMdShj8EXglcbQ==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1mqj2kqedv27ec0qe9wtwucv4qtgrlyjcj8u0pznmffmzxswsscus3q4tfj
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-05-28T11:40:35Z"
+  mac: ENC[AES256_GCM,data:PQxsalWp8UflGYeEWYIcrODEHuNHLkrF5yL+q9Cf1kMhxRN9PNwoYxK7SKjy+BkYLI0GLEb2X4fEn4kv0prC5gEQcxsIkVA95kd7O8PUUADghAzEp5AITam4fovEXtNyfQfR4dHyN28Rq863dA6ClzBR4kw1RJRYc4g9Lnw2mxo=,iv:JDKcV5GCKtPGEgGJ/1ShwY+c8UvC6wtHfMgU1gDJAyk=,tag:4gtrMsicMgxE9ifNgeOAYA==,type:str]
+  mac_only_encrypted: true
+  version: 3.13.0

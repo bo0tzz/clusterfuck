@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: share-backup-smb
+  annotations:
+    lbipam.cilium.io/ips: "10.0.10.106"
+spec:
+  type: LoadBalancer
+  selector:
+    samba-operator.samba.org/service: share-backup
+  ports:
+    - name: smb
+      protocol: TCP
+      port: 445
+      targetPort: 445

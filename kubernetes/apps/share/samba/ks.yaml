@@ -1,0 +1,62 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: share-samba-config
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/share/samba/config
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  dependsOn:
+    - name: samba-operator
+      namespace: operators
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: share-samba-backup-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/share/samba/backup/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: share-backup
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: share-samba-backup
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/share/samba/backup/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../../components/volsync
+  dependsOn:
+    - name: share-samba-config
+    - name: share-samba-backup-bucket
+  postBuild:
+    substitute:
+      APP: share-backup
+      BUCKET: share-backup
+      VOLSYNC_CAPACITY: 500Gi
+      VOLSYNC_STORAGECLASS: ssd-fs
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_COPY_METHOD: Direct

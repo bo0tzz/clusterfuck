@@ -1,0 +1,21 @@
+---
+apiVersion: samba-operator.samba.org/v1alpha1
+kind: SmbShare
+metadata:
+  name: share-backup
+spec:
+  shareName: backup
+  readOnly: false
+  browseable: true
+  securityConfig: user
+  commonConfig: user
+  storage:
+    pvc:
+      name: share-backup
+  customShareConfig:
+    useUnsafeCustomConfig: true
+    configs:
+      "force user": "568"
+      "force group": "568"
+      "create mask": "0664"
+      "directory mask": "0775"

@@ -1,0 +1,14 @@
+---
+apiVersion: samba-operator.samba.org/v1alpha1
+kind: SmbCommonConfig
+metadata:
+  name: user
+spec:
+  network:
+    publish: cluster
+  customGlobalConfig:
+    useUnsafeCustomConfig: true
+    configs:
+      "server min protocol": "SMB2_10"
+      "server signing": "auto"
+      "client signing": "auto"
