@@ -37,6 +37,12 @@ spec:
                     path: /ping
                     port: 9696
               readiness: *probes
+            resources:
+              requests:
+                cpu: 25m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
     defaultPodOptions:
       securityContext:
         fsGroup: 568
