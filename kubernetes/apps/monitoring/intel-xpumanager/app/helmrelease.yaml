@@ -12,12 +12,18 @@ spec:
     image:
       tag: v2.0.0-rc.0
       pullPolicy: IfNotPresent
+    # Chart 2.0.0-rc.0: setting `resourcesOverride` replaces the entire `resources:` block,
+    # including the DRA `claims:` ref the chart would otherwise add for `gpuAccess: dra`.
+    # Without it the container never receives the GPU via CDI and L0 sysman init returns
+    # ERROR_UNINITIALIZED, so re-add the claim binding here.
     resourcesOverride:
       requests:
         cpu: 10m
         memory: 192Mi
       limits:
         memory: 384Mi
+      claims:
+        - name: xpumd
     gpuAccess: dra
     # Scoped to tiny only:
     # - janky: xpumd v2 L0 sysman fails (ReBAR off, BIOS-side; tracking)
