@@ -9,6 +9,9 @@ spec:
   browseable: true
   securityConfig: user
   commonConfig: user
+  scaling:
+    groupMode: explicit
+    group: share-smb
   storage:
     pvc:
       name: share-backup
