@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - grafana-admin.sops.yaml
+  - grafana-oauth.sops.yaml
   - grafana.yaml
   - grafanadashboard.yaml
   - httproute.yaml

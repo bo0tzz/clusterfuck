@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-oauth
+stringData:
+  client_id: ENC[AES256_GCM,data:9vd7GluS4rYBYyVmQ+WeFx0+NhL4lvh/Kn5AYHMunhu/dL/WzhSAHQ==,iv:RiK9VNgj5ySRZpNjRpjp4pHPEeJ9pnyKQ8MQ2PIncNw=,tag:flayyC/eKckF44BFgYooLA==,type:str]
+  client_secret: ENC[AES256_GCM,data:1joOOqVyKsUJoaXJd7PqGuesjzAIkuolL9zI50lsAnfmUeedIg0sKr/vGjmKFoRWJs0pr2JhVGGAidTnz6L8W0+zXCGmZFFGTHOpYhihLfyKozwTlzz1lb9zQqif3chC+x79/ljkJ5ifIhclbv9A4olgEjDqnidsrgM7ekOTPzI=,iv:+FTWp44cD4LoP2JO3XtOUbxYHolOIfuDjSWktA8bXXA=,tag:Qp9DfDF8LGOF2C6osuIObw==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBjMHg0Wk1nOWdTZ3VWeWVt
+        cEdGSzVsc1AyTGhVVTJWT3NBWWhlS0J3UlRnCmI2dXBPekJDTmhQZFhleWg1MGZw
+        bUs2ZkRDc1F3NEIwdzlEZUpXWERyRVkKLS0tIGdDalpadVBOazVDdTNLYytpQVpK
+        Z21zdnJyRE5KVE5iUFpTemEyMXdnTVEKUWQ/hM85wogfG7m7KcmtLQSb6Fu06IJY
+        v0w+nID9LcXMJgslMsP6Nbqlp0E48Q5rydF9EmNjPW2hzFUo6Ldl1w==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1mqj2kqedv27ec0qe9wtwucv4qtgrlyjcj8u0pznmffmzxswsscus3q4tfj
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-05-28T07:56:54Z"
+  mac: ENC[AES256_GCM,data:xbUHUjgpa7aY20VC3/X2FcZ7gOknEZ7MBHoHuFdTTZqaOKY2MxC4d42yB8j3gURCiIsuq7739a00s9QYfwinaIUpuyHdcJfB4I+hc3EqTTYw2C+V9Q0Q1dIgITXCfrz1gMD9Z/qr2Fy9aMNNThnVFPU5enO2YUq2akUygBieDiE=,iv:BvuRb8ooPIIoDq8jG2GfLS4Wrd0lyVV1AjR0UjiMwwE=,tag:tIr6Bl3KCdDGWuYJxluIvg==,type:str]
+  mac_only_encrypted: true
+  version: 3.13.0
