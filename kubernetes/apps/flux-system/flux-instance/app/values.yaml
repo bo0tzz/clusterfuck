@@ -30,7 +30,27 @@ instance:
         target:
           kind: Deployment
           name: (kustomize-controller|helm-controller|source-controller)
-      - # Resource requests and limits
+      - # Resource requests and limits — helm + kustomize do heavy chart/build work
+        patch: |
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: all
+          spec:
+            template:
+              spec:
+                containers:
+                  - name: manager
+                    resources:
+                      requests:
+                        cpu: 50m
+                        memory: 256Mi
+                      limits:
+                        memory: 1Gi
+        target:
+          kind: Deployment
+          name: (helm-controller|kustomize-controller)
+      - # Resource requests and limits — source + notification are light
         patch: |
           apiVersion: apps/v1
           kind: Deployment
@@ -49,7 +69,7 @@ instance:
                         memory: 256Mi
         target:
           kind: Deployment
-          name: (kustomize-controller|helm-controller|source-controller|notification-controller)
+          name: (source-controller|notification-controller)
       - # Enable in-memory kustomize builds
         patch: |
           - op: add
