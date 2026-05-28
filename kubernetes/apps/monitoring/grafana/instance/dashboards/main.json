@@ -357,7 +357,7 @@
     {
       "id": 6,
       "type": "stat",
-      "title": "Flux reconcile errors (1h)",
+      "title": "Flux resources failing",
       "gridPos": {
         "x": 6,
         "y": 4,
@@ -374,7 +374,7 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "sum(increase(controller_runtime_reconcile_errors_total{namespace=\"flux-system\"}[1h]))",
+          "expr": "count((gotk_resource_info{ready=\"False\",ready_reason!~\"Progressing|DependencyNotReady\"}) or (gotk_resource_info{stalled=\"True\"})) or vector(0)",
           "refId": "A",
           "legendFormat": ""
         }
