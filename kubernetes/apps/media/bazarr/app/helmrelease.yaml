@@ -31,6 +31,12 @@ spec:
                     path: /health
                     port: 6767
               readiness: *probes
+            resources:
+              requests:
+                cpu: 25m
+                memory: 320Mi
+              limits:
+                memory: 512Mi
     defaultPodOptions:
       securityContext:
         fsGroup: 568
