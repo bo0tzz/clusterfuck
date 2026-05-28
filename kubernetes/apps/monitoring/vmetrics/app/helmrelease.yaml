@@ -21,41 +21,61 @@ spec:
               storage: 200Gi
         resources:
           requests:
-            cpu: 250m
+            cpu: 100m
             memory: 512Mi
           limits:
-            cpu: 1
             memory: 2Gi
 
     vmagent:
       spec:
         resources:
           requests:
-            cpu: 100m
-            memory: 256Mi
+            cpu: 50m
+            memory: 192Mi
           limits:
-            cpu: 500m
-            memory: 512Mi
+            memory: 384Mi
 
     vmalert:
       spec:
         resources:
           requests:
-            cpu: 50m
-            memory: 128Mi
+            cpu: 25m
+            memory: 64Mi
           limits:
-            cpu: 200m
-            memory: 256Mi
+            memory: 128Mi
 
     alertmanager:
       spec:
         resources:
           requests:
-            cpu: 50m
-            memory: 128Mi
+            cpu: 10m
+            memory: 64Mi
           limits:
-            cpu: 200m
-            memory: 256Mi
+            memory: 128Mi
+
+    victoria-metrics-operator:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 96Mi
+        limits:
+          memory: 192Mi
+
+    kube-state-metrics:
+      resources:
+        requests:
+          cpu: 25m
+          memory: 96Mi
+        limits:
+          memory: 192Mi
+
+    prometheus-node-exporter:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32Mi
+        limits:
+          memory: 64Mi
 
     grafana:
       enabled: false

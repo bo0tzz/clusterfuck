@@ -13,9 +13,9 @@ spec:
     resources:
       requests:
         cpu: 10m
-        memory: 30Mi
+        memory: 48Mi
       limits:
-        memory: 100Mi
+        memory: 96Mi
     serviceMonitor:
       enabled: true
       interval: 30s

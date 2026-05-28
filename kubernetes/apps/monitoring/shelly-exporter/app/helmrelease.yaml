@@ -18,10 +18,10 @@ spec:
               tag: v0.4.5
             resources:
               requests:
-                cpu: 15m
-                memory: 30Mi
+                cpu: 10m
+                memory: 16Mi
               limits:
-                memory: 50Mi
+                memory: 32Mi
     service:
       main:
         controller: main

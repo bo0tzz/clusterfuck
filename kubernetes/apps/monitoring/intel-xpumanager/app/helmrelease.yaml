@@ -12,6 +12,12 @@ spec:
     image:
       tag: v2.0.0-rc.0
       pullPolicy: IfNotPresent
+    resources:
+      requests:
+        cpu: 10m
+        memory: 192Mi
+      limits:
+        memory: 384Mi
     gpuAccess: dra
     # Scoped to tiny only:
     # - janky: xpumd v2 L0 sysman fails (ReBAR off, BIOS-side; tracking)

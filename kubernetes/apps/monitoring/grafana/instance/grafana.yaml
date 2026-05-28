@@ -43,10 +43,9 @@ spec:
             - name: grafana
               resources:
                 requests:
-                  cpu: 100m
+                  cpu: 50m
                   memory: 256Mi
                 limits:
-                  cpu: 500m
                   memory: 512Mi
               env:
                 - name: GF_SECURITY_ADMIN_USER
