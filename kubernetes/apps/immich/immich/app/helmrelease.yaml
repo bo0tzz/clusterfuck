@@ -11,6 +11,16 @@ spec:
   values:
     valkey:
       enabled: true
+      controllers:
+        main:
+          containers:
+            main:
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 32Mi
+                limits:
+                  memory: 64Mi
 
     immich:
       metrics:
@@ -77,8 +87,10 @@ spec:
                 claims:
                   - name: gpu
                 requests:
-                  cpu: 1500m
-                  memory: 2048M
+                  cpu: 100m
+                  memory: 1.5Gi
+                limits:
+                  memory: 3Gi
       route:
         main:
           parentRefs:
@@ -109,8 +121,8 @@ spec:
                 claims:
                   - name: gpu
                 requests:
-                  cpu: 500m
-                  memory: 4096M
+                  cpu: 100m
+                  memory: 8Gi
       persistence:
         cache:
           type: persistentVolumeClaim
