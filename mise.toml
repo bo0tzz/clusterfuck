@@ -7,7 +7,7 @@ usage = "3.3.0"
 helmfile = "1.5.2"
 helm = "4.2.0"
 yamlfmt = "0.21.0"
-"github:home-operations/flate" = "0.1.28"
+"github:home-operations/flate" = "0.1.30"
 
 [tasks."talos:genconfig"]
 dir = "talos"
