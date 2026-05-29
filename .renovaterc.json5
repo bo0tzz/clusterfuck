@@ -26,6 +26,14 @@
       minimumGroupSize: 3,
     },
     {
+      description: "Flate Group",
+      groupName: "flate",
+      matchPackageNames: ["/flate/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
       description: "Kubernetes Group",
       groupName: "kubernetes",
       matchDepNames: ["/kubectl/", "/kubelet/"],
