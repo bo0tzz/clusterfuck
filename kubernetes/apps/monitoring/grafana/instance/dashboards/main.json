@@ -102,6 +102,7 @@
             "uid": "VictoriaMetrics"
           },
           "expr": "upsBasicOutputStatus == 1",
+          "instant": true,
           "refId": "A",
           "legendFormat": "{{upsBasicOutputStatus}}"
         }
