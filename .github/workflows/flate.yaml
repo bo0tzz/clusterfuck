@@ -33,20 +33,19 @@ jobs:
           persist-credentials: false
 
       - name: Setup flate
-        uses: home-operations/flate/action@02a264ddeba1f36350b243b7ee4ff1af8497bfba # v0.1.28
+        uses: home-operations/flate/action@ba319041ec015aaa4eeed3aa7ff90d74ae2a1990 # v0.1.30
         with:
           cache: true
 
       - name: Run flate diff
         id: diff
         run: |
-          flate diff all \
-            --path ./kubernetes/flux/cluster \
-            --allow-missing-secrets \
-            > diff.patch
           {
             echo 'diff<<EOF'
-            cat diff.patch
+            flate diff all \
+              --path ./kubernetes/flux/cluster \
+              --allow-missing-secrets \
+              --output markdown
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
@@ -55,10 +54,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # v3.0.4
         with:
           header: ${{ github.event.pull_request.number }}/flate
-          message: |-
-            ```diff
-            ${{ steps.diff.outputs.diff }}
-            ```
+          message: ${{ steps.diff.outputs.diff }}
 
   success:
     if: ${{ !cancelled() }}
