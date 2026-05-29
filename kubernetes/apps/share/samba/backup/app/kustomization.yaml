@@ -4,4 +4,3 @@ kind: Kustomization
 namespace: share
 resources:
   - smbshare.yaml
-  - service.yaml

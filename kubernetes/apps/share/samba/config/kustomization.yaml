@@ -6,3 +6,4 @@ resources:
   - smbsecurityconfig.yaml
   - smbcommonconfig.yaml
   - users.sops.yaml
+  - service.yaml

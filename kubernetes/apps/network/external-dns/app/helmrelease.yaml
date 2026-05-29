@@ -23,7 +23,7 @@ spec:
       - --crd-source-kind=DNSEndpoint
       - --migrate-from-txt-owner=default
     policy: upsert-only
-    sources: ["crd", "gateway-httproute"]
+    sources: ["crd", "gateway-httproute", "service"]
     txtOwnerId: clusterfuck
     resources:
       requests:
