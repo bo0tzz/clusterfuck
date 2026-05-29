@@ -18,7 +18,5 @@ spec:
   customShareConfig:
     useUnsafeCustomConfig: true
     configs:
-      "force user": "568"
-      "force group": "568"
       "create mask": "0664"
       "directory mask": "0775"
