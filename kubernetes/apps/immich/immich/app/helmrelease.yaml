@@ -127,5 +127,5 @@ spec:
         cache:
           type: persistentVolumeClaim
           accessMode: ReadWriteMany
-          size: 10Gi
+          size: 20Gi
           storageClass: ssd-fs
