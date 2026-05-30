@@ -13,6 +13,9 @@ spec:
     database:
       existingSecret: pgmqtt-app
       existingSecretKey: uri
+    extraEnv:
+      - name: PGMQTT_LOG_LEVEL
+        value: debug
     resources:
       requests:
         cpu: 25m
