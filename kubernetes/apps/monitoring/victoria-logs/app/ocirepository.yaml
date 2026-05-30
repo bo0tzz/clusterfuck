@@ -9,5 +9,5 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 0.13.3@sha256:c72dde9b1353579eed932d029f408168f3f5b31012986224e5aef4b7f65317f5
+    tag: 0.13.3
   url: oci://ghcr.io/victoriametrics/helm-charts/victoria-logs-single
