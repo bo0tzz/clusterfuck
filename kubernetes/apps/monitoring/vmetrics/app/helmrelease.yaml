@@ -41,9 +41,9 @@ spec:
         resources:
           requests:
             cpu: 50m
-            memory: 192Mi
+            memory: 256Mi
           limits:
-            memory: 384Mi
+            memory: 1Gi
 
     vmalert:
       spec:
