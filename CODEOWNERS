@@ -4,6 +4,5 @@ kubernetes/flux/ @bo0tzz
 kubernetes/apps/flux-system/ @bo0tzz
 kubernetes/apps/infrastructure/ @bo0tzz
 kubernetes/components/ @bo0tzz
-.github/ @bo0tzz
 .renovaterc.json5 @bo0tzz
 **/*.sops.* @bo0tzz
