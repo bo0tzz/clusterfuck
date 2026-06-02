@@ -24,6 +24,9 @@ spec:
                 - weight: 100
                   podAffinityTerm:
                     topologyKey: kubernetes.io/hostname
+                    labelSelector:
+                      matchLabels:
+                        app.kubernetes.io/component: proxy
                     matchLabelKeys:
                       - gateway.envoyproxy.io/owning-gateway-name
       envoyService:
