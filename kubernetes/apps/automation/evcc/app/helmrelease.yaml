@@ -1,0 +1,79 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: evcc
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: evcc
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: docker.io/evcc/evcc
+              tag: "0.307.2"
+            env:
+              TZ: Europe/Amsterdam
+              # evcc's default DB/home is /root/.evcc (root-only); point HOME
+              # at the writable PVC so it runs as non-root 568. The db dsn in
+              # evcc.yaml writes to /data/evcc.db. The mqtt broker + creds are
+              # rendered into the config Secret (see externalsecret.yaml).
+              HOME: /data
+            resources:
+              requests:
+                cpu: 25m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 7070
+      # OCPP central-system server. The charger connects IN to this port
+      # (ws://10.0.10.102:8887/<stationid>). Kept off the OAuth-protected
+      # gateway because OCPP 1.6J has no auth and a wallbox can't do an OIDC
+      # login. Internal LBIPAM pool only -> LAN-reachable, never internet.
+      ocpp:
+        controller: main
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: "10.0.10.102"
+        ports:
+          ocpp:
+            port: 8887
+    persistence:
+      config:
+        type: secret
+        name: evcc-config
+        globalMounts:
+          - path: /etc/evcc.yaml
+            subPath: evcc.yaml
+      data:
+        existingClaim: evcc
+        globalMounts:
+          - path: /data
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - evcc.zijlein.de
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 7070

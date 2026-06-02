@@ -1,0 +1,41 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: automation-evcc-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/automation/evcc/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: evcc
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: automation-evcc
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/automation/evcc/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/volsync
+  dependsOn:
+    - name: automation-evcc-bucket
+    - name: automation-pgmqtt
+  postBuild:
+    substitute:
+      APP: evcc
+      BUCKET: evcc

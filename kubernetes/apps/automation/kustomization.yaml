@@ -15,3 +15,4 @@ resources:
   - ./zigbee2mqtt/ks.yaml
   - ./zigbee2mqtt-exporter/ks.yaml
   - ./esphome/ks.yaml
+  - ./evcc/ks.yaml
