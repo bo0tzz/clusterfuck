@@ -40,12 +40,17 @@ jobs:
       - name: Run flate diff
         id: diff
         run: |
+          out="$(flate diff all \
+            --path ./kubernetes/flux/cluster \
+            --allow-missing-secrets \
+            --output github)"
           {
             echo 'diff<<EOF'
-            flate diff all \
-              --path ./kubernetes/flux/cluster \
-              --allow-missing-secrets \
-              --output markdown
+            if [[ -n "$out" ]]; then
+              echo '```diff'
+              echo "$out"
+              echo '```'
+            fi
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
