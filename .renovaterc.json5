@@ -70,6 +70,12 @@
       },
     },
     {
+      description: "birdnet-go ships date-stamped nightly tags",
+      matchPackageNames: ["ghcr.io/tphakala/birdnet-go"],
+      versionCompatibility: "^(?<compatibility>nightly-)(?<version>\\d{8})$",
+      versioning: "loose",
+    },
+    {
       matchManagers: ["mise"],
       semanticCommitScope: "mise",
       commitMessageTopic: "tool {{depName}}",
