@@ -18,7 +18,9 @@ jobs:
         id: changed-files
         uses: bjw-s-labs/action-changed-files@a9a36fb08ce06db9b02fbd8026cc2c0945eb9841 # v0.6.0
         with:
-          patterns: kubernetes/**/*
+          patterns: |
+            kubernetes/**/*
+            .github/workflows/flate.yaml
 
   diff:
     if: ${{ needs.filter.outputs.changed-files != '[]' }}
@@ -33,19 +35,24 @@ jobs:
           persist-credentials: false
 
       - name: Setup flate
-        uses: home-operations/flate/action@a411fb90bfa6ed83934d4891e320900a5ac23b6f # 0.1.37
+        uses: home-operations/flate/action@ff3803f19b3e933da5a90085e275def2d89ef17e # 0.2.6
         with:
           cache: true
 
       - name: Run flate diff
         id: diff
         run: |
+          out="$(flate diff all \
+            --path ./kubernetes/flux/cluster \
+            --allow-missing-secrets \
+            --output github)"
           {
             echo 'diff<<EOF'
-            flate diff all \
-              --path ./kubernetes/flux/cluster \
-              --allow-missing-secrets \
-              --output markdown
+            if [[ -n "$out" ]]; then
+              echo '```diff'
+              echo "$out"
+              echo '```'
+            fi
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
