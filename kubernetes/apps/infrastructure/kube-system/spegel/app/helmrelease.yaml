@@ -20,3 +20,11 @@ spec:
         memory: 32Mi
       limits:
         memory: 64Mi
+    serviceMonitor:
+      enabled: true
+    grafanaDashboard:
+      enabled: true
+      mode: GrafanaOperator
+      grafanaOperator:
+        matchLabels:
+          dashboards: grafana
