@@ -14,6 +14,8 @@ spec:
       persistentVolume:
         enabled: true
         existingClaim: victoria-logs
+      vmServiceScrape:
+        enabled: true
       resources:
         requests:
           cpu: 50m
