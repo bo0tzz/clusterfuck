@@ -28,8 +28,9 @@ spec:
         requests:
           cpu: 25m
           memory: 128Mi
-        limits:
-          memory: 384Mi
+        # No memory limit: the rare mon cluster-log re-emit can briefly need
+        # well over 384Mi to read through the backlog; a cgroup cap just OOM-loops
+        # it (see incident 2026-06-06). Uncapped so it can recover; monitor usage.
     dashboards:
       enabled: true
       grafanaOperator:
