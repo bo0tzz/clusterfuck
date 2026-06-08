@@ -15,8 +15,10 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/pfnet-research/alertmanager-to-github
-              tag: v0.2.5
+              # Temporary fork carrying the `is:issue` search fix (pfnet-research#64).
+              # Revert to ghcr.io/pfnet-research/alertmanager-to-github once that's released.
+              repository: ghcr.io/bo0tzz/alertmanager-to-github
+              tag: v0.2.5-isissue2
             # Target owner/repo come from the Alertmanager webhook URL query
             # (?owner=bo0tzz&repo=clusterfuck), so they're per-request, not baked in here.
             args:
