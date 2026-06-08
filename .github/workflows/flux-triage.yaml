@@ -2,19 +2,15 @@ name: "Flux Triage"
 
 on:
   issues:
-    types: [opened, labeled]
+    types: [labeled]
 
 concurrency:
   group: flux-triage-${{ github.event.issue.number }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   triage:
-    # Bridge-created issues arrive `opened` already carrying the label; manual triage works by
-    # adding the label to any issue (`labeled`). Gate on the label alone — no author check.
-    if: >-
-      (github.event.action == 'opened' && contains(github.event.issue.labels.*.name, 'auto-triage')) ||
-      (github.event.action == 'labeled' && github.event.label.name == 'auto-triage')
+    if: github.event.label.name == 'auto-triage'
     name: Investigate
     runs-on: clusterfuck
     timeout-minutes: 20
