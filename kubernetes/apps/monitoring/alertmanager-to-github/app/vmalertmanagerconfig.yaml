@@ -1,0 +1,21 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAlertmanagerConfig
+metadata:
+  name: flux-triage
+spec:
+  route:
+    receiver: github-triage
+    # Only triage-labeled alerts reach the bridge — this is a sub-route under the global
+    # root, so the ~40 default-rule alerts (no triage label) never match and are unaffected.
+    matchers:
+      - 'triage="true"'
+    group_by: ["customresource_kind", "exported_namespace", "name"]
+    group_wait: 30s
+    group_interval: 5m
+    repeat_interval: 12h
+  receivers:
+    - name: github-triage
+      webhook_configs:
+        - url: "http://alertmanager-to-github.monitoring.svc.cluster.local:8080/v1/webhook?owner=bo0tzz&repo=clusterfuck"
+          send_resolved: true

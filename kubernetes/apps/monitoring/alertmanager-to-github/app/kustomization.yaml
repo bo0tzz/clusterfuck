@@ -7,3 +7,5 @@ resources:
   - helmrelease.yaml
   - config.yaml
   - github-token.sops.yaml
+  - vmrule.yaml
+  - vmalertmanagerconfig.yaml

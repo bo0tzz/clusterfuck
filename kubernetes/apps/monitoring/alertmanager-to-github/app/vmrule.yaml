@@ -1,0 +1,22 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: flux-resource-stuck
+spec:
+  groups:
+    - name: flux-triage
+      rules:
+        - alert: FluxResourceStuck
+          expr: gotk_resource_info{ready="False",suspended!="true"} == 1
+          for: 1h
+          labels:
+            triage: "true"
+            severity: warning
+          annotations:
+            summary: >-
+              Flux {{ $labels.customresource_kind }} {{ $labels.exported_namespace }}/{{ $labels.name }}
+              stuck: {{ $labels.ready_reason }}
+            description: >-
+              {{ $labels.customresource_kind }} {{ $labels.exported_namespace }}/{{ $labels.name }} has been
+              not-Ready (reason {{ $labels.ready_reason }}) for more than 15m.
