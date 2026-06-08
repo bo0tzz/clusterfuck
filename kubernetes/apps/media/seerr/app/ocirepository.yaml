@@ -6,4 +6,4 @@ spec:
   interval: 1h
   url: oci://ghcr.io/seerr-team/seerr/seerr-chart
   ref:
-    tag: "3.6.0"
+    tag: "3.7.0"
