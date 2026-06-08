@@ -1,0 +1,34 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-to-github-templates
+data:
+  title.tmpl: |-
+    [triage] {{ index .Payload.CommonLabels "alertname" }}: {{ index .Payload.CommonLabels "customresource_kind" }} {{ index .Payload.CommonLabels "exported_namespace" }}/{{ index .Payload.CommonLabels "name" }}
+  body.tmpl: |
+    {{- $p := .Payload -}}
+    **Alert `{{ index $p.CommonLabels "alertname" }}` is {{ $p.Status }}** — automated triage requested.
+
+    | field | value |
+    |---|---|
+    | Kind | `{{ index $p.CommonLabels "customresource_kind" }}` |
+    | Namespace | `{{ index $p.CommonLabels "exported_namespace" }}` |
+    | Name | `{{ index $p.CommonLabels "name" }}` |
+    | Not-ready reason | `{{ index $p.CommonLabels "ready_reason" }}` |
+
+    <details><summary>All alert labels</summary>
+
+    {{ range $k, $v := $p.CommonLabels }}- `{{ $k }}` = `{{ $v }}`
+    {{ end }}
+    </details>
+    {{- if $p.CommonAnnotations }}
+
+    <details><summary>Annotations</summary>
+
+    {{ range $k, $v := $p.CommonAnnotations }}- `{{ $k }}`: {{ $v }}
+    {{ end }}
+    </details>
+    {{- end }}
+
+    <!-- payload: {{ json $p }} -->

@@ -1,0 +1,78 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: alertmanager-to-github
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: alertmanager-to-github
+    namespace: monitoring
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/pfnet-research/alertmanager-to-github
+              tag: v0.2.5
+            # Target owner/repo come from the Alertmanager webhook URL query
+            # (?owner=bo0tzz&repo=clusterfuck), so they're per-request, not baked in here.
+            args:
+              - start
+              - --labels
+              - auto-triage
+              - --title-template-file
+              - /templates/title.tmpl
+              - --body-template-file
+              - /templates/body.tmpl
+            envFrom:
+              - secretRef:
+                  name: alertmanager-to-github-secret
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /metrics
+                    port: 8080
+                  initialDelaySeconds: 10
+                  periodSeconds: 30
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /metrics
+                    port: 8080
+                  initialDelaySeconds: 5
+                  periodSeconds: 15
+            securityContext:
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 64Mi
+    defaultPodOptions:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8080
+    persistence:
+      templates:
+        type: configMap
+        name: alertmanager-to-github-templates
+        globalMounts:
+          - path: /templates

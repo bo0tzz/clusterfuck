@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: alertmanager-to-github-secret
+stringData:
+  ATG_GITHUB_TOKEN: ENC[AES256_GCM,data:ywxLBttJYZAKtax6pc6FL/WfMPw1GbKQ7/kpnkTb/6qg/lOZ4Vs6ZsFjvEuhM/fR0tXFxHknaQ5rTG0miyrLVRTBJUYMwbQjh4cqV0wJfJ9cB4JGexEMgLnSOPYQ,iv:jtKiI4ulbs+bvBv7XJqXJcG15Nr6Wn6/CsVqkCJiLSs=,tag:M68yS0GxyfMILZmx1KtTyg==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlY1YrWFNwbW5Ya0lYUjNX
+        T1NuRWNGVGhHQ1RXSXluVWF2WTNPc3pUTEQ0CnpDNVlHTk9mS2g4T25JSWhtRkZH
+        UXVpNXg2L0lYMWxja1IyUDY0WHJBcWcKLS0tIE15NElUSUZaK281NkFFMU9rQ3RK
+        RFZ5YVVFaW83cGlQQmxUcFBIRjRQSkkKKyDe7SujeKdvZhR1Csdr4la3uVNXz11U
+        noYzbZtGztSZLy0/0/5q8mhhBy2xq3QIRAu6MELvA+zibyTkFvQmrQ==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1mqj2kqedv27ec0qe9wtwucv4qtgrlyjcj8u0pznmffmzxswsscus3q4tfj
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-06-08T18:00:50Z"
+  mac: ENC[AES256_GCM,data:1+s8JFZRgS6gpnx9ydxWUzeCDrmL937o8xJl4tFyBFmUSXOz7lXPxmEbeHlHqkPz9Pbq3BNhiLCWg/UfEeSHFUXiZzZOG0aIhY/Y9Yuc8hEHQWCFWO3ekyXlPJZjoxwXgalnUR2L9aGMR3/BDoDKfAFm5Xi2K7e9oTw6ontlJo0=,iv:uCk1m4sTK7sZvAt3tYT0NMe4sOkpXIRS++49czf0yb4=,tag:eSlKfwix7IjNnS5wR3gz8w==,type:str]
+  mac_only_encrypted: true
+  version: 3.13.1

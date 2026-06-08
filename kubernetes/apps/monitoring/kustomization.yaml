@@ -14,3 +14,4 @@ resources:
   - ./shelly-exporter/ks.yaml
   - ./snmp-exporter/ks.yaml
   - ./smartctl-exporter/ks.yaml
+  - ./alertmanager-to-github/ks.yaml
