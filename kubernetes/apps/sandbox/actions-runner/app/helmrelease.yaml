@@ -1,0 +1,22 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: actions-runner-clusterfuck
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: gha-runner-scale-set
+  values:
+    githubConfigUrl: https://github.com/bo0tzz/clusterfuck
+    githubConfigSecret: github-runner-auth
+    runnerScaleSetName: clusterfuck
+    minRunners: 0
+    maxRunners: 2
+    controllerServiceAccount:
+      namespace: actions-controller
+      name: actions-runner-controller-gha-rs-controller
+    template:
+      spec:
+        serviceAccountName: flux-triage-runner

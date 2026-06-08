@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-runner-auth
+stringData:
+  github_token: ENC[AES256_GCM,data:HoE0JPx0MZ3+/0VJeweZ/UC46WVuGfPC1UECIJbmj6EO0lQbZdrvN2qnFh01djI3xcvZFlA3OLeXmrDiH7XhBx255E4sWor9Saxv/whDjVBjEOWxOai92/swiAxM,iv:0dPQPNrUCsR/D3S70L07ShEvRzJEzbdC4B/Nkie4w5s=,tag:SomWJouCMT6iE8MTvHpy6g==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3TkhFajBZWjdhQUlZK1Zt
+        U3Rma0hFSDFZZ3JUNE9HS2htQ25oNit3d2tnCjlIamdpQlcyNmZlVnJheGNCL2Rn
+        cmVYYmMrZ1hMSVIvR21JclA2RmVrU0kKLS0tIGlYcThhSEZXSDRucGNqMHl1eWx1
+        UTVwUGRFVXFzcFhxbW02R0dDRk1aZE0KheXEZWHHbnzbdI/3vaVmvLUbssfQNkG9
+        VDItsTAkKWivitVqiD8e3cyRa8hUNgai5p9pUPLi8U3Hq37aJrYeuQ==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1mqj2kqedv27ec0qe9wtwucv4qtgrlyjcj8u0pznmffmzxswsscus3q4tfj
+  encrypted_regex: ^(data|stringData)$
+  lastmodified: "2026-06-08T15:37:27Z"
+  mac: ENC[AES256_GCM,data:4vlJh7oTEBqLV/YFvus5zHuG8tm9dNwyc7DNDd/vimF61fWWmfznb0Ed+wahpN/POas28BDEtXNiw1g2Sg/LVChtCtZ+NVmNKGxNr/63aS3Mjn3Io1qTM+cUav7xw4izI4uB2YR5Bl7vCqFCFgt7HKYAyu80Cc7eujMsB+3bM+0=,iv:v9BM1M6pjCIMG7EylT2ctRqJJyUyVSgO83S1plWLTJA=,tag:4QrsdsrWbbXMkOX472V7CQ==,type:str]
+  mac_only_encrypted: true
+  version: 3.13.1

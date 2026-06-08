@@ -1,0 +1,35 @@
+---
+# Egress allow-list for everything in the `sandbox` namespace (runners + any future
+# semi-trusted workloads). Cilium is used (not a plain NetworkPolicy) because reaching the
+# kube-apiserver cleanly needs the `kube-apiserver` entity. Selecting any sandbox endpoint for
+# egress flips the namespace to default-deny egress, so lateral in-cluster traffic is blocked.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: sandbox-egress
+spec:
+  endpointSelector: {}
+  egress:
+    # Cluster DNS
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+    # Kubernetes API (kubectl from the triage agent)
+    - toEntities:
+        - kube-apiserver
+    # Public internet (GitHub, Claude API, mise tool downloads, WebFetch)
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+            - port: "80"
+              protocol: TCP
