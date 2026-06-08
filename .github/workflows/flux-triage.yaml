@@ -1,0 +1,114 @@
+name: "Flux Triage"
+
+on:
+  issues:
+    types: [opened, labeled]
+
+concurrency:
+  group: flux-triage-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  triage:
+    # Bridge-created issues arrive `opened` already carrying the label; manual triage works by
+    # adding the label to any issue (`labeled`). Gate on the label alone — no author check.
+    if: >-
+      (github.event.action == 'opened' && contains(github.event.issue.labels.*.name, 'auto-triage')) ||
+      (github.event.action == 'labeled' && github.event.label.name == 'auto-triage')
+    name: Investigate
+    runs-on: clusterfuck
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      issues: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup tools
+        uses: jdx/mise-action@dba19683ed58901619b14f395a24841710cb4925 # v4.1.0
+
+      - uses: anthropics/claude-code-action@64de744025ca9e24df2b88204b4f1e968f39f009 # v1.0.139
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: |
+            --model claude-sonnet-4-6
+            --allowedTools "Read,Glob,Grep,Bash(kubectl get:*),Bash(kubectl describe:*),Bash(kubectl logs:*),Bash(kubectl top:*),Bash(kubectl events:*),Bash(kubectl api-resources:*),Bash(flux get:*),Bash(flux logs:*),Bash(flux events:*),Bash(flux trace:*),Bash(flux stat:*),Bash(gh issue view:*),Bash(gh issue comment:*),Bash(git log:*),Bash(git diff:*),WebFetch,WebSearch"
+          prompt: |
+            You are an automated triage agent for a Flux GitOps Kubernetes cluster (Talos + Flux).
+            You run INSIDE the cluster on a self-hosted runner with READ-ONLY access: `kubectl` and
+            `flux` use the in-cluster ServiceAccount automatically (no kubeconfig needed). The
+            repository that defines the cluster is checked out in the current directory. You
+            investigate and report — you never modify the cluster or the repo.
+
+            REPO: ${{ github.repository }}
+            ISSUE: #${{ github.event.issue.number }}
+
+            ## Step 1 — Read and classify the issue
+            Read it with `gh issue view ${{ github.event.issue.number }} --comments`. Decide:
+
+            - **Flux-stuck-resource alert** (the usual case): the body comes from our alerting bridge
+              and names a specific Flux resource — a kind (HelmRelease / Kustomization / …), a name,
+              a namespace, and a not-ready reason. Go to Step 2.
+            - **Anything else** (a human hand-labeled an arbitrary issue): there is no alert payload.
+              Do a best-effort, read-only investigation of whatever the issue describes. If it is too
+              vague to act on, post a short comment stating exactly what information you'd need, then
+              stop. Do not invent a Flux resource that wasn't mentioned.
+
+            ## Step 2 — Diagnose (alert case)
+            Investigate the named resource read-only. Useful moves:
+            - `kubectl get <kind> <name> -n <ns> -o yaml` for the COMPLETE object (full spec,
+              status, every condition, lastAppliedRevision/history) — prefer this over `describe`
+              for completeness. Use `flux get <kind> <name> -n <ns>` and `kubectl describe …` for a
+              quick status read and human-readable events.
+            - For HelmReleases: inspect the underlying workload (deploy/statefulset/daemonset, pods)
+              and `kubectl logs` (add `--previous` for crashloops).
+            - `kubectl get events -n <ns> --sort-by=.lastTimestamp`.
+            - In the repo: find this resource's manifests under `kubernetes/apps/`, and use
+              `git log`/`git diff` on those paths — a recent Renovate bump or edit is a common cause.
+
+            Identify the ROOT CAUSE, not just the symptom, cross-checking cluster state against the repo.
+            If the resource has already recovered (now Ready), say so and stop.
+
+            ## Step 3 — Classify the fix
+            - **git-fixable**: the cause lives in this repo (bad image tag, values/schema change,
+              wrong field, resource limits, …). Produce a concrete, minimal unified diff that would
+              fix it. Do NOT apply it.
+            - **runtime / not git-fixable**: needs a cluster action or has an external cause (failed
+              upgrade needing rollback, unbound PVC, scheduling, upstream outage, transient). Explain
+              what's needed and why it isn't a repo change.
+
+            ## Step 4 — Report
+            Post exactly ONE comment. Build the body and pipe it via stdin (preserves formatting):
+            `gh issue comment ${{ github.event.issue.number }} --body-file - <<'EOF' … EOF`. Structure:
+
+            ### Diagnosis
+            <root cause, with the evidence that supports it>
+
+            ### Fixable in git?
+            Yes / No — <one line>
+
+            ### Recommended remediation
+            - If **git-fixable**: a minimal unified diff against the repo:
+              ```diff
+              <unified diff>
+              ```
+            - If **runtime / not git-fixable**: the concrete action(s) a human should take — e.g. the
+              exact `flux`/`kubectl` command to run, a rollback, a runtime resource bump, or
+              "wait — transient/upstream, no action needed". This is prose/commands, NOT a diff.
+
+            ### What I checked
+            <brief list of the key commands/files, so a human can retrace your steps>
+
+            ## Constraints
+            - READ-ONLY: never run mutating kubectl/flux (apply, delete, patch, edit, scale, rollout,
+              reconcile, suspend, resume). RBAC blocks it anyway — don't attempt it.
+            - You have no access to Secret contents (RBAC denies it) and you don't need them:
+              diagnose from specs, statuses, events, logs, and Secret *references* (names/keys),
+              never their values. Do not attempt to read, decode, or exfiltrate Secret data.
+            - Post exactly one comment. Be concise and specific; prefer evidence over speculation.
+            - When citing github.com URLs in the comment, rewrite the host to `redirect.github.com`
+              to avoid spamming cross-referenced issues/PRs with backlink notifications.
