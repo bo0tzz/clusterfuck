@@ -23,7 +23,7 @@ spec:
           main:
             image:
               repository: ghcr.io/home-operations/home-assistant
-              tag: "2026.6.1"
+              tag: "2026.6.2"
             env:
               TZ: Europe/Amsterdam
             resources:
