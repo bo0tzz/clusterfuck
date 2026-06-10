@@ -5,9 +5,6 @@ metadata:
   name: prometheus-snmp-exporter
 spec:
   interval: 1h
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
   url: oci://ghcr.io/prometheus-community/charts/prometheus-snmp-exporter
   ref:
     tag: "9.14.0"

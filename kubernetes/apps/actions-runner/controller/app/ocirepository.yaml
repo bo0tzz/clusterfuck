@@ -5,9 +5,6 @@ metadata:
   name: gha-runner-scale-set-controller
 spec:
   interval: 1h
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
   url: oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
   ref:
     tag: "0.14.2"

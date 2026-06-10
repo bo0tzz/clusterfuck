@@ -8,6 +8,3 @@ spec:
   url: oci://ghcr.io/home-operations/charts-mirror/external-dns
   ref:
     tag: 1.21.1
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy

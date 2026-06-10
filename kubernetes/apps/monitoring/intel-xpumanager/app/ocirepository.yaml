@@ -5,9 +5,6 @@ metadata:
   name: xpumd
 spec:
   interval: 15m
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
   ref:
     tag: 2.0.0-rc.0
   url: oci://ghcr.io/intel/xpumanager/charts/xpumd

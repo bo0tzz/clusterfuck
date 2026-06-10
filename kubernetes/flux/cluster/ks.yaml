@@ -50,6 +50,18 @@ spec:
               target:
                 group: helm.toolkit.fluxcd.io
                 kind: HelmRelease
+            - patch: |-
+                apiVersion: source.toolkit.fluxcd.io/v1
+                kind: OCIRepository
+                metadata:
+                  name: _
+                spec:
+                  layerSelector:
+                    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+                    operation: copy
+              target:
+                group: source.toolkit.fluxcd.io
+                kind: OCIRepository
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization

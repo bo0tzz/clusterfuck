@@ -5,9 +5,6 @@ metadata:
   name: local-path-provisioner
 spec:
   interval: 15m
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
   ref:
     tag: 0.0.36
   url: oci://ghcr.io/rancher/local-path-provisioner/charts/local-path-provisioner

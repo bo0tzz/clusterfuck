@@ -8,6 +8,3 @@ spec:
   url: oci://quay.io/jetstack/charts/cert-manager
   ref:
     tag: v1.20.2
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
