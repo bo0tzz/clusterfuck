@@ -8,7 +8,10 @@ spec:
     - name: flux-triage
       rules:
         - alert: FluxResourceStuck
-          expr: gotk_resource_info{ready="False",suspended!="true"} == 1
+          # Exclude DependencyNotReady: those resources aren't broken themselves, they're waiting
+          # on a failing dependency — which fires its own alert with the real reason. Filtering
+          # them collapses a dependency cascade down to the single actionable root.
+          expr: gotk_resource_info{ready="False",suspended!="true",ready_reason!="DependencyNotReady"} == 1
           for: 1h
           labels:
             triage: "true"
