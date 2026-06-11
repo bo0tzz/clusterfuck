@@ -7,11 +7,19 @@ spec:
   groups:
     - name: flux-triage
       rules:
-        - alert: FluxResourceStuck
-          # Exclude DependencyNotReady: those resources aren't broken themselves, they're waiting
-          # on a failing dependency — which fires its own alert with the real reason. Filtering
-          # them collapses a dependency cascade down to the single actionable root.
+        # The set of genuinely-stuck Flux resources, evaluated once and reused below.
+        # Exclude DependencyNotReady: those resources aren't broken themselves, they're waiting on a
+        # failing dependency — which fires its own alert with the real reason. Filtering them
+        # collapses a dependency cascade down to the single actionable root.
+        - record: flux:resource_stuck
           expr: gotk_resource_info{ready="False",suspended!="true",ready_reason!="DependencyNotReady"} == 1
+
+        # Per-resource alert — but only when this is NOT a cluster-wide storm. The
+        # `and on() (count(...) < 10)` makes every per-resource series evaluate empty once 10+
+        # resources are stuck, so a common-cause outage (connectivity, storage, …) produces zero
+        # per-resource issues; FluxClusterWideFailure below fires a single aggregate instead.
+        - alert: FluxResourceStuck
+          expr: flux:resource_stuck and on() (count(flux:resource_stuck) < 10)
           for: 1h
           labels:
             triage: "true"
@@ -22,4 +30,18 @@ spec:
               stuck: {{ $labels.ready_reason }}
             description: >-
               {{ $labels.customresource_kind }} {{ $labels.exported_namespace }}/{{ $labels.name }} has been
-              not-Ready (reason {{ $labels.ready_reason }}) for more than 15m.
+              not-Ready (reason {{ $labels.ready_reason }}) for more than an hour.
+
+        # Storm guard: when 10+ resources are stuck at once it's almost certainly systemic, not N
+        # independent problems. Fire ONE aggregate issue instead of flooding. Resolves (and the
+        # bridge auto-closes its issue) once the count drops back below the threshold.
+        - alert: FluxClusterWideFailure
+          expr: count(flux:resource_stuck) >= 10
+          for: 30m
+          labels:
+            triage: "true"
+            severity: critical
+          annotations:
+            summary: >-
+              {{ $value }} Flux resources stuck at once — likely a systemic/cluster-wide cause
+              (connectivity, storage, or a core dependency). Investigate cluster-wide, not per-resource.
