@@ -1,0 +1,52 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: k8s-gateway
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: k8s-gateway
+  interval: 1h
+  values:
+    domain: "bo0tzz.me zijlein.de bo0.tz loc.place"
+    ttl: 60
+    watchedResources: ["HTTPRoute", "Service"]
+    fallthrough:
+      enabled: true
+      zones: []
+    service:
+      type: LoadBalancer
+      port: 53
+      useTcp: true
+      annotations:
+        lbipam.cilium.io/ips: "10.0.10.102"
+    extraZonePlugins:
+      - name: log
+      - name: errors
+      - name: health
+        configBlock: |-
+          lameduck 5s
+      - name: ready
+      - name: prometheus
+        parameters: 0.0.0.0:9153
+      - name: forward
+        parameters: . 1.1.1.1 1.0.0.1
+      - name: loop
+      - name: reload
+      - name: loadbalance
+    replicaCount: 2
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: k8s-gateway
+            app.kubernetes.io/instance: k8s-gateway
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 128Mi
