@@ -14,6 +14,7 @@ spec:
             deviceClassName: gpu.intel.com
             selectors:
               # Never claim a parent PF — always leave it to its VFs.
+              # TODO: switch to `type == "vf"` (driver >=0.11.0) once every GPU is SR-IOV'd (incl. the B50s); today this also covers bare non-SR-IOV GPUs.
               - cel:
                   expression: device.attributes["gpu.intel.com"].sriov == false
               # Default `1==1` is a CEL always-true expression. A naive default
