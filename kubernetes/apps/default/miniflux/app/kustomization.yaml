@@ -16,5 +16,8 @@ patches:
       - op: replace
         path: /spec/instances
         value: 1
+      - op: add
+        path: /spec/enablePDB
+        value: false
       - op: remove
         path: /spec/postgresql/synchronous
