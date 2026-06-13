@@ -10,6 +10,7 @@ spec:
     version: v1.13.4
   policy:
     rebootMode: powercycle
+    placement: hard
   healthChecks:
     - apiVersion: ceph.rook.io/v1
       kind: CephCluster
