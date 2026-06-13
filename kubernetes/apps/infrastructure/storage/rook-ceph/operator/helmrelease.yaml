@@ -12,6 +12,8 @@ spec:
     monitoring:
       enabled: true
 
+    priorityClassName: system-cluster-critical
+
     csi:
       cephFSKernelMountOptions: ms_mode=prefer-crc
       enableLiveness: true
