@@ -7,6 +7,7 @@ metadata:
 spec:
   deletionPolicy: WaitForTermination
   interval: 1h
+  retryInterval: 5m
   path: ./kubernetes/apps
   prune: true
   sourceRef:
@@ -23,6 +24,7 @@ spec:
           name: _
         spec:
           deletionPolicy: WaitForTermination
+          retryInterval: 5m
           decryption:
             provider: sops
           patches:
