@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/component.json
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+components:
+  - ../postgres
+patches:
+  - target:
+      group: postgresql.cnpg.io
+      kind: Cluster
+    patch: |-
+      - op: replace
+        path: /spec/instances
+        value: 1
+      - op: add
+        path: /spec/enablePDB
+        value: false
+      - op: remove
+        path: /spec/postgresql/synchronous

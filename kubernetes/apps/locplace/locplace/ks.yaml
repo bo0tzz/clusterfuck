@@ -31,7 +31,7 @@ spec:
     name: flux-system
     namespace: flux-system
   components:
-    - ../../../../components/postgres
+    - ../../../../components/postgres-single
   dependsOn:
     - name: locplace-bucket
     - name: cnpg-barman-cloud

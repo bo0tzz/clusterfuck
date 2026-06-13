@@ -15,11 +15,3 @@ patches:
       - op: replace
         path: /spec/bootstrap/initdb/import/databases
         value: [spoolman]
-      - op: replace
-        path: /spec/instances
-        value: 1
-      - op: add
-        path: /spec/enablePDB
-        value: false
-      - op: remove
-        path: /spec/postgresql/synchronous
