@@ -17,6 +17,17 @@ spec:
       limits:
         memory: 384Mi
     webhook:
+      replicaCount: 2
+      podDisruptionBudget:
+        enabled: true
+        minAvailable: 1
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: external-secrets-webhook
+              topologyKey: kubernetes.io/hostname
       resources:
         requests:
           cpu: 10m
