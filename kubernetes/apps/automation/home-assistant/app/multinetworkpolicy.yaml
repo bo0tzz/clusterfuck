@@ -1,0 +1,14 @@
+---
+apiVersion: k8s.cni.cncf.io/v1beta1
+kind: MultiNetworkPolicy
+metadata:
+  name: home-assistant-lan-deny-ingress
+  annotations:
+    k8s.v1.cni.cncf.io/policy-for: automation/lan
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: home-assistant
+  policyTypes:
+    - Ingress
+  ingress: []

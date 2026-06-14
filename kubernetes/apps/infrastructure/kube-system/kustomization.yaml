@@ -8,3 +8,4 @@ resources:
   - ./spegel/ks.yaml
   - ./intel-gpu-resource-driver/ks.yaml
   - ./multus/ks.yaml
+  - ./multi-networkpolicy/ks.yaml

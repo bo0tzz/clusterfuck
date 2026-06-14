@@ -6,6 +6,7 @@ resources:
   - ocirepository.yaml
   - helmrelease.yaml
   - network.yaml
+  - multinetworkpolicy.yaml
   - user.yaml
 patches:
   - target:

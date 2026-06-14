@@ -37,6 +37,8 @@ spec:
     - name: automation-pgmqtt
     - name: multus
       namespace: kube-system
+    - name: multi-networkpolicy
+      namespace: kube-system
   postBuild:
     substitute:
       APP: home-assistant
