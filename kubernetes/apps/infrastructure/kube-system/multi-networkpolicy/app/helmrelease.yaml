@@ -42,8 +42,8 @@ spec:
                   - NET_ADMIN
             resources:
               requests:
-                cpu: 100m
-                memory: 80Mi
+                cpu: 10m
+                memory: 24Mi
               limits:
                 memory: 150Mi
     serviceAccount:
