@@ -19,6 +19,14 @@ patches:
     up: true
   - |-
     apiVersion: v1alpha1
+    kind: VLANConfig
+    name: trunk.1
+    vlanID: 1
+    vlanMode: 802.1q
+    parent: trunk
+    up: true
+  - |-
+    apiVersion: v1alpha1
     kind: Layer2VIPConfig
     name: 10.0.10.10
     link: trunk.16

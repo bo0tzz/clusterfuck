@@ -10,6 +10,8 @@ spec:
     name: home-assistant
   values:
     defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: lan
       securityContext:
         runAsUser: 568
         runAsGroup: 568

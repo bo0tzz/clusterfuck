@@ -5,6 +5,7 @@ namespace: automation
 resources:
   - ocirepository.yaml
   - helmrelease.yaml
+  - network.yaml
   - user.yaml
 patches:
   - target:

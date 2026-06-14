@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: multus
+spec:
+  interval: 15m
+  ref:
+    tag: 1.3.2
+  url: oci://ghcr.io/bjw-s-labs/helm/multus

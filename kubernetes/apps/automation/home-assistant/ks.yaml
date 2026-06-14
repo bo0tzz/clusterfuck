@@ -35,6 +35,8 @@ spec:
   dependsOn:
     - name: automation-home-assistant-bucket
     - name: automation-pgmqtt
+    - name: multus
+      namespace: kube-system
   postBuild:
     substitute:
       APP: home-assistant
