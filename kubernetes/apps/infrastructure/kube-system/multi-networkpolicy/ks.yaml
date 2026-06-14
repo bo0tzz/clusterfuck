@@ -12,19 +12,6 @@ spec:
     /*
     !/scheme.yml
 ---
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: GitRepository
-metadata:
-  name: multi-networkpolicy-iptables
-spec:
-  interval: 1h
-  url: https://github.com/k8snetworkplumbingwg/multi-networkpolicy-iptables
-  ref:
-    commit: cbf2b11730b9fb0477d8d578129609df0c51f06b
-  ignore: |
-    /*
-    !/deploy.yml
----
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -48,39 +35,17 @@ metadata:
   name: multi-networkpolicy
 spec:
   interval: 1h
-  path: ./
+  path: ./kubernetes/apps/infrastructure/kube-system/multi-networkpolicy/app
   prune: true
   wait: false
   sourceRef:
     kind: GitRepository
-    name: multi-networkpolicy-iptables
+    name: flux-system
+    namespace: flux-system
   dependsOn:
     - name: multi-networkpolicy-crd
-  images:
-    - name: ghcr.io/k8snetworkplumbingwg/multi-networkpolicy-iptables
-      digest: sha256:eb21e1ef309b7531a09e029431cae2bed16ced5948901aab7a7853c8f89573e6
-  patches:
-    # Talos uses containerd, not the upstream CRI-O default
-    - target:
-        kind: DaemonSet
-        name: multi-networkpolicy-ds-amd64
-      patch: |
-        apiVersion: apps/v1
-        kind: DaemonSet
-        metadata:
-          name: multi-networkpolicy-ds-amd64
-        spec:
-          template:
-            spec:
-              containers:
-                - name: multi-networkpolicy
-                  args:
-                    - "--host-prefix=/host"
-                    - "--container-runtime-endpoint=/run/containerd/containerd.sock"
-                    - "--pod-iptables=/var/lib/multi-networkpolicy/iptables"
-                  imagePullPolicy: IfNotPresent
   healthChecks:
     - apiVersion: apps/v1
       kind: DaemonSet
-      name: multi-networkpolicy-ds-amd64
+      name: multi-networkpolicy
       namespace: kube-system
