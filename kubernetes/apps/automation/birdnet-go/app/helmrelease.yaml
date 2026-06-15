@@ -26,6 +26,11 @@ spec:
               tag: nightly-20260615@sha256:60573d17f59c132ac42d9d264508e80cdfbf08125f235aaaf6791a9ce511af68
             env:
               TZ: Europe/Amsterdam
+              # UID 568 has no /etc/passwd entry, so the runtime defaults $HOME=/
+              # and birdnet-go tries to mkdir /.config for its config dir -> crashloop.
+              # Point HOME at the (writable) config volume; the entrypoint then
+              # symlinks $HOME/.config/birdnet-go -> /config and settings load.
+              HOME: /config
     service:
       main:
         controller: main
