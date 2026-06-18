@@ -23,12 +23,14 @@ spec:
           resources:
             requests:
               storage: 200Gi
+        # Bumped from 2Gi: accepting the wider (NFD-labelled) kubelet/cadvisor
+        # series + replaying vmagent's backlog OOM-crashlooped vmsingle at 2Gi.
         resources:
           requests:
             cpu: 100m
-            memory: 512Mi
+            memory: 1Gi
           limits:
-            memory: 2Gi
+            memory: 4Gi
 
     vmagent:
       spec:
