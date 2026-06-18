@@ -11,3 +11,7 @@ spec:
     cdi:
       staticPath: /var/cdi/static
       dynamicPath: /var/cdi/dynamic
+    # Ships a NodeFeatureRule (labels Intel-GPU nodes) and scopes the kubelet
+    # plugin to it via NFD.
+    nodeFeatureRules:
+      enabled: true

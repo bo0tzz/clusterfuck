@@ -10,20 +10,11 @@ spec:
     name: drm-exporter
   values:
     fullnameOverride: drm-exporter
-    # Device access comes from the Intel GPU DRA driver (the admin-access
-    # ResourceClaimTemplate + postRenderer below), NOT a hostPath. A plain
-    # hostPath-mounted /dev/dri is visible but blocked by the cgroup-v2 device
-    # controller for a non-privileged container; DRA/CDI injects the device
-    # nodes *with* the cgroup allow rule, so the exporter runs unprivileged.
-    # devCpu="" too: the Talos kernel has CONFIG_X86_MSR unset (upstream declines
-    # on security grounds), so the MSR path (Intel iGPU package temp + RAPL power
-    # fallback) is unavailable. /sys is still mounted by the chart for freq/mem/
-    # hwmon stats.
+    # /dev/dri comes from the DRA claim (not a hostPath — that's cgroup-blocked
+    # for a non-privileged container); no MSR on Talos (CONFIG_X86_MSR unset).
     hostAccess:
       devDri: ""
       devCpu: ""
-    # Drop SYS_RAWIO (only used for the unavailable MSR path); keep PERFMON for
-    # the Intel i915/xe engine-utilization perf PMU.
     securityContext:
       capabilities:
         add: [PERFMON]
@@ -47,23 +38,11 @@ spec:
         memory: 32Mi
       limits:
         memory: 64Mi
-      # Container side of the DRA claim wired up by the postRenderer below.
       claims:
         - name: gpu
-    # Only janky (Arc Pro B50) and tiny (i9-12900H Iris Xe) have a GPU; wonky has
-    # none. Both run the xe driver (kernel 6.18 >= the 6.16 xe perf-PMU floor).
-    # Scoping avoids a permanently-Pending DaemonSet pod on wonky (no GPU device
-    # for the claim to allocate). TODO: switch to an NFD GPU label once NFD lands.
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values: [janky, tiny]
-  # The chart's DaemonSet template has no pod-level resourceClaims field, so
-  # inject the DRA claim that references the admin-access ResourceClaimTemplate.
+    nodeSelector:
+      intel.feature.node.kubernetes.io/gpu: "true"
+  # Chart has no pod-level resourceClaims field; inject the DRA claim.
   postRenderers:
     - kustomize:
         patches:

@@ -6,6 +6,7 @@ resources:
   - namespace.yaml
   - ./cilium/ks.yaml
   - ./spegel/ks.yaml
+  - ./node-feature-discovery/ks.yaml
   - ./intel-gpu-resource-driver/ks.yaml
   - ./multus/ks.yaml
   - ./multi-networkpolicy/ks.yaml
