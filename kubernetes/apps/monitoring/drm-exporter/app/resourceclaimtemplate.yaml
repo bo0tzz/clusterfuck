@@ -1,0 +1,24 @@
+---
+# Admin-access "monitor" claim: grants the exporter read access to ALL Intel
+# GPU devices on the node (PF + VFs) via the Intel GPU DRA driver. adminAccess
+# allocations are NOT counted as consumed, so this does not steal VFs from
+# jellyfin/frigate/etc. This is how the exporter gets the /dev/dri device nodes
+# (with the device-cgroup allow rule set up by CDI) without running privileged.
+# Requires the DRAAdminAccess feature gate + the namespace's
+# resource.kubernetes.io/admin-access="true" label (see namespace.yaml).
+apiVersion: resource.k8s.io/v1
+kind: ResourceClaimTemplate
+metadata:
+  name: drm-exporter-gpu
+spec:
+  spec:
+    devices:
+      requests:
+        - name: all-gpus
+          exactly:
+            deviceClassName: gpu.intel.com
+            adminAccess: true
+            allocationMode: All
+            tolerations:
+              - effect: NoExecute
+              - effect: NoSchedule
