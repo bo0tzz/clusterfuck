@@ -16,7 +16,7 @@ spec:
           main:
             image:
               repository: esphome/esphome
-              tag: "2026.5.3"
+              tag: "2026.6.0"
             env:
               TZ: Europe/Amsterdam
               ESPHOME_DASHBOARD_USE_PING: "true"
