@@ -1,0 +1,53 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: drm-exporter
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: drm-exporter
+  values:
+    fullnameOverride: drm-exporter
+    # The Talos kernel ships with CONFIG_X86_MSR unset (upstream declines to
+    # enable it on security grounds), so /dev/cpu/*/msr doesn't exist. Skip the
+    # /dev/cpu mount and drop SYS_RAWIO (only used for the MSR path) below. This
+    # costs the Intel iGPU package-temp metric on tiny + the RAPL power fallback;
+    # engine utilization (PMU), memory, frequency, and dGPU hwmon temp/power
+    # (the Arc B50 on janky) are unaffected.
+    hostAccess:
+      devCpu: ""
+    securityContext:
+      capabilities:
+        add: [PERFMON]
+    config:
+      logLevel: info
+    monitoring:
+      serviceMonitor:
+        enabled: true
+        relabelings:
+          - sourceLabels: [__meta_kubernetes_endpoint_node_name]
+            targetLabel: nodename
+      dashboards:
+        enabled: true
+        grafanaOperator:
+          enabled: true
+          matchLabels:
+            dashboards: grafana
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 64Mi
+    # Only janky (Arc Pro B50) and tiny (i9-12900H Iris Xe) have a GPU; wonky has
+    # none. Both run the xe driver (kernel 6.18 >= the 6.16 xe perf-PMU floor).
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values: [janky, tiny]
