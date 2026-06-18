@@ -12,6 +12,10 @@ spec:
     vmsingle:
       spec:
         retentionPeriod: "2y"
+        # NFD adds ~90 node labels which the kubelet/cadvisor scrapes labelmap
+        # onto every series; raise from the default 30 so they aren't dropped.
+        extraArgs:
+          maxLabelsPerTimeseries: "120"
         storage:
           storageClassName: ssd-block
           accessModes:
@@ -29,6 +33,8 @@ spec:
     vmagent:
       spec:
         replicaCount: 2
+        extraArgs:
+          maxLabelsPerTimeseries: "120"
         affinity:
           podAntiAffinity:
             preferredDuringSchedulingIgnoredDuringExecution:
