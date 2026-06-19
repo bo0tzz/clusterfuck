@@ -10,11 +10,7 @@ spec:
     name: drm-exporter
   values:
     fullnameOverride: drm-exporter
-    # /dev/dri comes from the DRA claim (not a hostPath — that's cgroup-blocked
-    # for a non-privileged container); no MSR on Talos (CONFIG_X86_MSR unset).
-    hostAccess:
-      devDri: ""
-      devCpu: ""
+    # Drop SYS_RAWIO from the chart default — only the (unavailable) MSR path uses it.
     securityContext:
       capabilities:
         add: [PERFMON]
@@ -32,26 +28,19 @@ spec:
           enabled: true
           matchLabels:
             dashboards: grafana
+    # Device access via the Intel GPU DRA driver's admin-access monitor claim.
+    # Tolerations keep it monitoring GPUs the driver taints on a health warning.
+    dra:
+      enabled: true
+      deviceClassName: gpu.intel.com
+      tolerations:
+        - effect: NoExecute
+        - effect: NoSchedule
     resources:
       requests:
         cpu: 10m
         memory: 32Mi
       limits:
         memory: 64Mi
-      claims:
-        - name: gpu
     nodeSelector:
       intel.feature.node.kubernetes.io/gpu: "true"
-  # Chart has no pod-level resourceClaims field; inject the DRA claim.
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              kind: DaemonSet
-              name: drm-exporter
-            patch: |
-              - op: add
-                path: /spec/template/spec/resourceClaims
-                value:
-                  - name: gpu
-                    resourceClaimTemplateName: drm-exporter-gpu
