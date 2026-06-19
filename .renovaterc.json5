@@ -19,7 +19,7 @@
     {
       description: "Flux Group",
       groupName: "flux",
-      matchPackageNames: ["/flux/"],
+      matchPackageNames: ["/\\bflux/"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
