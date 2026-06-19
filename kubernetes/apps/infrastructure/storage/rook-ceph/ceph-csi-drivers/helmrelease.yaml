@@ -37,6 +37,9 @@ spec:
                 memory: 512Mi
               limits:
                 memory: 1Gi
+            liveness: {}
+            addons: {}
+            logRotator: {}
         nodePlugin: &nodePlugin
           priorityClassName: system-node-critical
           resources:
@@ -52,6 +55,9 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 256Mi
+            liveness: {}
+            addons: {}
+            logRotator: {}
       cephfs:
         enabled: true
         name: rook-ceph.cephfs.csi.ceph.com
@@ -72,6 +78,10 @@ spec:
                 memory: 512Mi
               limits:
                 memory: 1Gi
+            omapGenerator: {}
+            liveness: {}
+            addons: {}
+            logRotator: {}
         nodePlugin: *nodePlugin
       nfs:
         enabled: false
