@@ -1,0 +1,79 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ceph-csi-drivers
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: ceph-csi-drivers
+  interval: 1h
+  values:
+    drivers:
+      rbd:
+        enabled: true
+        name: rook-ceph.rbd.csi.ceph.com
+        controllerPlugin:
+          replicas: 2
+          priorityClassName: system-cluster-critical
+          resources:
+            attacher: &ctrlSidecar
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+            provisioner: *ctrlSidecar
+            resizer: *ctrlSidecar
+            snapshotter: *ctrlSidecar
+            omapGenerator:
+              requests:
+                cpu: 250m
+                memory: 512Mi
+              limits:
+                memory: 1Gi
+            plugin:
+              requests:
+                memory: 512Mi
+              limits:
+                memory: 1Gi
+        nodePlugin: &nodePlugin
+          priorityClassName: system-node-critical
+          resources:
+            plugin:
+              requests:
+                cpu: 250m
+                memory: 512Mi
+              limits:
+                memory: 1Gi
+            registrar:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+      cephfs:
+        enabled: true
+        name: rook-ceph.cephfs.csi.ceph.com
+        snapshotPolicy: volumeGroupSnapshot
+        kernelMountOptions:
+          ms_mode: prefer-crc
+        controllerPlugin:
+          replicas: 2
+          priorityClassName: system-cluster-critical
+          resources:
+            attacher: *ctrlSidecar
+            provisioner: *ctrlSidecar
+            resizer: *ctrlSidecar
+            snapshotter: *ctrlSidecar
+            plugin:
+              requests:
+                cpu: 250m
+                memory: 512Mi
+              limits:
+                memory: 1Gi
+        nodePlugin: *nodePlugin
+      nfs:
+        enabled: false
+      nvmeof:
+        enabled: false

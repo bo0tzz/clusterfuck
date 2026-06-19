@@ -14,9 +14,6 @@ spec:
 
     priorityClassName: system-cluster-critical
 
-    csi:
-      cephFSKernelMountOptions: ms_mode=prefer-crc
-      enableLiveness: true
     image:
       repository: ghcr.io/rook/ceph
     resources:
