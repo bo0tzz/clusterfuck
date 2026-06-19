@@ -18,7 +18,7 @@ spec:
               repository: ghcr.io/sbs20/scanservjs
               tag: "3.1.0"
             env:
-              AIRSCAN_DEVICES: '"Brother MFC-L2710DW" = "http://192.168.178.70/eSCL"'
+              AIRSCAN_DEVICES: '"Brother MFC-L2710DW" = http://192.168.178.70/eSCL'
             resources:
               requests:
                 cpu: 25m
