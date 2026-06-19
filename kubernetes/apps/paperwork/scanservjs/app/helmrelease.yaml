@@ -1,0 +1,63 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: scanservjs
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: scanservjs
+    namespace: paperwork
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/sbs20/scanservjs
+              tag: "3.1.0"
+            env:
+              AIRSCAN_DEVICES: '"Brother MFC-L2710DW" = "http://192.168.178.70/eSCL"'
+            resources:
+              requests:
+                cpu: 25m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8080
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - scan.zijlein.de
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 8080
+    persistence:
+      output:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 2Gi
+        globalMounts:
+          - path: /var/lib/scanservjs/output
+      config:
+        type: configMap
+        name: scanservjs-config
+        globalMounts:
+          - path: /etc/scanservjs/config.local.js
+            subPath: config.local.js
+            readOnly: true
+      inbox:
+        type: persistentVolumeClaim
+        existingClaim: scan-inbox
+        globalMounts:
+          - path: /inbox

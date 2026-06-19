@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scanservjs-config
+data:
+  config.local.js: |
+    /* eslint-disable no-unused-vars */
+    // Resolve the bundled Process helper as config.default.js does.
+    const options = { paths: ['/usr/lib/scanservjs'] };
+    const Process = require(require.resolve('./server/classes/process', options));
+
+    module.exports = {
+      actions: [
+        {
+          name: 'Send to Paperless',
+          async execute(fileInfo) {
+            // Atomic rename so the polling consumer never sees a partial file.
+            const dest = `/inbox/${fileInfo.name}`;
+            const tmp = `/inbox/.${fileInfo.name}.part`;
+            return await Process.spawn(
+              `cp '${fileInfo.fullname}' '${tmp}' && chmod 0666 '${tmp}' && mv '${tmp}' '${dest}'`
+            );
+          }
+        }
+      ]
+    };

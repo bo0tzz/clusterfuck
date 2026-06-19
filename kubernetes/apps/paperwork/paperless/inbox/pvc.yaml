@@ -1,0 +1,14 @@
+---
+# Own Kustomization so the paperless app's blanket dataSourceRef PVC patch
+# doesn't touch it. Shared RWX (CephFS); scanservjs writes, paperless consumes.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: scan-inbox
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ssd-fs
+  resources:
+    requests:
+      storage: 2Gi

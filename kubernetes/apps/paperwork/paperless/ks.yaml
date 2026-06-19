@@ -21,6 +21,20 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: paperwork-paperless-inbox
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/paperwork/paperless/inbox
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: paperwork-paperless
 spec:
   interval: 1h
@@ -35,6 +49,7 @@ spec:
     - ../../../../components/volsync
   dependsOn:
     - name: paperwork-paperless-bucket
+    - name: paperwork-paperless-inbox
     - name: cnpg-barman-cloud
       namespace: operators
   postBuild:
