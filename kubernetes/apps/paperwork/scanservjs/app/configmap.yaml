@@ -4,6 +4,12 @@ kind: ConfigMap
 metadata:
   name: scanservjs-config
 data:
+  airscan.conf: |
+    [devices]
+    "Brother MFC-L2710DW" = http://192.168.178.70/eSCL
+
+    [options]
+    discovery = disable
   config.local.js: |
     /* eslint-disable no-unused-vars */
     // Resolve the bundled Process helper as config.default.js does.
