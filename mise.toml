@@ -1,7 +1,7 @@
 [tools]
 flux2 = "2.8.8"
 gh = "2.95.0"
-kubectl = "1.36.1"
+kubectl = "1.36.2"
 talhelper = "3.1.12"
 talosctl = "1.13.4"
 usage = "3.5.2"
