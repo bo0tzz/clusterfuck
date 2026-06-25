@@ -50,6 +50,8 @@ l2announcements:
   enabled: true
 loadBalancer:
   algorithm: maglev
+  mode: dsr
+  dsrDispatch: opt
 k8sClientRateLimit:
   qps: 10
   burst: 20
