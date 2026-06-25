@@ -39,6 +39,8 @@ spec:
       serviceType: LoadBalancer
       serviceAnnotations:
         lbipam.cilium.io/ips: "10.0.10.105"
+        external-dns.alpha.kubernetes.io/hostname: mc.bo0tzz.me
+        external-dns.alpha.kubernetes.io/target: "45.142.19.143"
       rcon:
         enabled: true
       type: "FABRIC"
