@@ -34,10 +34,10 @@ data:
     [/u]
       /data/u
 
-    [/u/${u}]
-      /data/u/${u}
+    [/u/$${u}]
+      /data/u/$${u}
       accs:
-        rwmda: ${u}
+        rwmda: $${u}
 
     [/shared]
       /data/shared
