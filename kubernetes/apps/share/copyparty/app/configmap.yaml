@@ -18,6 +18,7 @@ data:
       idp-h-usr: x-idp-user
       idp-h-grp: x-idp-group
       xff-src: 10.244.0.0/16
+      rproxy: -1
 
       # persist IdP users across restarts; on the data volume because /cfg
       # is ephemeral
