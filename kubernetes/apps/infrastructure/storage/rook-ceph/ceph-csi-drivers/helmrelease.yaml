@@ -62,6 +62,7 @@ spec:
       cephfs:
         enabled: true
         name: rook-ceph.cephfs.csi.ceph.com
+        fsGroupPolicy: File
         snapshotPolicy: volumeGroupSnapshot
         kernelMountOptions:
           ms_mode: prefer-crc
