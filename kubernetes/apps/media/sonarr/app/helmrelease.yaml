@@ -15,7 +15,7 @@ spec:
           main:
             image:
               repository: ghcr.io/home-operations/sonarr
-              tag: "4.0.17"
+              tag: "4.0.18"
             env:
               TZ: Europe/Amsterdam
               SONARR__APP__INSTANCENAME: Sonarr
