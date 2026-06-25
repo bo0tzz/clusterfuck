@@ -8,6 +8,7 @@ components:
 
 resources:
   - namespace.yaml
+  - ./copyparty/ks.yaml
   - ./zipline/ks.yaml
   - ./pingvin-share/ks.yaml
   - ./samba/ks.yaml
