@@ -6,5 +6,5 @@ metadata:
 spec:
   interval: 15m
   ref:
-    tag: 0.85.4
+    tag: 0.85.5
   url: oci://ghcr.io/victoriametrics/helm-charts/victoria-metrics-k8s-stack
