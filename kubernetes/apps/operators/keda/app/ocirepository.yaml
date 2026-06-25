@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: keda
+spec:
+  interval: 1h
+  ref:
+    tag: 2.20.1
+  url: oci://ghcr.io/home-operations/charts-mirror/keda
