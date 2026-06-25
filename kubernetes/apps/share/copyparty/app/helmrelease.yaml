@@ -1,0 +1,81 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: copyparty
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: copyparty
+  values:
+    defaultPodOptions:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/9001/copyparty-ac
+              tag: "1.20.16"
+            env:
+              TZ: Europe/Amsterdam
+              PYTHONUNBUFFERED: "1"
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                memory: 2Gi
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 3923
+                  initialDelaySeconds: 15
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness: *probe
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 3923
+    route:
+      main:
+        annotations:
+          # internal-only: don't let external-dns publish/overwrite the public
+          # zijlein.de apex (load-bearing for CNAMEs). Resolved in-cluster via
+          # k8s_gateway split-horizon.
+          external-dns.alpha.kubernetes.io/controller: none
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - zijlein.de
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 3923
+    persistence:
+      data:
+        existingClaim: copyparty
+        globalMounts:
+          - path: /data
+      config:
+        type: configMap
+        name: copyparty-config
+        globalMounts:
+          - path: /cfg/copyparty.conf
+            subPath: copyparty.conf

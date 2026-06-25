@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: copyparty-config
+data:
+  copyparty.conf: |
+    [global]
+      name: Zijleinde
+      e2dsa
+      e2ts
+      ansi
+      df: 10
+      hardlink
+
+      # auth is delegated to Envoy (OIDC -> Authentik), which injects the
+      # user as x-idp-user; trust those headers only from the pod network.
+      idp-h-usr: x-idp-user
+      idp-h-grp: x-idp-group
+      xff-src: 10.244.0.0/16
+
+      # persist IdP users across restarts; on the data volume because /cfg
+      # is ephemeral
+      idp-store: 3
+      idp-db: /data/.idp.db
+      idp-adm: boet
+
+    # shadowed (no accs): root can't be listed, so usernames aren't enumerable
+    [/]
+      /data
+
+    [/${u}]
+      /data/${u}
+      accs:
+        rwmda: ${u}
+
+    [/shared]
+      /data/shared
+      accs:
+        rwmd: @acct

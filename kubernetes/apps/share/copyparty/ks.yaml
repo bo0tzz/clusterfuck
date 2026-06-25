@@ -1,0 +1,44 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: share-copyparty-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/share/copyparty/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: copyparty
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: share-copyparty
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/share/copyparty/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/volsync
+  dependsOn:
+    - name: share-copyparty-bucket
+  postBuild:
+    substitute:
+      APP: copyparty
+      BUCKET: copyparty
+      VOLSYNC_CAPACITY: 250Gi
+      VOLSYNC_STORAGECLASS: ssd-fs
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_COPY_METHOD: Direct

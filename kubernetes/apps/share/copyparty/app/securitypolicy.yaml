@@ -1,0 +1,35 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: copyparty
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: copyparty
+  oidc:
+    provider:
+      issuer: https://auth.bo0tzz.me/application/o/copyparty/
+    clientIDRef:
+      name: copyparty-oidc
+    clientSecret:
+      name: copyparty-oidc
+    redirectURL: https://zijlein.de/oauth2/callback
+    logoutPath: /oauth2/sign_out
+    scopes:
+      - openid
+      - profile
+      - email
+    forwardAccessToken: true
+  jwt:
+    providers:
+      - name: authentik
+        issuer: https://auth.bo0tzz.me/application/o/copyparty/
+        remoteJWKS:
+          uri: https://auth.bo0tzz.me/application/o/copyparty/jwks/
+        claimToHeaders:
+          - claim: preferred_username
+            header: x-idp-user
+          - claim: groups
+            header: x-idp-group
