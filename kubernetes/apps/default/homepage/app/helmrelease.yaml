@@ -32,8 +32,6 @@ spec:
             port: 4000
     route:
       main:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: zijlein.de
         parentRefs:
           - name: envoy-external
             namespace: network
