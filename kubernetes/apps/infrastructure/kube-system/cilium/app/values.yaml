@@ -40,7 +40,6 @@ bpf:
 
 socketLB:
   enabled: true
-  hostNamespaceOnly: true
 endpointRoutes:
   enabled: true
 localRedirectPolicies:
