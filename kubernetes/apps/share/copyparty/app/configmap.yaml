@@ -25,17 +25,12 @@ data:
       idp-db: /data/.idp.db
       idp-adm: boet
 
+    # no accs = shadowed: root can't be listed, so usernames aren't enumerable
     [/]
       /data
-      accs:
-        r: @acct
 
-    # no accs = shadowed: hides the home dirs from the root listing
-    [/u]
-      /data/u
-
-    [/u/$${u}]
-      /data/u/$${u}
+    [/$${u}]
+      /data/$${u}
       accs:
         rwmda: $${u}
 
