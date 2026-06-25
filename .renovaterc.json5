@@ -17,6 +17,11 @@
       pinDigests: false,
     },
     {
+      description: "helmfile version is a single field — appending @sha256 can't be applied",
+      matchManagers: ["helmfile"],
+      pinDigests: false,
+    },
+    {
       description: "Flux Group",
       groupName: "flux",
       matchPackageNames: ["/\\bflux/"],
