@@ -21,7 +21,9 @@ spec:
       - openid
       - profile
       - email
+      - offline_access
     forwardAccessToken: true
+    refreshToken: true
   jwt:
     providers:
       - name: authentik
