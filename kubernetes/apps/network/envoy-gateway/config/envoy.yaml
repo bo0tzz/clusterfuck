@@ -67,8 +67,11 @@ spec:
       name: envoy-internal
   compressor:
     - type: Zstd
+      zstd: {}
     - type: Brotli
+      brotli: {}
     - type: Gzip
+      gzip: {}
   retry:
     numRetries: 2
     retryOn:
