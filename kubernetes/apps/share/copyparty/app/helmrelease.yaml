@@ -54,11 +54,6 @@ spec:
             port: 3923
     route:
       main:
-        annotations:
-          # internal-only: don't let external-dns publish/overwrite the public
-          # zijlein.de apex (load-bearing for CNAMEs). Resolved in-cluster via
-          # k8s_gateway split-horizon.
-          external-dns.alpha.kubernetes.io/controller: none
         parentRefs:
           - name: envoy-internal
             namespace: network
