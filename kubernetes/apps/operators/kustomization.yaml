@@ -9,5 +9,6 @@ resources:
   - ./cnpg-barman-cloud/ks.yaml
   - ./external-secrets/ks.yaml
   - ./keda/ks.yaml
+  - ./keda-add-ons-http/ks.yaml
   - ./samba-operator/ks.yaml
   - ./volsync/ks.yaml
