@@ -16,7 +16,7 @@ spec:
           main:
             image:
               repository: ghcr.io/diced/zipline
-              tag: "4.6.2"
+              tag: "4.6.3"
             env:
               DATABASE_URL:
                 valueFrom:
