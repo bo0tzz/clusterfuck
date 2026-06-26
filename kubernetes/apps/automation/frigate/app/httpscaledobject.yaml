@@ -1,0 +1,23 @@
+---
+apiVersion: http.keda.sh/v1alpha1
+kind: HTTPScaledObject
+metadata:
+  name: frigate
+spec:
+  hosts:
+    - camera.zijlein.de
+  scaleTargetRef:
+    name: frigate
+    kind: Deployment
+    apiVersion: apps/v1
+    service: frigate
+    port: 8971
+  replicas:
+    min: 0
+    max: 1
+  scaledownPeriod: 1200
+  scalingMetric:
+    concurrency:
+      targetValue: 100
+  timeouts:
+    conditionWait: 1m

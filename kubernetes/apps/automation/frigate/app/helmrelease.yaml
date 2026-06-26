@@ -54,8 +54,12 @@ spec:
           - camera.zijlein.de
         rules:
           - backendRefs:
-              - identifier: main
-                port: 8971
+              # Route through the KEDA HTTP add-on interceptor (operators ns) so
+              # Frigate can scale to zero and wake on demand.
+              - kind: Service
+                name: keda-add-ons-http-interceptor-proxy
+                namespace: operators
+                port: 8080
     persistence:
       config:
         existingClaim: ${APP}
