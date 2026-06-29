@@ -23,7 +23,7 @@ spec:
           main:
             image:
               repository: docker.io/superseriousbusiness/gotosocial
-              tag: "0.21.3"
+              tag: "0.22.0"
             envFrom:
               - secretRef:
                   name: gotosocial-oidc
