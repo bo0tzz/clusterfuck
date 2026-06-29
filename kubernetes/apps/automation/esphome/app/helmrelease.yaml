@@ -16,7 +16,7 @@ spec:
           main:
             image:
               repository: esphome/esphome
-              tag: "2026.6.2"
+              tag: "2026.6.3"
             env:
               TZ: Europe/Amsterdam
               ESPHOME_DASHBOARD_USE_PING: "true"
