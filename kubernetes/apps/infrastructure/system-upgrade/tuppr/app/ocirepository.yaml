@@ -7,5 +7,5 @@ metadata:
 spec:
   interval: 15m
   ref:
-    tag: 0.2.8
+    tag: 0.2.9
   url: oci://ghcr.io/home-operations/charts/tuppr
