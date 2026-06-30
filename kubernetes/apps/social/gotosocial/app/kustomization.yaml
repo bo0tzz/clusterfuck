@@ -13,6 +13,10 @@ patches:
     patch: |-
       - op: remove
         path: /spec/bootstrap/initdb
+      - op: add
+        path: /spec/bootstrap/recovery/recoveryTarget
+        value:
+          targetTime: "2026-06-29 18:10:00+00"
   - target:
       kind: PersistentVolumeClaim
     # dataSourceRef is immutable post-creation; patch retained because reverting it errors.
