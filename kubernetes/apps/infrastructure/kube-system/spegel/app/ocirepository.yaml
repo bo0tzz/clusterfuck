@@ -5,5 +5,5 @@ metadata:
 spec:
   interval: 15m
   ref:
-    tag: 0.7.2
+    tag: 0.7.3
   url: oci://ghcr.io/spegel-org/helm-charts/spegel
