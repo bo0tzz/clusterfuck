@@ -16,7 +16,7 @@ spec:
           main:
             image:
               repository: ghcr.io/stirling-tools/s-pdf
-              tag: "2.13.2"
+              tag: "2.14.0"
             env:
               SYSTEM_ENABLEANALYTICS: "false"
               SYSTEM_ENABLEPOSTHOG: "false"
