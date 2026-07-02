@@ -114,6 +114,7 @@ spec:
           containers:
             main:
               image:
+                # renovate: datasource=github-releases depName=immich-app/immich
                 tag: v2.7.5-openvino
               env:
                 GUNICORN_CMD_ARGS: "--no-control-socket"
