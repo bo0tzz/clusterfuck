@@ -75,6 +75,12 @@
       },
     },
     {
+      description: "Immich ML image carries an -openvino compatibility suffix",
+      matchDatasources: ["github-releases"],
+      matchPackageNames: ["immich-app/immich"],
+      versionCompatibility: "^(?<version>[^-]+)(?<compatibility>-.+)?$",
+    },
+    {
       description: "birdnet-go ships date-stamped nightly tags",
       matchPackageNames: ["ghcr.io/tphakala/birdnet-go"],
       versionCompatibility: "^(?<compatibility>nightly-)(?<version>\\d{8})$",
