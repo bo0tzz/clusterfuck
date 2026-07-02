@@ -114,7 +114,7 @@ spec:
           containers:
             main:
               image:
-                # renovate: datasource=github-releases depName=immich-app/immich
+                # renovate: datasource=docker depName=ghcr.io/immich-app/immich-machine-learning
                 tag: v2.7.5-openvino
               env:
                 GUNICORN_CMD_ARGS: "--no-control-socket"

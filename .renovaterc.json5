@@ -75,9 +75,10 @@
       },
     },
     {
-      description: "Immich ML image carries an -openvino compatibility suffix",
-      matchDatasources: ["github-releases"],
-      matchPackageNames: ["immich-app/immich"],
+      description: "Immich ML image carries an -openvino compatibility suffix; keep it lockstep with the server",
+      groupName: "immich-monorepo",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["ghcr.io/immich-app/immich-machine-learning"],
       versionCompatibility: "^(?<version>[^-]+)(?<compatibility>-.+)?$",
     },
     {
