@@ -18,7 +18,7 @@ spec:
           main:
             image:
               repository: ghcr.io/bo0tzz/bo0kkeeper
-              tag: 0.7.1@sha256:452d69603913217aa49756507c16ede8454b6daf154d66bbdb017a9afd3fbc52
+              tag: 0.7.2@sha256:514333aa952427da8c75264334d090c9cf1886ecafd07d3a1292bcd2f51c1fbb
               pullPolicy: IfNotPresent
             env:
               TZ: Europe/Amsterdam
