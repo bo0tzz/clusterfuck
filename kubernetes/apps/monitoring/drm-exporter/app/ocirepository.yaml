@@ -7,4 +7,4 @@ spec:
   interval: 1h
   url: oci://ghcr.io/home-operations/charts/drm-exporter
   ref:
-    tag: "0.2.6"
+    tag: "0.3.0"
