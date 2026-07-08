@@ -119,6 +119,9 @@ jobs:
             - **New features**: Capabilities worth adopting (simplifies config, eliminates
               workarounds, improves functionality or performance)
 
+            If a change is clearly entirely irrelevant (example: a PostgresQL sub-chart was bumped,
+            but the app is using CNPG), then don't mention it. If you're unsure then do include it.
+
             ## Submitting the Review
 
             Submit your findings as a single GitHub PR review.
