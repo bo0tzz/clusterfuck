@@ -24,7 +24,7 @@ spec:
           main:
             image:
               repository: ghcr.io/9001/copyparty-ac
-              tag: "1.20.17"
+              tag: "1.20.18"
             env:
               TZ: Europe/Amsterdam
               PYTHONUNBUFFERED: "1"
