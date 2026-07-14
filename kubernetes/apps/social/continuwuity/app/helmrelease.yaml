@@ -22,9 +22,9 @@ spec:
         containers:
           app:
             image:
-              # Temporary main pin to test; repin to next release.
-              repository: registry.erwanleboucher.dev/continuwuity-invite-fix
-              tag: latest@sha256:160806a0302cab7dffd1e4cbcc29ce8df8661df82918de1eb08b745c8b3991a0
+              # Temporary main pin for post-v26.6.2 fixes (legacy-sync E2EE + PR#1987 v12 invite); repin to next release.
+              repository: forgejo.ellis.link/continuwuation/continuwuity
+              tag: sha-7ecd2aa
             env:
               TZ: Europe/Amsterdam
               CONDUWUIT_SERVER_NAME: bo0.tz
