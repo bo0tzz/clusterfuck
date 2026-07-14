@@ -1,0 +1,41 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: social-continuwuity-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/social/continuwuity/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: continuwuity
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: social-continuwuity
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/social/continuwuity/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/volsync
+  dependsOn:
+    - name: social-continuwuity-bucket
+  postBuild:
+    substitute:
+      APP: continuwuity
+      BUCKET: continuwuity
+      VOLSYNC_CAPACITY: 50Gi

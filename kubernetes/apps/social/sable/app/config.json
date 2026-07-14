@@ -1,0 +1,5 @@
+{
+  "defaultHomeserver": 0,
+  "homeserverList": ["bo0.tz"],
+  "allowCustomHomeservers": true
+}

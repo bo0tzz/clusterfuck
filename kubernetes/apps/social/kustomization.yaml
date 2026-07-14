@@ -8,5 +8,7 @@ components:
 
 resources:
   - namespace.yaml
+  - ./continuwuity/ks.yaml
   - ./gotosocial/ks.yaml
   - ./phanpy/ks.yaml
+  - ./sable/ks.yaml

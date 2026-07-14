@@ -1,0 +1,105 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: continuwuity
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: continuwuity
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      continuwuity:
+        type: statefulset
+        containers:
+          app:
+            image:
+              repository: forgejo.ellis.link/continuwuation/continuwuity
+              tag: v26.6.0
+            env:
+              TZ: Europe/Amsterdam
+              CONDUWUIT_SERVER_NAME: bo0.tz
+              CONDUWUIT_ADDRESS: 0.0.0.0
+              CONDUWUIT_DATABASE_PATH: /data/db
+              CONDUWUIT_ALLOW_REGISTRATION: "false"
+              CONDUWUIT_NEW_USER_DISPLAYNAME_SUFFIX: ""
+              CONDUWUIT_LOCKDOWN_PUBLIC_ROOM_DIRECTORY: "true"
+              CONDUWUIT_REQUIRE_AUTH_FOR_PROFILE_REQUESTS: "true"
+              CONDUWUIT_WELL_KNOWN__CLIENT: https://matrix.bo0.tz
+              CONDUWUIT_WELL_KNOWN__SERVER: matrix.bo0.tz:443
+              CONDUWUIT_OAUTH__OIDC__DISCOVERY_URL: https://auth.bo0tzz.me/application/o/continuwuity/
+              CONDUWUIT_OAUTH__OIDC__PROMPT_FOR_LOCALPART: "false"
+            envFrom:
+              - secretRef:
+                  name: continuwuity-oidc
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /_matrix/client/versions
+                    port: 8008
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probe
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 250m
+                memory: 1Gi
+              limits:
+                memory: 4Gi
+    service:
+      app:
+        ports:
+          http:
+            port: 80
+            targetPort: 8008
+    route:
+      app:
+        hostnames:
+          - matrix.bo0.tz
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 80
+      wellknown:
+        hostnames:
+          - bo0.tz
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /.well-known/matrix
+            backendRefs:
+              - identifier: app
+                port: 80
+    persistence:
+      data:
+        existingClaim: continuwuity
+        globalMounts:
+          - path: /data
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

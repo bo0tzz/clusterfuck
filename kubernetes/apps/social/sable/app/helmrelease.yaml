@@ -1,0 +1,82 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sable
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: sable
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+    controllers:
+      sable:
+        replicas: 2
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              # PR #1071 (native OIDC) build; swap to an official release once merged.
+              repository: registry.erwanleboucher.dev/eleboucher/sable
+              tag: pr1071-5b8ef30
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /index.html
+                    port: &port 8080
+                  initialDelaySeconds: 0
+                  periodSeconds: 30
+              readiness: *probe
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+    service:
+      app:
+        ports:
+          http:
+            port: 80
+            targetPort: *port
+    route:
+      app:
+        hostnames:
+          - sable.bo0.tz
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 80
+    persistence:
+      config-file:
+        type: configMap
+        name: sable-config
+        globalMounts:
+          - path: /app/config.json
+            subPath: config.json
+            readOnly: true
+      # Caddy needs writable XDG data/config dirs (image declares them as root-owned volumes)
+      data:
+        type: emptyDir
+        globalMounts:
+          - path: /data
+      config:
+        type: emptyDir
+        globalMounts:
+          - path: /config
