@@ -36,7 +36,6 @@ spec:
               CONDUWUIT_WELL_KNOWN__CLIENT: https://matrix.bo0.tz
               CONDUWUIT_WELL_KNOWN__SERVER: matrix.bo0.tz:443
               CONDUWUIT_OAUTH__OIDC__DISCOVERY_URL: https://auth.bo0tzz.me/application/o/continuwuity/
-              CONDUWUIT_OAUTH__OIDC__PROMPT_FOR_LOCALPART: "false"
               CONDUWUIT_OAUTH__OIDC__ADDITIONAL_SCOPES: '["profile"]'
             envFrom:
               - secretRef:
