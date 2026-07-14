@@ -22,8 +22,9 @@ spec:
         containers:
           app:
             image:
+              # Temporary main pin to test post-v26.6.2 E2EE/legacy-sync fixes; repin to next release.
               repository: forgejo.ellis.link/continuwuation/continuwuity
-              tag: v26.6.2
+              tag: sha-ad1c194
             env:
               TZ: Europe/Amsterdam
               CONDUWUIT_SERVER_NAME: bo0.tz
