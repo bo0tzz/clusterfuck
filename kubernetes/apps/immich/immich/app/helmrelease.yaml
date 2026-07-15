@@ -72,7 +72,7 @@ spec:
               TZ: Europe/Amsterdam
             image:
               # renovate: datasource=github-releases depName=immich-app/immich
-              tag: "v3.0.2"
+              tag: "v3.0.3"
 
     server:
       defaultPodOptions:
@@ -115,7 +115,7 @@ spec:
             main:
               image:
                 # renovate: datasource=docker depName=ghcr.io/immich-app/immich-machine-learning
-                tag: v3.0.2-openvino
+                tag: v3.0.3-openvino
               env:
                 GUNICORN_CMD_ARGS: "--no-control-socket"
               resources:
