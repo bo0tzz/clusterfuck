@@ -35,6 +35,15 @@ spec:
           value:
             spec:
               externalTrafficPolicy: Cluster
+  bootstrap:
+    type: Merge
+    value: |
+      layered_runtime:
+        layers:
+          - name: oauth2_gcm
+            static_layer:
+              envoy.reloadable_features.oauth2_use_gcm_encryption: true
+              envoy.reloadable_features.oauth2_legacy_cbc_decrypt_compat: false
   shutdown:
     drainTimeout: 180s
   telemetry:
