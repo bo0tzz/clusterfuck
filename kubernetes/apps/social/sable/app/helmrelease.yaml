@@ -21,9 +21,9 @@ spec:
         containers:
           app:
             image:
-              # PR #1071 (native OIDC) build; swap to an official release once merged.
-              repository: registry.erwanleboucher.dev/eleboucher/sable
-              tag: pr1071-5b8ef30
+              # Official dev build (OIDC PR #1071 merged to dev); repin to a release tag once one ships with it.
+              repository: ghcr.io/sableclient/sable
+              tag: "392e455"
             probes:
               liveness: &probe
                 enabled: true
