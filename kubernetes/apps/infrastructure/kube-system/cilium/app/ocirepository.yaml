@@ -5,5 +5,5 @@ metadata:
 spec:
   interval: 15m
   ref:
-    tag: 1.19.5
+    tag: 1.19.6
   url: oci://quay.io/cilium/charts/cilium
