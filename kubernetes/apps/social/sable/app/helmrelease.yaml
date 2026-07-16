@@ -21,9 +21,9 @@ spec:
         containers:
           app:
             image:
-              # Official dev build (OIDC PR #1071 merged to dev); repin to a release tag once one ships with it.
-              repository: ghcr.io/sableclient/sable
-              tag: "392e455"
+              # PR author's build (registry.erwanleboucher.dev); move back to official ghcr sable once its fixes land upstream.
+              repository: registry.erwanleboucher.dev/eleboucher/sable
+              tag: 2ec3083-444cd06
             probes:
               liveness: &probe
                 enabled: true
