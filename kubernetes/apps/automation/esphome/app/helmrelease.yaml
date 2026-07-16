@@ -19,7 +19,6 @@ spec:
               tag: "2026.7.0"
             env:
               TZ: Europe/Amsterdam
-              ESPHOME_DASHBOARD_USE_PING: "true"
             resources:
               requests:
                 cpu: 10m
