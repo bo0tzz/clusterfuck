@@ -7,4 +7,4 @@ spec:
   interval: 1h
   url: oci://ghcr.io/external-secrets/charts/external-secrets
   ref:
-    tag: 2.7.0
+    tag: 2.8.0
