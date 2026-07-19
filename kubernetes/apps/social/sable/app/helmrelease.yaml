@@ -21,9 +21,8 @@ spec:
         containers:
           app:
             image:
-              # PR author's build (registry.erwanleboucher.dev); move back to official ghcr sable once its fixes land upstream.
-              repository: registry.erwanleboucher.dev/eleboucher/sable
-              tag: 2ec3083-444cd06
+              repository: ghcr.io/sableclient/sable
+              tag: "1.20.0"
             probes:
               liveness: &probe
                 enabled: true
