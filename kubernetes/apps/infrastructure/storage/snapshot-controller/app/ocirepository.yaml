@@ -6,5 +6,5 @@ metadata:
 spec:
   interval: 15m
   ref:
-    tag: 5.1.1
+    tag: 5.2.0
   url: oci://ghcr.io/piraeusdatastore/helm-charts/snapshot-controller
