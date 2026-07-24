@@ -15,7 +15,7 @@ spec:
           main:
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
-              tag: "2.20.15"
+              tag: "3.0.2"
             env:
               PAPERLESS_URL: https://paperless.bo0tzz.me
               PAPERLESS_TIME_ZONE: "Europe/Amsterdam"
