@@ -495,7 +495,7 @@
       "gridPos": {
         "x": 18,
         "y": 4,
-        "w": 6,
+        "w": 3,
         "h": 4
       },
       "datasource": {
@@ -552,6 +552,81 @@
           }
         }
       ]
+    },
+    {
+      "id": 14,
+      "type": "stat",
+      "title": "Ceph nearfull ETA",
+      "description": "Time until the first OSD crosses nearfull_ratio (0.85) and Ceph goes HEALTH_WARN with OSD_NEARFULL. Evaluated per-OSD, not cluster-wide: OSDs here range 0.45-3.5TiB and fill very unevenly, so the cluster hits nearfull at ~20% raw usage. Slope is a 2d least-squares fit, so the value is noisy at low fill rates; empty (\"not filling\") means every OSD is flat or shrinking.",
+      "gridPos": {
+        "x": 21,
+        "y": 4,
+        "w": 3,
+        "h": 4
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "bottomk(1,\n  (\n    scalar(max(ceph_osd_nearfull_ratio) or vector(0.85)) * max by (ceph_daemon) (ceph_osd_stat_bytes)\n      - max by (ceph_daemon) (ceph_osd_stat_bytes_used)\n  )\n  / deriv(max by (ceph_daemon) (ceph_osd_stat_bytes_used)[2d:10m])\n  > 0\n)",
+          "refId": "A",
+          "legendFormat": "{{ceph_daemon}}",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "decimals": 0,
+          "noValue": "not filling",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 604800
+              },
+              {
+                "color": "yellow",
+                "value": 2592000
+              },
+              {
+                "color": "green",
+                "value": 7776000
+              }
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value_and_name",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto"
+      }
     },
     {
       "id": 9,
