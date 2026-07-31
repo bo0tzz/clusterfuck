@@ -29,12 +29,12 @@ spec:
             env:
               TZ: Europe/Amsterdam
               LANG: nl_NL
+              GOMEMLIMIT: 115MiB
             resources:
               requests:
                 cpu: 10m
-                memory: 64Mi
               limits:
-                memory: 512Mi
+                memory: 128Mi
     service:
       main:
         controller: main
