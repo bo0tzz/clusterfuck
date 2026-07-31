@@ -635,7 +635,7 @@
       "gridPos": {
         "x": 0,
         "y": 8,
-        "w": 24,
+        "w": 12,
         "h": 6
       },
       "datasource": {
@@ -692,6 +692,100 @@
               "pod": true,
               "container": true,
               "reason": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "type": "table",
+      "title": "Bad container exits",
+      "description": "Last termination per container, excluding clean exits. Survives the event: stays visible for the pod's lifetime, unlike the waiting-reason based Broken pods table.",
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "(kube_pod_container_status_last_terminated_reason{reason!=\"Completed\",reason!=\"\"} == 1) * on (namespace, pod, container) group_left () max by (namespace, pod, container) (kube_pod_container_status_last_terminated_timestamp) * 1000",
+          "refId": "A",
+          "format": "table",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto"
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last exit"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dateTimeAsIso"
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "displayName": "Last exit",
+            "desc": true
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "namespace": 0,
+              "pod": 1,
+              "container": 2,
+              "reason": 3,
+              "Value": 4
+            },
+            "includeByName": {
+              "namespace": true,
+              "pod": true,
+              "container": true,
+              "reason": true,
+              "Value": true
+            },
+            "renameByName": {
+              "Value": "Last exit"
             }
           }
         }
