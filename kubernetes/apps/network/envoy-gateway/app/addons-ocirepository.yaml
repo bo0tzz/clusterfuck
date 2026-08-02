@@ -8,3 +8,4 @@ spec:
   url: oci://docker.io/envoyproxy/gateway-addons-helm
   ref:
     tag: 1.8.3
+    digest: sha256:991cdef5e6db3ad2aa24d7a533fa02f0ad7ee3709b5b42d174212e063bf93038
