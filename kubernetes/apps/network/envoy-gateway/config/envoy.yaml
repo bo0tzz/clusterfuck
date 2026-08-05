@@ -116,6 +116,36 @@ spec:
       - h2
       - http/1.1
 ---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: home-assistant
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
+      sectionName: home-assistant
+  clientIPDetection:
+    xForwardedFor:
+      trustedCIDRs:
+        - 10.244.0.0/16
+  http2:
+    onInvalidMessage: TerminateStream
+  http3: {}
+  tls:
+    minVersion: "1.2"
+    ciphers:
+      - ECDHE-ECDSA-AES128-GCM-SHA256
+      - ECDHE-RSA-AES128-GCM-SHA256
+      - ECDHE-ECDSA-AES256-GCM-SHA384
+      - ECDHE-RSA-AES256-GCM-SHA384
+      - AES256-SHA
+      - AES128-SHA
+    alpnProtocols:
+      - h2
+      - http/1.1
+---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:

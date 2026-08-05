@@ -26,3 +26,17 @@ spec:
         certificateRefs:
           - name: bo0tzz-me-production-tls
           - name: zijlein-de-production-tls
+    - name: home-assistant
+      protocol: HTTPS
+      port: 443
+      hostname: 8a.zijlein.de
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: automation
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: zijlein-de-production-tls
