@@ -6,5 +6,6 @@ metadata:
 spec:
   interval: 15m
   ref:
-    tag: 0.0.36
+    tag: 0.0.37
+    digest: sha256:81033683ce790e593524b2105945ee0d81bf6608f0c85eb5e0c1082cc74ff03d
   url: oci://ghcr.io/rancher/local-path-provisioner/charts/local-path-provisioner
