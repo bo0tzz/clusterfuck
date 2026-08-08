@@ -7,4 +7,5 @@ spec:
   interval: 15m
   ref:
     tag: 0.57.0
+    digest: sha256:2ef25fdd727deeb2480ec563845961b13c7258a422570a15a010fec0b6384803
   url: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
