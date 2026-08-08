@@ -7,4 +7,5 @@ spec:
   interval: 1h
   url: oci://ghcr.io/external-secrets/charts/external-secrets
   ref:
-    tag: 2.8.0
+    tag: 2.9.0
+    digest: sha256:3c542c7746c3ff1ab1a21c3acc7e5c0c0b48a5c651529a7c5220f3854048b393
