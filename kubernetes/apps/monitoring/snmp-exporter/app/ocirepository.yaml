@@ -7,4 +7,5 @@ spec:
   interval: 1h
   url: oci://ghcr.io/prometheus-community/charts/prometheus-snmp-exporter
   ref:
-    tag: "9.17.0"
+    tag: "9.17.1"
+    digest: sha256:e2ea6372a52c3964774c90bd6961cc27b7af31f9450bc8468b8347551027e98e
