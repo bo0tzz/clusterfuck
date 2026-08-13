@@ -1307,12 +1307,12 @@
       "id": 19,
       "type": "table",
       "title": "Ceph health checks",
-      "description": "The named checks behind the Ceph Health stat up top. Empty means HEALTH_OK. RECENT_CRASH sticks around until the crash is archived (`ceph crash archive-all`), so it is the usual reason for a warn that has no live symptom.",
+      "description": "The named checks behind the Ceph Health stat up top. Empty means HEALTH_OK. ceph_health_detail carries only the check name and severity - no daemon and no detail text - so the human-readable summary (\"1 daemons have recently crashed\") is not available here; the mon cluster log in victoria-logs has it, and naming a crashed daemon needs `ceph crash ls`. Firing-for is measured back to the last sample where the check was clear, so a blank means it has been firing longer than the 7d lookback. RECENT_CRASH persists until archived with `ceph crash archive-all`, so it is the usual reason for a warn with no live symptom.",
       "gridPos": {
         "x": 0,
         "y": 39,
-        "w": 24,
-        "h": 6
+        "w": 12,
+        "h": 7
       },
       "datasource": {
         "type": "prometheus",
@@ -1324,8 +1324,18 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "ceph_health_detail != 0",
+          "expr": "max by(name, severity) (ceph_health_detail != 0)",
           "refId": "A",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max by(name) ((time() - max_over_time(timestamp(ceph_health_detail == 0)[7d:5m])) and (ceph_health_detail == 1))",
+          "refId": "B",
           "format": "table",
           "instant": true
         }
@@ -1380,6 +1390,26 @@
                 ]
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Firing for"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "noValue",
+                "value": "> 7d"
+              }
+            ]
           }
         ]
       },
@@ -1394,19 +1424,261 @@
       },
       "transformations": [
         {
+          "id": "joinByField",
+          "options": {
+            "byField": "name",
+            "mode": "outer"
+          }
+        },
+        {
           "id": "organize",
           "options": {
             "indexByName": {
               "severity": 0,
-              "name": 1
+              "name": 1,
+              "Value #B": 2
             },
             "includeByName": {
               "severity": true,
-              "name": true
+              "name": true,
+              "Value #B": true
             },
             "renameByName": {
               "severity": "Severity",
-              "name": "Check"
+              "name": "Check",
+              "Value #B": "Firing for"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "type": "table",
+      "title": "Ceph daemons",
+      "description": "Every mon, mds and osd, worst first. Socket is the daemon's admin socket as probed by the per-node rook-ceph-exporter, so a missing row means the exporter on that node is down rather than the daemon necessarily being gone - cross-check against Nodes Ready. In/quorum is ceph_osd_in for OSDs and quorum membership for mons; MDS daemons have neither and stay blank. Version is here to catch a straggler mid-upgrade. mgr is not listed: it does not expose a socket to the exporter.",
+      "gridPos": {
+        "x": 12,
+        "y": 39,
+        "w": 12,
+        "h": 7
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max by(daemon, hostname) (label_replace(ceph_daemon_socket_up, \"daemon\", \"$1\", \"ceph_daemon\", \"ceph-(.*)\"))",
+          "refId": "A",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max by(daemon) (label_replace(ceph_osd_in, \"daemon\", \"$1\", \"ceph_daemon\", \"(.*)\") or label_replace(ceph_mon_quorum_status, \"daemon\", \"$1\", \"ceph_daemon\", \"(.*)\"))",
+          "refId": "B",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max by(daemon) (label_replace(ceph_daemon_health_metrics{type=\"SLOW_OPS\"}, \"daemon\", \"$1\", \"ceph_daemon\", \"(.*)\"))",
+          "refId": "C",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max by(daemon, version) (label_replace(label_replace(ceph_osd_metadata or ceph_mon_metadata or ceph_mds_metadata, \"daemon\", \"$1\", \"ceph_daemon\", \"(.*)\"), \"version\", \"$1\", \"ceph_version\", \"ceph version ([^ ]+).*\"))",
+          "refId": "D",
+          "format": "table",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto"
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Socket"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "1": {
+                        "text": "up",
+                        "color": "green",
+                        "index": 0
+                      },
+                      "0": {
+                        "text": "down",
+                        "color": "red",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "In/quorum"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "noValue",
+                "value": "-"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "1": {
+                        "text": "yes",
+                        "color": "green",
+                        "index": 0
+                      },
+                      "0": {
+                        "text": "no",
+                        "color": "red",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Slow ops"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "text",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "displayName": "Socket",
+            "desc": false
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "daemon",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "daemon": 0,
+              "hostname": 1,
+              "Value #A": 2,
+              "Value #B": 3,
+              "Value #C": 4,
+              "version": 5
+            },
+            "includeByName": {
+              "daemon": true,
+              "hostname": true,
+              "Value #A": true,
+              "Value #B": true,
+              "Value #C": true,
+              "version": true
+            },
+            "renameByName": {
+              "daemon": "Daemon",
+              "hostname": "Host",
+              "Value #A": "Socket",
+              "Value #B": "In/quorum",
+              "Value #C": "Slow ops",
+              "version": "Version"
             }
           }
         }
