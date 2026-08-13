@@ -495,7 +495,7 @@
       "gridPos": {
         "x": 18,
         "y": 4,
-        "w": 3,
+        "w": 6,
         "h": 4
       },
       "datasource": {
@@ -552,81 +552,6 @@
           }
         }
       ]
-    },
-    {
-      "id": 14,
-      "type": "stat",
-      "title": "Ceph nearfull ETA",
-      "description": "Time until the first OSD crosses nearfull_ratio (0.85) and Ceph goes HEALTH_WARN with OSD_NEARFULL. Evaluated per-OSD, not cluster-wide: OSDs here range 0.45-3.5TiB and fill very unevenly, so the cluster hits nearfull at ~20% raw usage. Slope is a 2d least-squares fit, so the value is noisy at low fill rates; empty (\"not filling\") means every OSD is flat or shrinking.",
-      "gridPos": {
-        "x": 21,
-        "y": 4,
-        "w": 3,
-        "h": 4
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "VictoriaMetrics"
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "VictoriaMetrics"
-          },
-          "expr": "bottomk(1,\n  (\n    scalar(max(ceph_osd_nearfull_ratio) or vector(0.85)) * max by (ceph_daemon) (ceph_osd_stat_bytes)\n      - max by (ceph_daemon) (ceph_osd_stat_bytes_used)\n  )\n  / deriv(max by (ceph_daemon) (ceph_osd_stat_bytes_used)[2d:10m])\n  > 0\n)",
-          "refId": "A",
-          "legendFormat": "{{ceph_daemon}}",
-          "instant": true
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "s",
-          "decimals": 0,
-          "noValue": "not filling",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 604800
-              },
-              {
-                "color": "yellow",
-                "value": 2592000
-              },
-              {
-                "color": "green",
-                "value": 7776000
-              }
-            ]
-          },
-          "color": {
-            "mode": "thresholds"
-          },
-          "min": 0
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "value_and_name",
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto"
-      }
     },
     {
       "id": 9,
@@ -998,6 +923,494 @@
           "placement": "bottom"
         }
       }
+    },
+    {
+      "id": 16,
+      "type": "row",
+      "title": "Ceph / storage",
+      "collapsed": false,
+      "gridPos": {
+        "x": 0,
+        "y": 30,
+        "w": 24,
+        "h": 1
+      },
+      "panels": []
+    },
+    {
+      "id": 17,
+      "type": "table",
+      "title": "OSD fill",
+      "description": "Per-OSD utilisation, fullest first. Thresholds track Ceph's own gates: 85% is nearfull_ratio (cluster goes HEALTH_WARN with OSD_NEARFULL), 95% is full_ratio (that OSD stops accepting writes and the pools go read-only). OSDs here range 0.5-3.84TiB and fill very unevenly, so the fullest OSD - not the cluster average - is what actually limits writes; see the usable-free panel for what that leaves you. PG counts are uneven by design: one PG carries a manual upmap to compensate for tiny being an undersized failure domain.",
+      "gridPos": {
+        "x": 0,
+        "y": 31,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max by(ceph_daemon, hostname) (100 * ceph_osd_stat_bytes_used / ceph_osd_stat_bytes * on(ceph_daemon) group_left(hostname) ceph_osd_metadata)",
+          "refId": "A",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max by(ceph_daemon) (ceph_osd_stat_bytes_used)",
+          "refId": "B",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max by(ceph_daemon) (ceph_osd_stat_bytes)",
+          "refId": "C",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max by(ceph_daemon) (ceph_osd_numpg)",
+          "refId": "D",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max by(ceph_daemon) (ceph_osd_apply_latency_ms)",
+          "refId": "E",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max by(ceph_daemon) (ceph_osd_up * on(ceph_daemon) group_left() (1 + ceph_osd_in))",
+          "refId": "F",
+          "format": "table",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto"
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "% full"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "min",
+                "value": 0
+              },
+              {
+                "id": "max",
+                "value": 100
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "gauge",
+                  "mode": "gradient"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 70
+                    },
+                    {
+                      "color": "orange",
+                      "value": 85
+                    },
+                    {
+                      "color": "red",
+                      "value": 95
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Used|Size"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Apply"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "text",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 50
+                    },
+                    {
+                      "color": "red",
+                      "value": 200
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "State"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "2": {
+                        "text": "up/in",
+                        "color": "green",
+                        "index": 0
+                      },
+                      "1": {
+                        "text": "up/out",
+                        "color": "yellow",
+                        "index": 1
+                      },
+                      "0": {
+                        "text": "down",
+                        "color": "red",
+                        "index": 2
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "displayName": "% full",
+            "desc": true
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "ceph_daemon",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "ceph_daemon": 0,
+              "hostname": 1,
+              "Value #A": 2,
+              "Value #B": 3,
+              "Value #C": 4,
+              "Value #D": 5,
+              "Value #E": 6,
+              "Value #F": 7
+            },
+            "includeByName": {
+              "ceph_daemon": true,
+              "hostname": true,
+              "Value #A": true,
+              "Value #B": true,
+              "Value #C": true,
+              "Value #D": true,
+              "Value #E": true,
+              "Value #F": true
+            },
+            "renameByName": {
+              "ceph_daemon": "OSD",
+              "hostname": "Host",
+              "Value #A": "% full",
+              "Value #B": "Used",
+              "Value #C": "Size",
+              "Value #D": "PGs",
+              "Value #E": "Apply",
+              "Value #F": "State"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "type": "timeseries",
+      "title": "Ceph usable free space",
+      "description": "max_avail: bytes a replicated pool can still take, as Ceph computes it from the actual CRUSH layout. This is the number that matters and it is much smaller than (raw total - raw used) / 3, because the fullest OSD in the smallest failure domain caps it. Plotted rather than reduced to an ETA on purpose: the slope is what tells you how long you have, and you can see how noisy it is instead of trusting a fitted number.",
+      "gridPos": {
+        "x": 12,
+        "y": 31,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "max(ceph_pool_max_avail)",
+          "refId": "A",
+          "legendFormat": "usable free"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "sum(ceph_pool_stored)",
+          "refId": "B",
+          "legendFormat": "stored"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "min": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      }
+    },
+    {
+      "id": 19,
+      "type": "table",
+      "title": "Ceph health checks",
+      "description": "The named checks behind the Ceph Health stat up top. Empty means HEALTH_OK. RECENT_CRASH sticks around until the crash is archived (`ceph crash archive-all`), so it is the usual reason for a warn that has no live symptom.",
+      "gridPos": {
+        "x": 0,
+        "y": 39,
+        "w": 24,
+        "h": 6
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "VictoriaMetrics"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "VictoriaMetrics"
+          },
+          "expr": "ceph_health_detail != 0",
+          "refId": "A",
+          "format": "table",
+          "instant": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto"
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severity"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "HEALTH_WARN": {
+                        "color": "yellow",
+                        "index": 0
+                      },
+                      "HEALTH_ERR": {
+                        "color": "red",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "displayName": "Severity",
+            "desc": true
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "indexByName": {
+              "severity": 0,
+              "name": 1
+            },
+            "includeByName": {
+              "severity": true,
+              "name": true
+            },
+            "renameByName": {
+              "severity": "Severity",
+              "name": "Check"
+            }
+          }
+        }
+      ]
     }
   ]
 }
