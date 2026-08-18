@@ -5,5 +5,6 @@ metadata:
 spec:
   interval: 15m
   ref:
-    tag: 1.20.0
+    tag: 1.20.1
+    digest: sha256:906ce40d35daad838d12add8a5ba7033e767767f51799a93c7eace2cec9cdc05
   url: oci://quay.io/cilium/charts/cilium
