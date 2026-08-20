@@ -6,5 +6,6 @@ metadata:
 spec:
   interval: 15m
   ref:
-    tag: v1.20.2
+    tag: v1.20.6
+    digest: sha256:a24d8f48670097d206dc9e1b7e434841221afdfca09117dc6608f5c951fe35f5
   url: oci://ghcr.io/rook/rook-ceph
