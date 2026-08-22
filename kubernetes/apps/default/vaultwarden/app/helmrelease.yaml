@@ -23,7 +23,7 @@ spec:
           main:
             image:
               repository: vaultwarden/server
-              tag: 1.37.1-alpine
+              tag: 1.37.2-alpine
             env:
               SIGNUPS_ALLOWED: "false"
               DATA_FOLDER: /config
