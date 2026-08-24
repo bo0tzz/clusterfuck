@@ -7,4 +7,5 @@ spec:
   interval: 1h
   url: oci://ghcr.io/bjw-s-labs/helm/app-template
   ref:
-    tag: 5.0.1
+    tag: 5.1.0
+    digest: sha256:0d039f7760db66790168e9de13780327ad1adecca0a3b31621e32146d8be503c
