@@ -60,10 +60,10 @@ spec:
             memory: 4Gi
         mds:
           requests:
-            cpu: 50m
-            memory: 256Mi
+            cpu: 100m
+            memory: 1Gi
           limits:
-            memory: 512Mi
+            memory: 2Gi
         exporter:
           requests:
             cpu: 10m
@@ -169,10 +169,10 @@ spec:
                       app.kubernetes.io/part-of: *cephFileSystemName
             resources:
               requests:
-                cpu: 50m
-                memory: 256Mi
+                cpu: 100m
+                memory: 1Gi
               limits:
-                memory: 512Mi
+                memory: 2Gi
         storageClass:
           enabled: true
           isDefault: false
