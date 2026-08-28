@@ -7,5 +7,5 @@ spec:
   interval: 15m
   url: oci://docker.io/envoyproxy/gateway-addons-helm
   ref:
-    tag: 1.9.0
-    digest: sha256:fa4338a6b0aed7f80a426c71694afa718868a41b7c095dac4e3fc4c56c560546
+    tag: 1.9.1
+    digest: sha256:ecb04dfc4f2f8e58318be448f211e6335e90eadf0d9ccd91defd2b765773807e
