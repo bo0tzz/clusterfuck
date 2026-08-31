@@ -19,12 +19,13 @@ spec:
               tag: "2026.8.2"
             env:
               TZ: Europe/Amsterdam
+              ESPHOME_DEFAULT_COMPILE_PROCESS_LIMIT: "4"
             resources:
               requests:
                 cpu: 10m
-                memory: 64Mi
+                memory: 256Mi
               limits:
-                memory: 128Mi
+                memory: 2Gi
     service:
       main:
         controller: main
