@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: kyoo
+spec:
+  interval: 1h
+  url: oci://ghcr.io/zoriya/helm-charts/kyoo
+  ref:
+    tag: "5.2.0"
+    digest: sha256:d0edad585579410556256e1730fc44d54c1fc6ad2f2ab527078184dd5651cfa0

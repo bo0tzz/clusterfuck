@@ -1,0 +1,43 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: kyoo
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: kyoo
+      sectionName: api
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: kyoo
+      sectionName: transcoder
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: kyoo
+      sectionName: scanner
+  cors:
+    allowOrigins:
+      - "*"
+    allowMethods:
+      - GET
+      - OPTIONS
+    allowHeaders:
+      - Authorization
+      - Content-Type
+      - Range
+      - X-Api-Key
+  extAuth:
+    recomputeRoute: true
+    headersToExtAuth:
+      - Authorization
+      - X-Api-Key
+      - Cookie
+      - Sec-WebSocket-Protocol
+    http:
+      backendRefs:
+        - name: kyoo-auth
+          port: 4568
+      path: /auth/jwt
+      headersToBackend:
+        - Authorization

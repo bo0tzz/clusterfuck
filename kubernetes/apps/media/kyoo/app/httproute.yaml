@@ -1,0 +1,53 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: kyoo
+spec:
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+  hostnames:
+    - kyoo.bo0tzz.me
+  rules:
+    - name: api
+      matches:
+        - path:
+            type: PathPrefix
+            value: /api
+        - path:
+            type: PathPrefix
+            value: /swagger
+      backendRefs:
+        - name: kyoo-api
+          port: 3567
+    - name: auth
+      matches:
+        - path:
+            type: PathPrefix
+            value: /auth
+        - path:
+            type: PathPrefix
+            value: /.well-known
+      backendRefs:
+        - name: kyoo-auth
+          port: 4568
+    - name: transcoder
+      matches:
+        - path:
+            type: PathPrefix
+            value: /video
+      backendRefs:
+        - name: kyoo-transcoder
+          port: 7666
+    - name: scanner
+      matches:
+        - path:
+            type: PathPrefix
+            value: /scanner
+      backendRefs:
+        - name: kyoo-scanner
+          port: 4389
+    - name: front
+      backendRefs:
+        - name: kyoo-front
+          port: 8901
