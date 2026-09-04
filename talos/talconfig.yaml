@@ -59,6 +59,9 @@ patches:
       kubelet:
         extraConfig:
           serializeImagePulls: false
+          imageGCHighThresholdPercent: 60
+          imageGCLowThresholdPercent: 50
+          imageMaximumGCAge: 168h
       network:
         disableSearchDomain: true
       sysctls:
