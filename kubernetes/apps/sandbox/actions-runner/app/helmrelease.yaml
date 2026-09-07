@@ -20,3 +20,7 @@ spec:
     template:
       spec:
         serviceAccountName: flux-triage-runner
+        containers:
+          - name: runner
+            image: ghcr.io/actions/actions-runner:2.337.0
+            command: ["/home/runner/run.sh"]
