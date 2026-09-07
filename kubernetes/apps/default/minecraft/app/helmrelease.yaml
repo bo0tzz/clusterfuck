@@ -20,7 +20,8 @@ spec:
       fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
     image:
-      pullPolicy: Always
+      repository: itzg/minecraft-server
+      tag: 2026.9.0-java25
     resources:
       requests:
         cpu: 100m
