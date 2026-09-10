@@ -103,10 +103,14 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: envoy-internal
-  clientIPDetection:
-    xForwardedFor:
-      trustedCIDRs:
-        - 10.244.0.0/16
+  headers:
+    earlyRequestHeaders:
+      # Envoy appends the peer IP to a client-supplied XFF, so first-hop
+      # parsers (authentik) would record a client-chosen address.
+      # Nothing in front of Envoy sets XFF; drop the client's copy so
+      # Envoy's own append is the only hop.
+      remove:
+        - X-Forwarded-For
   http2:
     onInvalidMessage: TerminateStream
   http3: {}
