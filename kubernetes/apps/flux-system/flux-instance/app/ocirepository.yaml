@@ -6,6 +6,6 @@ metadata:
 spec:
   interval: 15m
   ref:
-    tag: 0.58.1
-    digest: sha256:aeeb3e25fdcfd19f62b2c8de073119c3038df8bff3977de2d17beff108fe1482
+    tag: 0.60.0
+    digest: sha256:55e9ac0168de179bec79ca8b718a7e772be19280d9d43b06772cdd21989af049
   url: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
