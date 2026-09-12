@@ -21,7 +21,7 @@ spec:
       fsGroupChangePolicy: OnRootMismatch
     image:
       repository: itzg/minecraft-server
-      tag: 2026.9.0-java25
+      tag: 2026.9.1-java25
     resources:
       requests:
         cpu: 100m
