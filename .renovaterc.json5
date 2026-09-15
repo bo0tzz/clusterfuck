@@ -2,6 +2,7 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
     "github>home-operations/renovate-presets",
+    "github>home-operations/renovate-presets//apps/talosFactory.json5",
     ":semanticCommits",
   ],
   automerge: true,
@@ -44,7 +45,7 @@
     {
       description: "Talos Group",
       groupName: "talos",
-      matchPackageNames: ["/installer/", "/talos/"],
+      matchPackageNames: ["siderolabs/talos", "/talos/"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
