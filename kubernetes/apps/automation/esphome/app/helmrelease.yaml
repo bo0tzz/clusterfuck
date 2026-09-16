@@ -16,7 +16,7 @@ spec:
           main:
             image:
               repository: esphome/esphome
-              tag: "2026.8.2"
+              tag: "2026.9.0"
             env:
               TZ: Europe/Amsterdam
               ESPHOME_DEFAULT_COMPILE_PROCESS_LIMIT: "4"
