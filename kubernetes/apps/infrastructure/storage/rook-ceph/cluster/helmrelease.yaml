@@ -31,13 +31,19 @@ spec:
       network:
         connections:
           requireMsgr2: true
+      security:
+        cephx:
+          daemon:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
+          csi:
+            # AES256K CSI keys need kernel 7.0+ on the nodes
+            keyType: aes
       mgr:
         modules:
           - name: insights
             enabled: true
           - name: pg_autoscaler
-            enabled: true
-          - name: rook
             enabled: true
       resources:
         mon:
