@@ -6,5 +6,6 @@ metadata:
 spec:
   interval: 1h
   ref:
-    tag: 0.15.0
+    tag: 0.16.0
+    digest: sha256:379a09cbb8654d3d9a68e8fbb311d016b6378fd6e33b28539e667a55f7e253bc
   url: oci://ghcr.io/home-operations/charts-mirror/keda-add-ons-http
