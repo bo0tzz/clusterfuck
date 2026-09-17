@@ -60,6 +60,7 @@ spec:
       main:
         annotations:
           external-dns.alpha.kubernetes.io/exclude: "true"
+          external-dns.kubernetes.io/exclude: "true"
         parentRefs:
           - name: envoy-external
             namespace: network

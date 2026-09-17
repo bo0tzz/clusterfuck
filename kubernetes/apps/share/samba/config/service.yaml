@@ -6,6 +6,7 @@ metadata:
   annotations:
     lbipam.cilium.io/ips: "10.0.10.106"
     external-dns.alpha.kubernetes.io/hostname: ganesha.zijlein.de
+    external-dns.kubernetes.io/hostname: ganesha.zijlein.de
 spec:
   type: LoadBalancer
   selector:
