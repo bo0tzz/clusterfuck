@@ -9,6 +9,7 @@ spec:
     name: grafana-operator
   interval: 1h
   values:
+    priorityClassName: infra
     serviceMonitor:
       enabled: true
     resources:

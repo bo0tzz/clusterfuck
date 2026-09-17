@@ -63,6 +63,7 @@ spec:
               limits:
                 memory: 64Mi
     defaultPodOptions:
+      priorityClassName: infra
       securityContext:
         seccompProfile:
           type: RuntimeDefault

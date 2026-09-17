@@ -9,6 +9,7 @@ spec:
     kind: OCIRepository
     name: pgmqtt
   values:
+    priorityClassName: database
     replicaCount: 3
     database:
       existingSecret: pgmqtt-app
