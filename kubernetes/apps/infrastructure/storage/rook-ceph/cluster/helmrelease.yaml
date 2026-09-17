@@ -33,6 +33,7 @@ spec:
           requireMsgr2: true
       security:
         cephx:
+          allowedCiphers: [aes256k]
           daemon:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
