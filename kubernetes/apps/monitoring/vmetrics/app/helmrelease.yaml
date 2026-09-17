@@ -11,6 +11,7 @@ spec:
   values:
     vmsingle:
       spec:
+        priorityClassName: database
         retentionPeriod: "2y"
         # NFD adds ~90 node labels which the kubelet/cadvisor scrapes labelmap
         # onto every series; raise from the default 30 so they aren't dropped.

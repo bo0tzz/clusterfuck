@@ -77,6 +77,8 @@ spec:
               limits:
                 memory: 3Gi
       redis:
+        pod:
+          priorityClassName: database
         containers:
           main:
             image:

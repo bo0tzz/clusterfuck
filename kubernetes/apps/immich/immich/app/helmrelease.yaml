@@ -11,6 +11,8 @@ spec:
   values:
     valkey:
       enabled: true
+      defaultPodOptions:
+        priorityClassName: database
       controllers:
         main:
           containers:

@@ -7,6 +7,7 @@ metadata:
     cnpg.io/skipEmptyWalArchiveCheck: enabled
 spec:
   instances: 3
+  priorityClassName: database
   imageName: ${PG_IMAGE:=ghcr.io/cloudnative-pg/postgresql:18.4-standard-trixie}
   primaryUpdateStrategy: unsupervised
   primaryUpdateMethod: switchover
