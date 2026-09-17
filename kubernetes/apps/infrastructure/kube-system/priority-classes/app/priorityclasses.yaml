@@ -1,0 +1,37 @@
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: infra-node
+value: 100000000
+description: Node-pinned infrastructure (per-node exporters, DaemonSets). Has exactly one node it can run on, so it must win that node.
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: infra
+value: 10000000
+description: Movable control planes and the ingress path (cert-manager, gateways, DNS, secrets, operators).
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: database
+value: 1000000
+description: Stateful data stores (CNPG instances, metrics/logs storage). A restart here is a multi-service outage.
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: application
+value: 100000
+globalDefault: true
+description: Default for everything not otherwise classified.
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: batch
+value: 1000
+preemptionPolicy: Never
+description: Runners and one-shot work. Yields first and never evicts anyone.

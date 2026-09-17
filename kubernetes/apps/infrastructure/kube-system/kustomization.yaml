@@ -5,6 +5,7 @@ namespace: kube-system
 resources:
   - namespace.yaml
   - ./cilium/ks.yaml
+  - ./priority-classes/ks.yaml
   - ./spegel/ks.yaml
   - ./node-feature-discovery/ks.yaml
   - ./intel-gpu-resource-driver/ks.yaml
