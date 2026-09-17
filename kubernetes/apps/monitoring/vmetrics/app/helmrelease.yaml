@@ -263,6 +263,27 @@ spec:
             - port: http-metrics
               scheme: http
 
+    # kube-scheduler / kube-controller-manager self-sign their serving cert for
+    # localhost only, so the cluster-CA verification the chart defaults to can
+    # never pass; skip verification (still TLS + bearer token auth).
+    kubeScheduler:
+      vmScrape:
+        spec:
+          endpoints:
+            - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+              port: http-metrics
+              scheme: https
+              tlsConfig:
+                insecureSkipVerify: true
+    kubeControllerManager:
+      vmScrape:
+        spec:
+          endpoints:
+            - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+              port: http-metrics
+              scheme: https
+              tlsConfig:
+                insecureSkipVerify: true
     defaultDashboards:
       grafanaOperator:
         enabled: true
