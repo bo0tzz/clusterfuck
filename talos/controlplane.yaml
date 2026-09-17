@@ -12,7 +12,7 @@ machine:
     node.kubernetes.io/exclude-from-external-load-balancers: ''
 cluster:
   apiServer:
-    image: registry.k8s.io/kube-apiserver:v1.36.1
+    image: registry.k8s.io/kube-apiserver:v1.37.0@sha256:d1045e5c6d2f016797d22143eba7502e1bb712a4681836a7c35763a9c192dd70
     certSANs:
       - clusterfuck.bo0tzz.me
     admissionControl:
@@ -42,7 +42,7 @@ cluster:
         cpu: 200m
         memory: 2560Mi
   controllerManager:
-    image: registry.k8s.io/kube-controller-manager:v1.36.1
+    image: registry.k8s.io/kube-controller-manager:v1.37.0@sha256:997c997924eb8574f63f204a0b0af133aaf33c10df84009c32d34037f4e0e077
     extraArgs:
       bind-address: 0.0.0.0
     resources:
@@ -50,7 +50,7 @@ cluster:
         cpu: 100m
         memory: 320Mi
   scheduler:
-    image: registry.k8s.io/kube-scheduler:v1.36.1
+    image: registry.k8s.io/kube-scheduler:v1.37.0@sha256:a27622f132aa09cf2461ba077894a070c0186ec607366d14e805912d4804d11f
     extraArgs:
       bind-address: 0.0.0.0
     resources:
