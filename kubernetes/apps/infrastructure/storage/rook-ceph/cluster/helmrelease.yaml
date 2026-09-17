@@ -40,7 +40,11 @@ spec:
             # aes256k kernel mounts need Talos >=1.14.0 (aes256k backported into 6.18) on every node
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
-            keepPriorKeyCountMax: 1
+            keepPriorKeyCountMax: 0
+            keyType: aes256k
+          rbdMirrorPeer:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
             keyType: aes256k
       mgr:
         modules:
