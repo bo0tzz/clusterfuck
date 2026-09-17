@@ -18,3 +18,13 @@ spec:
         memory: 128Mi
       limits:
         memory: 256Mi
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: volsync-volsync-perfectra1n
+            patch: |
+              - op: add
+                path: /spec/template/spec/priorityClassName
+                value: infra

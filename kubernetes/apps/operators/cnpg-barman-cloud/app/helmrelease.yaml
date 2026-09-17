@@ -9,6 +9,7 @@ spec:
     name: cnpg-barman-cloud
   interval: 1h
   values:
+    priorityClassName: infra
     resources:
       requests:
         cpu: 25m

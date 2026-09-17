@@ -9,6 +9,7 @@ spec:
     kind: OCIRepository
     name: node-feature-discovery
   values:
+    priorityClassName: infra
     master:
       resources:
         requests:

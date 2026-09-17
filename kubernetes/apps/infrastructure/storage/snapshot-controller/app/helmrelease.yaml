@@ -8,3 +8,6 @@ spec:
     kind: OCIRepository
     name: snapshot-controller
   interval: 1h
+  values:
+    controller:
+      priorityClassName: infra

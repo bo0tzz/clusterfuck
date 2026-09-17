@@ -72,6 +72,7 @@ spec:
             memory: 128Mi
 
     victoria-metrics-operator:
+      priorityClassName: infra
       resources:
         requests:
           cpu: 10m

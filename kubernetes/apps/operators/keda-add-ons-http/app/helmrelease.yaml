@@ -8,3 +8,13 @@ spec:
     kind: OCIRepository
     name: keda-add-ons-http
   interval: 1h
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: keda-add-ons-http-.*
+            patch: |
+              - op: add
+                path: /spec/template/spec/priorityClassName
+                value: infra

@@ -67,6 +67,13 @@ instance:
         target:
           kind: Deployment
           name: (source-controller|notification-controller)
+      - patch: |
+          - op: add
+            path: /spec/template/spec/priorityClassName
+            value: infra
+        target:
+          kind: Deployment
+          name: notification-controller
       - # Enable in-memory kustomize builds
         patch: |
           - op: add

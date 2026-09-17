@@ -9,6 +9,7 @@ spec:
     name: external-secrets
   interval: 1h
   values:
+    priorityClassName: infra
     installCRDs: true
     resources:
       requests:
@@ -17,6 +18,7 @@ spec:
       limits:
         memory: 384Mi
     webhook:
+      priorityClassName: infra
       replicaCount: 2
       strategy:
         type: RollingUpdate
@@ -40,6 +42,7 @@ spec:
         limits:
           memory: 80Mi
     certController:
+      priorityClassName: infra
       resources:
         requests:
           cpu: 10m

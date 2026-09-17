@@ -20,6 +20,7 @@ spec:
             deploy:
               type: GatewayNamespace
     deployment:
+      priorityClassName: infra
       envoyGateway:
         resources:
           requests:

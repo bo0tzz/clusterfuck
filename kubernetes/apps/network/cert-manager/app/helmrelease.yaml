@@ -9,6 +9,8 @@ spec:
     name: cert-manager
   interval: 1h
   values:
+    global:
+      priorityClassName: infra
     crds:
       enabled: true
     resources:

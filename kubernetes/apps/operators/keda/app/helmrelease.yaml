@@ -8,3 +8,5 @@ spec:
     kind: OCIRepository
     name: keda
   interval: 1h
+  values:
+    priorityClassName: infra

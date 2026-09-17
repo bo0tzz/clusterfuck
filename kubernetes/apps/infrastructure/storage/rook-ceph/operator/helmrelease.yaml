@@ -13,6 +13,9 @@ spec:
       enabled: true
 
     priorityClassName: system-cluster-critical
+    ceph-csi-operator:
+      controllerManager:
+        priorityClassName: infra
 
     image:
       repository: ghcr.io/rook/ceph

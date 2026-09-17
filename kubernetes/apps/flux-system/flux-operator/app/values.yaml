@@ -9,3 +9,4 @@ resources:
     memory: 256Mi
   limits:
     memory: 512Mi
+priorityClassName: infra

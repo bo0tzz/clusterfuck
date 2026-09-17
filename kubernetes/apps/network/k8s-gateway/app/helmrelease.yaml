@@ -9,6 +9,7 @@ spec:
     name: k8s-gateway
   interval: 1h
   values:
+    priorityClassName: infra
     domain: "bo0tzz.me zijlein.de bo0.tz loc.place"
     ttl: 60
     watchedResources: ["HTTPRoute", "Service"]

@@ -14,3 +14,10 @@ patches:
       kind: Namespace
       metadata:
         name: container-object-storage-system
+  - target:
+      kind: Deployment
+      name: container-object-storage-controller
+    patch: |
+      - op: add
+        path: /spec/template/spec/priorityClassName
+        value: infra

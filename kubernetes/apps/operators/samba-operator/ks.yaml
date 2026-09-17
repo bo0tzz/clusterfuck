@@ -28,6 +28,14 @@ spec:
   dependsOn:
     - name: samba-operator-source
   wait: true
+  patches:
+    - target:
+        kind: Deployment
+        name: samba-operator-controller-manager
+      patch: |
+        - op: add
+          path: /spec/template/spec/priorityClassName
+          value: infra
   images:
     - name: gcr.io/kubebuilder/kube-rbac-proxy
       newName: quay.io/brancz/kube-rbac-proxy

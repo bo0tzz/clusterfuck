@@ -13,6 +13,7 @@ spec:
       labels:
         app: b2-cosi-driver
     spec:
+      priorityClassName: infra
       serviceAccountName: b2-cosi-driver
       volumes:
         - name: cosi-socket
