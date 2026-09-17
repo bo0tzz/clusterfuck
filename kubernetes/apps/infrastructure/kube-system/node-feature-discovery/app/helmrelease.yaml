@@ -9,7 +9,6 @@ spec:
     kind: OCIRepository
     name: node-feature-discovery
   values:
-    priorityClassName: infra
     master:
       resources:
         requests:
@@ -32,3 +31,15 @@ spec:
           memory: 32Mi
         limits:
           memory: 64Mi
+  # The chart renders both the top-level and worker priorityClassName into the
+  # worker DaemonSet (duplicate key), so master/gc get theirs via patch instead.
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: node-feature-discovery-(master|gc)
+            patch: |
+              - op: add
+                path: /spec/template/spec/priorityClassName
+                value: infra
