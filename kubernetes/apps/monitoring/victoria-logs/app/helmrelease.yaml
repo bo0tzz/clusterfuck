@@ -24,6 +24,7 @@ spec:
           memory: 768Mi
     vector:
       enabled: true
+      podPriorityClassName: infra-node
       resources:
         requests:
           cpu: 25m

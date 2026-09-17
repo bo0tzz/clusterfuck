@@ -10,6 +10,7 @@ spec:
     name: smartctl-exporter
   values:
     fullnameOverride: smartctl-exporter
+    priorityClassName: infra-node
     serviceMonitor:
       enabled: true
       relabelings:

@@ -10,6 +10,7 @@ spec:
     name: drm-exporter
   values:
     fullnameOverride: drm-exporter
+    priorityClassName: infra-node
     # Drop SYS_RAWIO from the chart default — only the (unavailable) MSR path uses it.
     securityContext:
       capabilities:

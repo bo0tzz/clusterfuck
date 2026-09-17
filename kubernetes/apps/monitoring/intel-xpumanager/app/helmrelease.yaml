@@ -63,3 +63,10 @@ spec:
               - op: replace
                 path: /metadata/labels/app.kubernetes.io~1version
                 value: 2.0.0-rc.0
+          - target:
+              kind: DaemonSet
+              name: xpumd
+            patch: |
+              - op: add
+                path: /spec/template/spec/priorityClassName
+                value: infra-node

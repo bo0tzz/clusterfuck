@@ -17,6 +17,7 @@ spec:
         limits:
           memory: 128Mi
     worker:
+      priorityClassName: infra-node
       resources:
         requests:
           cpu: 10m

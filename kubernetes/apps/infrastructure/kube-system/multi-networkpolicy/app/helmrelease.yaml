@@ -11,6 +11,7 @@ spec:
     defaultPodOptions:
       # controller talks to the API via in-cluster config — needs its SA token mounted
       automountServiceAccountToken: true
+      priorityClassName: infra-node
       hostNetwork: true
       nodeSelector:
         kubernetes.io/arch: amd64

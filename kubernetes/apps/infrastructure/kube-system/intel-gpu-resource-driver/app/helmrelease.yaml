@@ -15,3 +15,13 @@ spec:
     # plugin to it via NFD.
     nodeFeatureRules:
       enabled: true
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: DaemonSet
+              name: intel-gpu-resource-driver-kubelet-plugin
+            patch: |
+              - op: add
+                path: /spec/template/spec/priorityClassName
+                value: infra-node
