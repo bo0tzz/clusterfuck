@@ -3,7 +3,7 @@ machine:
   install:
     diskSelector:
       serial: 23294BEE189B
-    image: factory.talos.dev/metal-installer/894844fbd107ec2317c0fcc15823ed4a93ebd0bb89c8218b2fbbf02a48ac8d4f:v1.13.4
+    image: factory.talos.dev/metal-installer/894844fbd107ec2317c0fcc15823ed4a93ebd0bb89c8218b2fbbf02a48ac8d4f:v1.14.1
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig
