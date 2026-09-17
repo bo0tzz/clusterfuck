@@ -1,0 +1,92 @@
+---
+version: v1alpha1
+debug: false
+persist: true
+machine:
+  certSANs: []
+  kubelet:
+    image: ghcr.io/siderolabs/kubelet:v1.36.1
+    extraConfig:
+      imageGCHighThresholdPercent: 60
+      imageGCLowThresholdPercent: 50
+      imageMaximumGCAge: 168h
+      serializeImagePulls: false
+    defaultRuntimeSeccompProfileEnabled: true
+    disableManifestsDirectory: true
+  network:
+    disableSearchDomain: true
+  install:
+    wipe: false
+    grubUseUKICmdline: true
+  files:
+    - content: |-
+        [plugins."io.containerd.cri.v1.runtime"]
+          cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
+          device_ownership_from_security_context = true
+      permissions: 0o0
+      path: /etc/cri/conf.d/20-customization.part
+      op: create
+  sysctls:
+    fs.inotify.max_user_instances: '8192'
+    fs.inotify.max_user_watches: '1048576'
+  features:
+    diskQuotaSupport: true
+    kubePrism:
+      enabled: true
+      port: 7445
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: true
+cluster:
+  controlPlane:
+    endpoint: https://10.0.10.10:6443
+  clusterName: clusterfuck
+  network:
+    cni:
+      name: none
+    dnsDomain: cluster.local
+    podSubnets:
+      - 10.244.0.0/16
+    serviceSubnets:
+      - 10.96.0.0/12
+  proxy:
+    disabled: true
+    image: registry.k8s.io/kube-proxy:v1.36.1
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: trunk
+up: true
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: trunk.1
+vlanID: 1
+vlanMode: 802.1q
+parent: trunk
+up: true
+---
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  diskSelector:
+    match: system_disk
+  maxSize: 300GiB
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-path-provisioner
+provisioning:
+  diskSelector:
+    match: system_disk
+  grow: true
+  minSize: 10GiB
+  maxSize: 500GiB
+filesystem:
+  type: xfs

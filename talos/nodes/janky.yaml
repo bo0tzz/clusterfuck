@@ -1,0 +1,29 @@
+---
+machine:
+  install:
+    diskSelector:
+      serial: 23294BEE189B
+    image: factory.talos.dev/metal-installer/894844fbd107ec2317c0fcc15823ed4a93ebd0bb89c8218b2fbbf02a48ac8d4f:v1.13.4
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+auto: 'off'
+hostname: janky
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: trunk
+selector:
+  match: mac(link.permanent_addr) == "28:80:23:91:3a:ac"
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: trunk.16
+vlanID: 16
+vlanMode: 802.1q
+parent: trunk
+up: true
+addresses:
+  - address: 10.0.10.12/24
+routes:
+  - gateway: 10.0.10.1

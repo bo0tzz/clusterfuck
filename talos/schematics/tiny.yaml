@@ -1,0 +1,10 @@
+---
+customization:
+  extraKernelArgs:
+    - xe.force_probe=46a6
+    - i915.force_probe=!46a6
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/intel-ucode
+      - siderolabs/i915
+      - siderolabs/xe

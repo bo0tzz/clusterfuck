@@ -37,7 +37,7 @@
     {
       description: "Kubernetes Group",
       groupName: "kubernetes",
-      matchDepNames: ["/kubectl/", "/kubelet/"],
+      matchDepNames: ["/kubectl/", "/kubelet/", "/kube-apiserver/", "/kube-controller-manager/", "/kube-scheduler/", "/kube-proxy/"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },

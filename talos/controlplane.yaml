@@ -1,0 +1,64 @@
+---
+machine:
+  type: controlplane
+  features:
+    kubernetesTalosAPIAccess:
+      enabled: true
+      allowedRoles:
+        - os:admin
+      allowedKubernetesNamespaces:
+        - system-upgrade
+  nodeLabels:
+    node.kubernetes.io/exclude-from-external-load-balancers: ''
+cluster:
+  apiServer:
+    image: registry.k8s.io/kube-apiserver:v1.36.1
+    certSANs:
+      - clusterfuck.bo0tzz.me
+    admissionControl:
+      - name: PodSecurity
+        configuration:
+          apiVersion: pod-security.admission.config.k8s.io/v1alpha1
+          defaults:
+            audit: restricted
+            audit-version: latest
+            enforce: baseline
+            enforce-version: latest
+            warn: restricted
+            warn-version: latest
+          exemptions:
+            namespaces:
+              - kube-system
+            runtimeClasses: []
+            usernames: []
+          kind: PodSecurityConfiguration
+    auditPolicy:
+      apiVersion: audit.k8s.io/v1
+      kind: Policy
+      rules:
+        - level: Metadata
+    resources:
+      requests:
+        cpu: 200m
+        memory: 2560Mi
+  controllerManager:
+    image: registry.k8s.io/kube-controller-manager:v1.36.1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 320Mi
+  scheduler:
+    image: registry.k8s.io/kube-scheduler:v1.36.1
+    resources:
+      requests:
+        cpu: 10m
+        memory: 128Mi
+  etcd:
+    extraArgs:
+      listen-metrics-urls: http://0.0.0.0:2381
+  allowSchedulingOnControlPlanes: true
+---
+apiVersion: v1alpha1
+kind: Layer2VIPConfig
+name: 10.0.10.10
+link: trunk.16

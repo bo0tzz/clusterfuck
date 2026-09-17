@@ -2,32 +2,69 @@
 flux2 = "2.9.4"
 gh = "2.101.0"
 kubectl = "1.36.1"
-talhelper = "3.1.17"
 talosctl = "1.13.9"
 usage = "6.9.1"
 helmfile = "1.8.0"
 helm = "4.3.0"
 yamlfmt = "0.21.0"
+yq = "4.53.6"
 "github:home-operations/flate" = "v0.6.5"
 
-[tasks."talos:genconfig"]
+[tasks."talos:render"]
+description = "Render the full machine config for a node to stdout"
 dir = "talos"
-run = "talhelper genconfig"
-outputs = ["talos/clusterconfig"]
+usage = 'arg "<node>"'
+shell = "bash -c"
+run = """
+talosctl machineconfig patch cluster.yaml \
+  -p @controlplane.yaml \
+  -p @<(sops -d talsecret.sops.yaml | yq --from-file secrets.yq) \
+  -p @nodes/$usage_node.yaml
+"""
 
 [tasks."talos:apply"]
+description = "Apply the machine config to every node; extra args go to talosctl apply-config (e.g. --dry-run)"
 dir = "talos"
-depends = ["talos:genconfig"]
-confirm = "Are you sure you want to apply the talos config to all nodes?"
-run = "talhelper gencommand apply | bash"
+usage = 'arg "[args]..." var=#true'
+confirm = "Apply the machine config to all nodes?"
+run = "for f in nodes/*.yaml; do mise run talos:apply-node $(basename $f .yaml) $usage_args; done"
+
+[tasks."talos:apply-node"]
+description = "Apply the machine config to one node; extra args go to talosctl apply-config"
+dir = "talos"
+usage = '''
+arg "<node>"
+arg "[args]..." var=#true
+'''
+shell = "bash -c"
+run = """
+ip=$(yq 'select(.addresses) | .addresses[0].address' nodes/$usage_node.yaml | cut -d/ -f1)
+mise run talos:render $usage_node | talosctl -n $ip apply-config -f /dev/stdin $usage_args
+"""
+
+[tasks."talos:schematic"]
+description = "Print the Image Factory schematic ID for every node's schematics/<node>.yaml"
+dir = "talos"
+run = "for f in schematics/*.yaml; do echo \"$(basename $f .yaml): $(curl -sfX POST --data-binary @$f https://factory.talos.dev/schematics | yq -r .id)\"; done"
+
+[tasks."talos:upgrade-node"]
+description = "Reinstall one node from the installer image in nodes/<node>.yaml (needed for schematic changes; version bumps are tuppr's job)"
+dir = "talos"
+usage = 'arg "<node>"'
+shell = "bash -c"
+confirm = "Upgrade the node from its installer image? This reboots it."
+run = """
+ip=$(yq 'select(.addresses) | .addresses[0].address' nodes/$usage_node.yaml | cut -d/ -f1)
+image=$(yq 'select(.machine.install.image) | .machine.install.image' nodes/$usage_node.yaml)
+talosctl -n $ip upgrade -i $image -m powercycle
+"""
 
 [tasks."talos:bootstrap-k8s"]
-dir = "talos"
-depends = ["talos:genconfig"]
+shell = "bash -c"
 run = """
 KUBECONFIG=$(mktemp)
 trap 'rm -f "$KUBECONFIG"' EXIT
-talhelper gencommand kubeconfig --extra-flags - | bash > "$KUBECONFIG"
+talosctl kubeconfig -n "$(talosctl config info -o yaml | yq -r '.endpoints[0]')" "$KUBECONFIG"
 helmfile --kubeconfig "$KUBECONFIG" --file '{{ config_root }}/bootstrap/helmfile.yaml' sync
 """
 
