@@ -35,6 +35,7 @@ spec:
               runAsGroup: 568
               runAsNonRoot: true
     defaultPodOptions:
+      priorityClassName: batch
       securityContext:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
