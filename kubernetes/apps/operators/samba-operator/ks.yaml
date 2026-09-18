@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: samba-operator-source
+  name: samba-operator
 spec:
   interval: 1h
   path: ./kubernetes/apps/operators/samba-operator/app
@@ -12,23 +12,3 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: samba-operator
-spec:
-  interval: 1h
-  path: ./config/default
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: samba-operator
-    namespace: flux-system
-  dependsOn:
-    - name: samba-operator-source
-  wait: true
-  images:
-    - name: gcr.io/kubebuilder/kube-rbac-proxy
-      newName: quay.io/brancz/kube-rbac-proxy
-      newTag: v0.22.1@sha256:e8cad21b2f9ad0302f1ec972c555a1d916f51aae6003da3cd2554d5f29bb9bc4
