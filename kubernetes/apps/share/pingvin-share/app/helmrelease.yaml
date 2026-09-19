@@ -23,7 +23,7 @@ spec:
           configure:
             image:
               repository: ghcr.io/dmfrey/bash
-              tag: 5.2.26-alpine3.20
+              tag: 5.2.26-alpine3.20@sha256:7b8f16b5d06b4cd836c81d61990d7d52a08d183e5909dd7accfbc5601471e877
             command:
               - "/usr/local/bin/bash"
               - -c
@@ -43,7 +43,7 @@ spec:
           main:
             image:
               repository: ghcr.io/stonith404/pingvin-share
-              tag: v1.13.0
+              tag: v1.13.0@sha256:6bf2bcd3043ee68cb61264f0857511ccf7f212fdb984382b7f2d491635184ad6
             env:
               TZ: Europe/Amsterdam
               TRUST_PROXY: "true"

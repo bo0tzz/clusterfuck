@@ -17,7 +17,7 @@ spec:
           main:
             image:
               repository: ghcr.io/donkie/spoolman
-              tag: "0.26.1"
+              tag: "0.26.1@sha256:cf9b41e17b93ce7d4ca584d9809142f8918fd290f2cd7d3b8b12ff76c75482f0"
             env:
               SPOOLMAN_DB_TYPE: postgres
               SPOOLMAN_DB_HOST:

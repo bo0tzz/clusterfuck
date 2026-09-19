@@ -8,3 +8,4 @@ spec:
   url: oci://ghcr.io/home-operations/charts/drm-exporter
   ref:
     tag: "0.3.3"
+    digest: sha256:9d8cc031518154ba31bbce7e1844bff72ed56c6fc4d9bf6c793bd8aa841b6cb4
