@@ -21,7 +21,7 @@ spec:
           main:
             image:
               repository: ghcr.io/locplace/server
-              tag: "0.3.7"
+              tag: "0.3.7@sha256:bfc8466609e38010057c1635a4a8a810068cf870a9bb81dcf8efad3ccdf597ba"
             env:
               MAX_PENDING_BATCHES: "1000"
               DB_MAX_CONNS: "50"

@@ -23,7 +23,7 @@ spec:
           main:
             image:
               repository: vaultwarden/server
-              tag: 1.37.3-alpine
+              tag: 1.37.3-alpine@sha256:9a905c5cf5df61bb827da3805e160170741c0b53b0c63bb07e1afd3d2e21b1c8
             env:
               SIGNUPS_ALLOWED: "false"
               DATA_FOLDER: /config

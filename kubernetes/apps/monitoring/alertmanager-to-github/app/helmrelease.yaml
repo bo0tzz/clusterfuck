@@ -18,7 +18,7 @@ spec:
               # Temporary fork carrying the `is:issue` search fix (pfnet-research#64).
               # Revert to ghcr.io/pfnet-research/alertmanager-to-github once that's released.
               repository: ghcr.io/bo0tzz/alertmanager-to-github
-              tag: v0.2.5-isissue2
+              tag: v0.2.5-isissue2@sha256:ef2afa7a48d07a2012d88c854610823492900c4d99f89c9153b4bd70ea5cf3cd
             # Target owner/repo come from the Alertmanager webhook URL query
             # (?owner=bo0tzz&repo=clusterfuck), so they're per-request, not baked in here.
             args:
