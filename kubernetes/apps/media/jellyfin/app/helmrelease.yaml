@@ -15,7 +15,7 @@ spec:
           main:
             image:
               repository: ghcr.io/jellyfin/jellyfin
-              tag: "10.11.11"
+              tag: 12.1@sha256:008ec8024bdaaa6f0a3f0de468e185633eeba9d67c56936e8dbf5ef6b8d6200f
             env:
               TZ: Europe/Amsterdam
             securityContext:
