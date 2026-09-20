@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: forgejo.ellis.link/continuwuation/continuwuity
-              tag: v26.9.0
+              tag: v26.9.0@sha256:5cc03961412fb74836a14599cda3bfa17f003df902d9555281fa973976c5243b
             env:
               TZ: Europe/Amsterdam
               CONDUWUIT_SERVER_NAME: bo0.tz

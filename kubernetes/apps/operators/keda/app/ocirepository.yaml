@@ -7,4 +7,5 @@ spec:
   interval: 1h
   ref:
     tag: 2.20.2
+    digest: sha256:f6a4126b9a760fc85dbc62346aac142223afd0955dc042be574c569119b05998
   url: oci://ghcr.io/home-operations/charts-mirror/keda

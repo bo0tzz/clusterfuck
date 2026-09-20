@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sableclient/sable
-              tag: "1.22.5"
+              tag: "1.22.5@sha256:7a8224a998f3d8155161112f3df2581964365ad0b01d664329bb377af51e377f"
             probes:
               liveness: &probe
                 enabled: true

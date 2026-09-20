@@ -7,4 +7,5 @@ spec:
   interval: 15m
   ref:
     tag: 0.13.9
+    digest: sha256:e32b6fbe50188a6b904642ae6686646ee708913bca494b558296136759225bc1
   url: oci://ghcr.io/victoriametrics/helm-charts/victoria-logs-single

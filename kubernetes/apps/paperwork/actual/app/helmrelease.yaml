@@ -23,7 +23,7 @@ spec:
           main:
             image:
               repository: ghcr.io/actualbudget/actual-server
-              tag: "26.9.0"
+              tag: "26.9.0@sha256:552beab3dec8c93d46b8b9245612d63c3f123b8a45063a474f53e229b17621d3"
             env:
               ACTUAL_LOGIN_METHOD: openid
               ACTUAL_MULTIUSER: "true"
