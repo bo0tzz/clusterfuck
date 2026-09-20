@@ -16,7 +16,7 @@ spec:
           main:
             image:
               repository: ghcr.io/sbs20/scanservjs
-              tag: "3.3.0"
+              tag: "3.3.0@sha256:7a0c0dfd546f483c2fe8c5ccdcd8fc96301a41fb0d4309747fc8268108defb6a"
             resources:
               requests:
                 cpu: 25m

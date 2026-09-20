@@ -20,7 +20,7 @@ spec:
           emptyDir: {}
       containers:
         - name: objectstorage-sidecar
-          image: registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2
+          image: registry.k8s.io/sig-storage/objectstorage-sidecar:v0.2.2@sha256:c7166a73a303c43c8c1dca3e81aacf2fa85e98b46bcab0b64249cde19fa67979
           resources:
             requests:
               cpu: 10m
@@ -31,7 +31,7 @@ spec:
             - name: cosi-socket
               mountPath: /var/lib/cosi
         - name: b2-cosi-driver
-          image: ghcr.io/bo0tzz/b2-cosi-driver:v0.1.0
+          image: ghcr.io/bo0tzz/b2-cosi-driver:v0.1.0@sha256:92a928f580110b3d51ef34ba68a5fb1ec895e8314ad9ab2aa1b61a32b8993783
           args: ["--v=5"]
           resources:
             requests:
