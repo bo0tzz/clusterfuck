@@ -4,39 +4,11 @@ debug: false
 persist: true
 machine:
   certSANs: []
-  kubelet:
-    image: ghcr.io/siderolabs/kubelet:v1.37.0@sha256:d87c090ff7d915c308bf71ad2fe7d63a21cbf8e2481066d2c4b41feea2ddc5c9
-    extraConfig:
-      imageGCHighThresholdPercent: 60
-      imageGCLowThresholdPercent: 50
-      imageMaximumGCAge: 168h
-      serializeImagePulls: false
-    defaultRuntimeSeccompProfileEnabled: true
-    disableManifestsDirectory: true
-  network:
-    disableSearchDomain: true
   install:
     wipe: false
     grubUseUKICmdline: true
-  files:
-    - content: |-
-        [plugins."io.containerd.cri.v1.runtime"]
-          cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
-          device_ownership_from_security_context = true
-      permissions: 0o0
-      path: /etc/cri/conf.d/20-customization.part
-      op: create
-  sysctls:
-    fs.inotify.max_user_instances: '8192'
-    fs.inotify.max_user_watches: '1048576'
   features:
     diskQuotaSupport: true
-    kubePrism:
-      enabled: true
-      port: 7445
-    hostDNS:
-      enabled: true
-      forwardKubeDNSToHost: true
 cluster:
   controlPlane:
     endpoint: https://10.0.10.10:6443
@@ -90,3 +62,39 @@ provisioning:
   maxSize: 500GiB
 filesystem:
   type: xfs
+---
+apiVersion: v1alpha1
+kind: KubeletConfig
+image: ghcr.io/siderolabs/kubelet:v1.37.0@sha256:d87c090ff7d915c308bf71ad2fe7d63a21cbf8e2481066d2c4b41feea2ddc5c9
+defaultRuntimeSeccompProfileEnabled: true
+config:
+  imageGCHighThresholdPercent: 60
+  imageGCLowThresholdPercent: 50
+  imageMaximumGCAge: 168h
+  serializeImagePulls: false
+---
+apiVersion: v1alpha1
+kind: SysctlConfig
+params:
+  fs.inotify.max_user_instances: '8192'
+  fs.inotify.max_user_watches: '1048576'
+---
+apiVersion: v1alpha1
+kind: CRICustomizationConfig
+name: cdi
+content: |-
+  [plugins."io.containerd.cri.v1.runtime"]
+    cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
+    device_ownership_from_security_context = true
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+searchDomains:
+  disableDefault: true
+hostDNS:
+  enabled: true
+  forwardKubeDNSToHost: true
+---
+apiVersion: v1alpha1
+kind: KubePrismConfig
+port: 7445

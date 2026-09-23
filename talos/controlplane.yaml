@@ -1,15 +1,6 @@
 ---
 machine:
   type: controlplane
-  features:
-    kubernetesTalosAPIAccess:
-      enabled: true
-      allowedRoles:
-        - os:admin
-      allowedKubernetesNamespaces:
-        - system-upgrade
-  nodeLabels:
-    node.kubernetes.io/exclude-from-external-load-balancers: ''
 cluster:
   apiServer:
     image: registry.k8s.io/kube-apiserver:v1.37.0@sha256:d1045e5c6d2f016797d22143eba7502e1bb712a4681836a7c35763a9c192dd70
@@ -60,9 +51,21 @@ cluster:
   etcd:
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
-  allowSchedulingOnControlPlanes: true
 ---
 apiVersion: v1alpha1
 kind: Layer2VIPConfig
 name: 10.0.10.10
 link: trunk.16
+---
+apiVersion: v1alpha1
+kind: KubeTalosAPIAccessConfig
+allowedRoles:
+  - os:admin
+allowedKubernetesNamespaces:
+  - system-upgrade
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+labels:
+  node-role.kubernetes.io/control-plane: ""
+  node.kubernetes.io/exclude-from-external-load-balancers: ""
