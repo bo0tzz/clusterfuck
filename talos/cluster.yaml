@@ -3,7 +3,6 @@ version: v1alpha1
 debug: false
 persist: true
 machine:
-  certSANs: []
   features:
     diskQuotaSupport: true
 ---
