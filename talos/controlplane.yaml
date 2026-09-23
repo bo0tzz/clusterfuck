@@ -106,3 +106,8 @@ apiVersion: v1alpha1
 kind: KubeProxyConfig
 enabled: false
 image: registry.k8s.io/kube-proxy:v1.37.0@sha256:77bf2b08ff8ac1a4a446cffaa85e79e87379c8cb54fcf60f2cb6c62c966829c8
+---
+apiVersion: v1alpha1
+kind: KubeServiceAccountConfig
+issuer:
+  issuerURL: https://10.0.10.10:6443

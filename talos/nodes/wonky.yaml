@@ -1,9 +1,12 @@
 ---
-machine:
-  install:
-    diskSelector:
-      serial: 25034DD0804C
-    image: factory.talos.dev/metal-installer/96f8c146a67c80daad900d3fc1a6976fe11062321eee9ab6ae2a6aea88b2d26e:v1.14.1
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/metal-installer/96f8c146a67c80daad900d3fc1a6976fe11062321eee9ab6ae2a6aea88b2d26e:v1.14.1
+provisioning:
+  diskSelector:
+    match: 'disk.serial == "25034DD0804C"'
+  wipe: false
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig

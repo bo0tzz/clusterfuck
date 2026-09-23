@@ -4,28 +4,8 @@ debug: false
 persist: true
 machine:
   certSANs: []
-  install:
-    wipe: false
-    grubUseUKICmdline: true
   features:
     diskQuotaSupport: true
-cluster:
-  controlPlane:
-    endpoint: https://10.0.10.10:6443
-  clusterName: clusterfuck
-  network:
-    cni:
-      name: none
-    dnsDomain: cluster.local
-    podSubnets:
-      - 10.244.0.0/16
-    serviceSubnets:
-      - 10.96.0.0/12
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: true
 ---
 apiVersion: v1alpha1
 kind: LinkConfig
@@ -95,3 +75,21 @@ hostDNS:
 apiVersion: v1alpha1
 kind: KubePrismConfig
 port: 7445
+---
+apiVersion: v1alpha1
+kind: KubeClusterConfig
+clusterName: clusterfuck
+endpoint: https://10.0.10.10:6443
+---
+apiVersion: v1alpha1
+kind: KubeNetworkConfig
+dnsDomain: cluster.local
+podSubnets:
+  - 10.244.0.0/16
+serviceSubnets:
+  - 10.96.0.0/12
+---
+apiVersion: v1alpha1
+kind: DiscoveryServiceConfig
+name: default
+endpoint: https://discovery.talos.dev/
