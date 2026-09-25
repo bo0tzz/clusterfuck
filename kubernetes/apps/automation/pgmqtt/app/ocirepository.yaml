@@ -7,5 +7,5 @@ spec:
   interval: 1h
   url: oci://ghcr.io/bo0tzz/charts/pgmqtt
   ref:
-    tag: "0.1.17"
-    digest: sha256:1a40583cf8fcc253f58003cd07204802f561c7f3fd7f06f62562c331ef34b7d9
+    tag: "0.1.18"
+    digest: sha256:99e9701279c5e143b71006878b4ecffb633e6d83930641cea579750efdf5c99b
