@@ -1,0 +1,175 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openproject
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: openproject
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Job
+              labelSelector: app.kubernetes.io/component=seeder
+            patch: |-
+              apiVersion: batch/v1
+              kind: Job
+              metadata:
+                name: _
+              spec:
+                template:
+                  spec:
+                    initContainers:
+                      - name: check-db-ready
+                        $patch: delete
+                    volumes:
+                      - name: tmp
+                        ephemeral: null
+                        emptyDir:
+                          sizeLimit: 5Gi
+                      - name: app-tmp
+                        ephemeral: null
+                        emptyDir:
+                          sizeLimit: 5Gi
+          - target:
+              kind: Deployment
+            patch: |-
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: _
+              spec:
+                template:
+                  spec:
+                    volumes:
+                      - name: tmp
+                        ephemeral: null
+                        emptyDir:
+                          sizeLimit: 5Gi
+                      - name: app-tmp
+                        ephemeral: null
+                        emptyDir:
+                          sizeLimit: 5Gi
+  values:
+    image:
+      repository: openproject/openproject
+      tag: "17.8.0-slim@sha256:48952034215d2a8ecf07086db86be55c74819cc76aa26af61f8da9ce5f06eda2"
+      imagePullPolicy: IfNotPresent
+
+    ingress:
+      enabled: false
+
+    openproject:
+      host: project.zijleinde.nl
+      seed_locale: nl
+      cache:
+        store: redis
+      extraEnvVarsSecret: openproject-secret
+      secretKeyBase:
+        existingSecret: openproject-secret
+        secretKey: SECRET_KEY_BASE
+
+    environment:
+      OPENPROJECT_CACHE__REDIS__URL: redis://openproject-valkey:6379
+      OPENPROJECT_DEFAULT__LANGUAGE: nl
+      OPENPROJECT_USER__DEFAULT__TIMEZONE: Europe/Amsterdam
+      OPENPROJECT_SELF__REGISTRATION: "0"
+      OPENPROJECT_EMAIL__DELIVERY__METHOD: smtp
+      OPENPROJECT_SMTP__ENABLE__STARTTLS__AUTO: "true"
+      OPENPROJECT_SMTP__DOMAIN: zijleinde.nl
+
+    extraEnvVars:
+      - name: OPENPROJECT_MAIL__FROM
+        value: $(OPENPROJECT_SMTP__USER__NAME)
+      - name: IMAP_HOST
+        value: $(OPENPROJECT_SMTP__ADDRESS)
+      - name: IMAP_USERNAME
+        value: $(OPENPROJECT_SMTP__USER__NAME)
+      - name: IMAP_PASSWORD
+        value: $(OPENPROJECT_SMTP__PASSWORD)
+
+    postgresql:
+      bundled: false
+      connection:
+        host: openproject-rw
+        port: 5432
+      auth:
+        existingSecret: openproject-app
+        secretKeys:
+          userPasswordKey: password
+
+    memcached:
+      bundled: false
+
+    persistence:
+      existingClaim: openproject
+
+    podSecurityContext:
+      fsGroupChangePolicy: OnRootMismatch
+
+    replicaCount: 1
+    strategy:
+      type: RollingUpdate
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 1Gi
+      limits:
+        cpu: null
+        memory: 3Gi
+
+    appInit:
+      resources:
+        requests:
+          memory: 256Mi
+
+    seederJob:
+      resources:
+        limits:
+          memory: 2Gi
+
+    workers:
+      default:
+        maxThreads: 5
+        resources:
+          requests:
+            cpu: 25m
+          limits:
+            cpu: null
+            memory: 2Gi
+
+    cron:
+      enabled: true
+      environment:
+        IMAP_MOVE_ON_SUCCESS: processed
+        IMAP_MOVE_ON_FAILURE: failed
+      resources:
+        requests:
+          cpu: 10m
+        limits:
+          cpu: null
+
+    hocuspocus:
+      auth:
+        existingSecret: openproject-secret
+        secretKey: HOCUSPOCUS_SECRET
+      image:
+        imagePullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: 5m
+          memory: 64Mi
+        limits:
+          cpu: null
+          memory: 256Mi
+
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        interval: 1m
+        scrapeTimeout: 10s

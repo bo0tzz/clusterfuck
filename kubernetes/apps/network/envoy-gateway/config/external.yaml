@@ -30,3 +30,4 @@ spec:
           - name: zijlein-de-production-tls
           - name: bo0-tz-production-tls
           - name: loc-place-production-tls
+          - name: zijleinde-nl-production-tls

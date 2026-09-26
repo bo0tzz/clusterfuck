@@ -52,3 +52,15 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: zijleinde-nl-production
+spec:
+  secretName: zijleinde-nl-production-tls
+  dnsNames:
+    - "project.zijleinde.nl"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer

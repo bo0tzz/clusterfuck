@@ -1,0 +1,53 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: zijleinde-openproject-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/zijleinde/openproject/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: openproject
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: zijleinde-openproject
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/zijleinde/openproject/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/postgres
+    - ../../../../components/volsync
+  dependsOn:
+    - name: zijleinde-openproject-bucket
+    - name: cnpg-barman-cloud
+      namespace: operators
+  postBuild:
+    substitute:
+      APP: openproject
+      BUCKET: openproject
+      PG_IMAGE: ghcr.io/cloudnative-pg/postgresql:17.11-standard-trixie
+      VOLSYNC_CAPACITY: 100Gi
+      VOLSYNC_STORAGECLASS: ssd-fs
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_COPY_METHOD: Direct
+      VOLSYNC_PUID: "1000"
+      VOLSYNC_PGID: "1000"
+    substituteFrom:
+      - kind: Secret
+        name: openproject

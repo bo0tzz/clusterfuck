@@ -15,3 +15,12 @@ spec:
             apiTokenSecretRef:
               name: cloudflare-api-token
               key: api-token
+      - selector:
+          dnsZones:
+            - zijleinde.nl
+        http01:
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: envoy-external
+                namespace: network
+                sectionName: http

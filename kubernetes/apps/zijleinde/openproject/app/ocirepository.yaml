@@ -1,0 +1,22 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: openproject
+spec:
+  interval: 1h
+  url: oci://ghcr.io/opf/helm-charts/openproject
+  ref:
+    tag: "13.12.0"
+    digest: sha256:54a40541b79908d86c7364b7b5ec092ae06375e28e5635ef4d82c914f9dd83f8
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: openproject-valkey
+spec:
+  interval: 1h
+  url: oci://ghcr.io/bjw-s-labs/helm/app-template
+  ref:
+    tag: "5.2.1"
+    digest: sha256:f32d40ce76b5378acc96783424e3c5b7ec0274240484968a868b2256983514c3

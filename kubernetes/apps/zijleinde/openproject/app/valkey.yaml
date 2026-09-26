@@ -1,0 +1,39 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openproject-valkey
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: openproject-valkey
+  values:
+    controllers:
+      main:
+        pod:
+          priorityClassName: database
+        containers:
+          main:
+            image:
+              repository: docker.io/valkey/valkey
+              tag: "9.1.2@sha256:418652cfb58ef879d4978c33553735d7147016032d5aefaa14c828e611eb9dfd"
+            args:
+              - --save
+              - ""
+              - --maxmemory
+              - 96mb
+              - --maxmemory-policy
+              - allkeys-lru
+            resources:
+              requests:
+                cpu: 5m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+    service:
+      main:
+        controller: main
+        ports:
+          redis:
+            port: 6379
