@@ -25,7 +25,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup tools
-        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
+        uses: jdx/mise-action@9149ea85001c7435d5a66bb127d6a1b6227cb0a5 # v5.0.0
 
       - uses: anthropics/claude-code-action@3b8197d3d486006dd4af54613517f21ac6ac625e # v1.0.227
         with:
