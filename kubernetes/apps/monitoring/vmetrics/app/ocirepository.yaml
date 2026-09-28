@@ -6,6 +6,6 @@ metadata:
 spec:
   interval: 15m
   ref:
-    tag: 0.94.0
-    digest: sha256:9db6261ee258901cddca27eb96f8ef37435d7f6184dc786eb30f73eed8254cfc
+    tag: 0.95.0
+    digest: sha256:c18a44589ebb3f8be9e1497a09392e2c6091d31d28a9a1cd2f9e9b1158f0ce5c
   url: oci://ghcr.io/victoriametrics/helm-charts/victoria-metrics-k8s-stack
