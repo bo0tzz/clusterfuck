@@ -1,6 +1,6 @@
 [tools]
 flux2 = "2.9.4"
-gh = "2.101.0"
+gh = "2.102.0"
 kubectl = "1.37.0"
 talosctl = "1.14.1"
 usage = "6.12.0"
