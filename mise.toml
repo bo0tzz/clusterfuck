@@ -1,7 +1,7 @@
 [tools]
 flux2 = "2.9.4"
 gh = "2.102.0"
-kubectl = "1.37.0"
+kubectl = "1.37.1"
 talosctl = "1.14.2"
 usage = "6.12.0"
 helmfile = "1.8.1"
