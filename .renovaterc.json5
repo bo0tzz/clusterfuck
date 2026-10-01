@@ -71,6 +71,14 @@
       },
     },
     {
+      groupName: "actions-runner-controller",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/actions-runner-controller-charts/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
       description: "Immich ML image carries an -openvino compatibility suffix; keep it lockstep with the server",
       groupName: "immich-monorepo",
       matchDatasources: ["docker"],
