@@ -20,7 +20,7 @@ spec:
           resources:
             attacher: &ctrlSidecar
               requests:
-                cpu: 100m
+                cpu: 10m
                 memory: 128Mi
               limits:
                 memory: 256Mi
@@ -35,7 +35,7 @@ spec:
                 memory: 1Gi
             plugin:
               requests:
-                memory: 512Mi
+                memory: 160Mi
               limits:
                 memory: 1Gi
             liveness: {}
@@ -46,14 +46,14 @@ spec:
           resources:
             plugin:
               requests:
-                cpu: 250m
-                memory: 512Mi
+                cpu: 50m
+                memory: 192Mi
               limits:
                 memory: 1Gi
             registrar:
               requests:
-                cpu: 50m
-                memory: 128Mi
+                cpu: 10m
+                memory: 32Mi
               limits:
                 memory: 256Mi
             liveness: {}
@@ -76,8 +76,8 @@ spec:
             snapshotter: *ctrlSidecar
             plugin:
               requests:
-                cpu: 250m
-                memory: 512Mi
+                cpu: 50m
+                memory: 160Mi
               limits:
                 memory: 1Gi
             omapGenerator: {}

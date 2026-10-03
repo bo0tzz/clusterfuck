@@ -8,6 +8,18 @@ spec:
     kind: OCIRepository
     name: keda-add-ons-http
   interval: 1h
+  values:
+    operator:
+      resources: &resources
+        requests:
+          cpu: 25m
+          memory: 64Mi
+        limits:
+          memory: 128Mi
+    scaler:
+      resources: *resources
+    interceptor:
+      resources: *resources
   postRenderers:
     - kustomize:
         patches:
