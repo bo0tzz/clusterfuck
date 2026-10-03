@@ -23,6 +23,7 @@ spec:
               TZ: Europe/Amsterdam
               ORIGIN: https://slopbonk.bo0tzz.me
               PUBLIC_CONTACT_EMAIL: slopbonk@bo0tzz.me
+              OPERATOR_GITHUB_IDS: 11602424
               DATABASE_URL:
                 valueFrom:
                   secretKeyRef:
