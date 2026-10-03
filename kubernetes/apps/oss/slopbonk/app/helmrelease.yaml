@@ -22,6 +22,7 @@ spec:
             env:
               TZ: Europe/Amsterdam
               ORIGIN: https://slopbonk.bo0tzz.me
+              PUBLIC_CONTACT_EMAIL: slopbonk@bo0tzz.me
               DATABASE_URL:
                 valueFrom:
                   secretKeyRef:
