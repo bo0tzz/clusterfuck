@@ -1,0 +1,66 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: slopbonk
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: slopbonk
+    namespace: oss
+  values:
+    controllers:
+      main:
+        replicas: 1
+        containers:
+          main:
+            image:
+              repository: ghcr.io/bo0tzz/slopbonk
+              tag: 0.1.0@sha256:2f1e5fdc2662771346f6f44eb138f9be3dc3a704f097b7cf1fc67d44d016177b
+              pullPolicy: IfNotPresent
+            env:
+              TZ: Europe/Amsterdam
+              ORIGIN: https://slopbonk.bo0tzz.me
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: slopbonk-app
+                    key: uri
+            envFrom:
+              - secretRef:
+                  name: slopbonk-secrets
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: &port 3000
+                  periodSeconds: 10
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: *port
+    route:
+      main:
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        hostnames:
+          - slopbonk.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: *port

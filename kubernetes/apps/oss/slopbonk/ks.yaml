@@ -1,0 +1,45 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: oss-slopbonk-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/oss/slopbonk/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: slopbonk
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: oss-slopbonk
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/oss/slopbonk/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/postgres
+  dependsOn:
+    - name: oss-slopbonk-bucket
+    - name: cnpg-barman-cloud
+      namespace: operators
+  postBuild:
+    substitute:
+      APP: slopbonk
+      BUCKET: slopbonk
+    substituteFrom:
+      - kind: Secret
+        name: slopbonk
