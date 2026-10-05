@@ -52,7 +52,8 @@ spec:
     configMaps:
       settings:
         data:
-          # File-backed settings are authoritative: the whole GENERAL group becomes read-only in the UI.
+          # Every deployment-configurable key is pinned so none of it is editable in the UI.
+          # An empty message means memos' built-in defaults.
           memos-instance-setting-general.json: |
             {
               "key": "GENERAL",
@@ -69,25 +70,46 @@ spec:
                 "accessMode": "INSTANCE_ACCESS_MODE_PRIVATE"
               }
             }
+          # Default is LOCAL, which would land attachments on the emptyDir.
+          memos-instance-setting-storage.json: |
+            {
+              "key": "STORAGE",
+              "storageSetting": {
+                "storageType": "DATABASE"
+              }
+            }
+          memos-instance-setting-memo-related.json: |
+            {
+              "key": "MEMO_RELATED",
+              "memoRelatedSetting": {}
+            }
+          memos-instance-setting-notification.json: |
+            {
+              "key": "NOTIFICATION",
+              "notificationSetting": {}
+            }
+          memos-instance-setting-ai.json: |
+            {
+              "key": "AI",
+              "aiSetting": {}
+            }
     persistence:
       data:
         type: emptyDir
         globalMounts:
           - path: /var/opt/memos
-      settings:
-        type: configMap
-        identifier: settings
+      config:
+        type: custom
+        volumeSpec:
+          projected:
+            sources:
+              - configMap:
+                  name: memos
+              - secret:
+                  name: memos-idp
         globalMounts:
-          - path: /etc/secrets/memos-instance-setting-general.json
-            subPath: memos-instance-setting-general.json
-          - path: /etc/secrets/memos-instance-setting-access.json
-            subPath: memos-instance-setting-access.json
-      idp:
-        type: secret
-        name: memos-idp
-        globalMounts:
-          - path: /etc/secrets/memos-idp-authentik.json
-            subPath: memos-idp-authentik.json
+          - path: /etc/secrets
+            readOnly: true
     service:
       main:
         controller: main
