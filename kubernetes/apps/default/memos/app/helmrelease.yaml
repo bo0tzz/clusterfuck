@@ -61,6 +61,14 @@ spec:
                 "weekStartDayOffset": 1
               }
             }
+          # First DB init seeds PUBLIC whenever MEMOS_INSTANCE_URL is set.
+          memos-instance-setting-access.json: |
+            {
+              "key": "ACCESS",
+              "accessSetting": {
+                "accessMode": "INSTANCE_ACCESS_MODE_PRIVATE"
+              }
+            }
     persistence:
       data:
         type: emptyDir
@@ -72,6 +80,8 @@ spec:
         globalMounts:
           - path: /etc/secrets/memos-instance-setting-general.json
             subPath: memos-instance-setting-general.json
+          - path: /etc/secrets/memos-instance-setting-access.json
+            subPath: memos-instance-setting-access.json
       idp:
         type: secret
         name: memos-idp
