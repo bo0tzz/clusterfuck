@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: memos
+spec:
+  interval: 1h
+  url: oci://ghcr.io/bjw-s-labs/helm/app-template
+  ref:
+    tag: "5.2.1"
+    digest: sha256:f32d40ce76b5378acc96783424e3c5b7ec0274240484968a868b2256983514c3

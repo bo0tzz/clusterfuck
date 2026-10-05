@@ -12,4 +12,5 @@ resources:
   - imagebot/ks.yaml
   - miniflux/ks.yaml
   - vaultwarden/ks.yaml
+  - memos/ks.yaml
   - minecraft/ks.yaml
