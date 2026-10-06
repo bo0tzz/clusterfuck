@@ -26,7 +26,7 @@ labels:
 ---
 apiVersion: v1alpha1
 kind: KubeAPIServerConfig
-image: registry.k8s.io/kube-apiserver:v1.37.0@sha256:d1045e5c6d2f016797d22143eba7502e1bb712a4681836a7c35763a9c192dd70
+image: registry.k8s.io/kube-apiserver:v1.37.1@sha256:e190f914a6cc21cab9268485d1ae7282fdeab1315ac64b668aa42d732fd1061d
 certExtraSANs:
   - clusterfuck.bo0tzz.me
 resources:
@@ -84,7 +84,7 @@ configuration:
 ---
 apiVersion: v1alpha1
 kind: KubeControllerManagerConfig
-image: registry.k8s.io/kube-controller-manager:v1.37.0@sha256:997c997924eb8574f63f204a0b0af133aaf33c10df84009c32d34037f4e0e077
+image: registry.k8s.io/kube-controller-manager:v1.37.1@sha256:d470c1b85aebb466e971c06239cc6a31a4ac337a78600cef80375a79a1be1641
 extraArgs:
   bind-address: 0.0.0.0
 resources:
@@ -94,7 +94,7 @@ resources:
 ---
 apiVersion: v1alpha1
 kind: KubeSchedulerConfig
-image: registry.k8s.io/kube-scheduler:v1.37.0@sha256:a27622f132aa09cf2461ba077894a070c0186ec607366d14e805912d4804d11f
+image: registry.k8s.io/kube-scheduler:v1.37.1@sha256:b6e2474a6c20309f0df1e7337364281fda95c6a0722259ba7f032a1e177d3f29
 extraArgs:
   bind-address: 0.0.0.0
 resources:
@@ -105,7 +105,7 @@ resources:
 apiVersion: v1alpha1
 kind: KubeProxyConfig
 enabled: false
-image: registry.k8s.io/kube-proxy:v1.37.0@sha256:77bf2b08ff8ac1a4a446cffaa85e79e87379c8cb54fcf60f2cb6c62c966829c8
+image: registry.k8s.io/kube-proxy:v1.37.1@sha256:b9ae667ed9c160c9d5b66f55e8afec97fc5483a12db0ada5286541b0385cb9f4
 ---
 apiVersion: v1alpha1
 kind: KubeServiceAccountConfig
