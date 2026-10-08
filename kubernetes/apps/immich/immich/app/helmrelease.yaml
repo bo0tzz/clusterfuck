@@ -120,6 +120,7 @@ spec:
                 tag: v3.3.0-openvino
               env:
                 GUNICORN_CMD_ARGS: "--no-control-socket"
+                MACHINE_LEARNING_MODEL_REVISION: v2
               resources:
                 claims:
                   - name: gpu
@@ -130,5 +131,5 @@ spec:
         cache:
           type: persistentVolumeClaim
           accessMode: ReadWriteMany
-          size: 30Gi
+          size: 50Gi
           storageClass: ssd-fs
