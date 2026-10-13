@@ -21,8 +21,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/sableclient/sable
-              tag: "1.22.11@sha256:08b78065c4a55c8afabf78cab33afa3bbe4e5c9b2a685625399d88bd3c0f6e32"
+              repository: git.sable.moe/sableclient/sable-next
+              tag: "2.0.2@sha256:d091747051dec5f8a2b381afb0c31a750d1521eb70b40cda266f664085c5863d"
             probes:
               liveness: &probe
                 enabled: true
@@ -68,7 +68,7 @@ spec:
           - path: /app/config.json
             subPath: config.json
             readOnly: true
-      # Caddy needs writable XDG data/config dirs (image declares them as root-owned volumes)
+      # Caddy needs writable XDG data/config dirs (image owns them as nobody, not our uid)
       data:
         type: emptyDir
         globalMounts:
