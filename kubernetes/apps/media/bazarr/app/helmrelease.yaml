@@ -53,7 +53,7 @@ spec:
           - name: envoy-internal
             namespace: network
         hostnames:
-          - bazarr.next.bo0tzz.me
+          - bazarr.bo0tzz.me
         rules:
           - backendRefs:
               - identifier: main

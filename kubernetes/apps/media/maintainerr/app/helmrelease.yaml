@@ -53,7 +53,7 @@ spec:
           - name: envoy-internal
             namespace: network
         hostnames:
-          - maintainerr.next.bo0tzz.me
+          - maintainerr.bo0tzz.me
     persistence:
       config:
         existingClaim: maintainerr-config

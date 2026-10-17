@@ -62,7 +62,7 @@ spec:
           - name: envoy-internal
             namespace: network
         hostnames:
-          - sonarr.next.bo0tzz.me
+          - sonarr.bo0tzz.me
         rules:
           - backendRefs:
               - identifier: main

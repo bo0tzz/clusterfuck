@@ -59,7 +59,7 @@ spec:
           - name: envoy-internal
             namespace: network
         hostnames:
-          - jellyfin.next.bo0tzz.me
+          - jellyfin.bo0tzz.me
         rules:
           - backendRefs:
               - identifier: main

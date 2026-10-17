@@ -35,7 +35,7 @@ spec:
           - name: envoy-internal
             namespace: network
         hostnames:
-          - seerr.next.bo0tzz.me
+          - seerr.bo0tzz.me
         rules:
           - backendRefs:
               - identifier: main

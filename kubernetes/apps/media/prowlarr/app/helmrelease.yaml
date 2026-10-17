@@ -59,7 +59,7 @@ spec:
           - name: envoy-internal
             namespace: network
         hostnames:
-          - prowlarr.next.bo0tzz.me
+          - prowlarr.bo0tzz.me
         rules:
           - backendRefs:
               - identifier: main

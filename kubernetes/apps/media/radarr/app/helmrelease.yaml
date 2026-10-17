@@ -62,7 +62,7 @@ spec:
           - name: envoy-internal
             namespace: network
         hostnames:
-          - radarr.next.bo0tzz.me
+          - radarr.bo0tzz.me
         rules:
           - backendRefs:
               - identifier: main

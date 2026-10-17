@@ -54,7 +54,7 @@ spec:
           - name: envoy-internal
             namespace: network
         hostnames:
-          - qbittorrent.next.bo0tzz.me
+          - qbittorrent.bo0tzz.me
         rules:
           - backendRefs:
               - identifier: main
