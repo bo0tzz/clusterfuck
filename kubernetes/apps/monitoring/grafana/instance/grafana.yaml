@@ -44,9 +44,9 @@ spec:
               resources:
                 requests:
                   cpu: 50m
-                  memory: 256Mi
-                limits:
                   memory: 512Mi
+                limits:
+                  memory: 768Mi
               env:
                 - name: GF_SECURITY_ADMIN_USER
                   valueFrom:

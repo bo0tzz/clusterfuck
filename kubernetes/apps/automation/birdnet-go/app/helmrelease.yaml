@@ -31,6 +31,9 @@ spec:
               # Point HOME at the (writable) config volume; the entrypoint then
               # symlinks $HOME/.config/birdnet-go -> /config and settings load.
               HOME: /config
+            resources:
+              requests:
+                memory: 384Mi
     service:
       main:
         controller: main

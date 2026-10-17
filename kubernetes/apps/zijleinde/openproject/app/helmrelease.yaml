@@ -118,7 +118,7 @@ spec:
     resources:
       requests:
         cpu: 50m
-        memory: 1Gi
+        memory: 2Gi
       limits:
         cpu: null
         memory: 3Gi
@@ -139,6 +139,7 @@ spec:
         resources:
           requests:
             cpu: 25m
+            memory: 768Mi
           limits:
             cpu: null
             memory: 2Gi

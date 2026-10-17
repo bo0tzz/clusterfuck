@@ -32,7 +32,7 @@ certExtraSANs:
 resources:
   requests:
     cpu: 200m
-    memory: 2560Mi
+    memory: 3584Mi
 ---
 apiVersion: v1alpha1
 kind: KubeAuthenticationConfig
