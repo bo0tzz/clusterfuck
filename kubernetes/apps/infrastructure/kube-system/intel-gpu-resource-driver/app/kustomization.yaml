@@ -4,3 +4,10 @@ namespace: kube-system
 resources:
   - ./helmrelease.yaml
   - ./ocirepository.yaml
+configMapGenerator:
+  - name: gpu-rebar
+    files:
+      - rebar.py
+# the HelmRelease's post-renderer names it, and kustomize doesn't rewrite names inside that patch string
+generatorOptions:
+  disableNameSuffixHash: true

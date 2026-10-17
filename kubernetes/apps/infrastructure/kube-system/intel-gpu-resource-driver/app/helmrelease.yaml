@@ -25,3 +25,37 @@ spec:
               - op: add
                 path: /spec/template/spec/priorityClassName
                 value: infra-node
+              # Grows Battlemage VRAM BARs on boards without Resizable BAR (dusty) before the plugin
+              # hands the card out; see rebar.py.
+              - op: add
+                path: /spec/template/spec/initContainers
+                value:
+                  - name: rebar
+                    image: docker.io/library/python:3.13-alpine@sha256:2d9aefe2fef018a7eb2c13064c89c71929800fd2e5dccdbf52ea5da5bb8d929a
+                    command: ["python3", "-u", "/scripts/rebar.py"]
+                    securityContext:
+                      privileged: true
+                    resources:
+                      requests:
+                        cpu: 1m
+                        memory: 8Mi
+                      limits:
+                        memory: 64Mi
+                    volumeMounts:
+                      - name: rebar
+                        mountPath: /scripts
+                      - name: host-proc
+                        mountPath: /host/proc
+                        readOnly: true
+              - op: add
+                path: /spec/template/spec/volumes/-
+                value:
+                  name: rebar
+                  configMap:
+                    name: gpu-rebar
+              - op: add
+                path: /spec/template/spec/volumes/-
+                value:
+                  name: host-proc
+                  hostPath:
+                    path: /proc
