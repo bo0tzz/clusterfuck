@@ -5,6 +5,5 @@ namespace: automation
 resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
-  - ./httpscaledobject.yaml
   - ./securitypolicy.yaml
   - ./secret.sops.yaml
