@@ -96,7 +96,8 @@ def users(under):
 
 
 for dev in sorted((PCI / "devices").iterdir()):
-    if read(dev, "vendor") != VENDOR or read(dev, "device") not in DEVICES:
+    # VFs share the PF's device ID but have no resizable BAR
+    if read(dev, "vendor") != VENDOR or read(dev, "device") not in DEVICES or not (dev / f"resource{BAR}_resize").exists():
         continue
     size = int(read(dev, f"resource{BAR}_resize"), 16).bit_length() - 1  # bit n: 2^n MiB
     if bar_mib(dev) >= 1 << size:
