@@ -55,7 +55,7 @@ shell = "bash -c"
 confirm = "Upgrade the node from its installer image? This reboots it."
 run = """
 ip=$(yq 'select(.addresses) | .addresses[0].address' nodes/$usage_node.yaml | cut -d/ -f1)
-image=$(yq 'select(.machine.install.image) | .machine.install.image' nodes/$usage_node.yaml)
+image=$(yq 'select(.kind == "UnattendedInstallConfig") | .installer.image' nodes/$usage_node.yaml)
 talosctl -n $ip upgrade -i $image -m powercycle
 """
 
