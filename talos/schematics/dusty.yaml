@@ -3,3 +3,4 @@ customization:
   systemExtensions:
     officialExtensions:
       - siderolabs/amd-ucode
+      - siderolabs/xe
