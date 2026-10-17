@@ -8,9 +8,6 @@ spec:
     name: spegel
   interval: 1h
   values:
-    service:
-      registry:
-        hostPort: 29999
     spegel:
       containerdSock: /run/containerd/containerd.sock
       containerdRegistryConfigPath: /etc/cri/conf.d/hosts
@@ -22,9 +19,3 @@ spec:
         memory: 64Mi
     serviceMonitor:
       enabled: true
-    grafanaDashboard:
-      enabled: true
-      mode: GrafanaOperator
-      grafanaOperator:
-        matchLabels:
-          dashboards: grafana
