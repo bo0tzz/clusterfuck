@@ -3,12 +3,17 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rook-ceph-cluster
+  annotations:
+    clusterfuck.bo0tzz.me/own-upgrade-strategy: "true"
 spec:
   chartRef:
     kind: OCIRepository
     name: rook-ceph-cluster
   interval: 1h
-  timeout: 30m
+  # a rollback mid-pass makes Rook start over
+  upgrade:
+    strategy:
+      name: RetryOnFailure
   values:
     monitoring:
       enabled: true

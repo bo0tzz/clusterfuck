@@ -44,6 +44,17 @@ spec:
                   upgrade:
                     cleanupOnFail: true
                     crds: CreateReplace
+              target:
+                group: helm.toolkit.fluxcd.io
+                kind: HelmRelease
+            # opt out with the annotation to set your own upgrade strategy
+            - patch: |-
+                apiVersion: helm.toolkit.fluxcd.io/v2
+                kind: HelmRelease
+                metadata:
+                  name: _
+                spec:
+                  upgrade:
                     strategy:
                       name: RemediateOnFailure
                     remediation:
@@ -52,6 +63,7 @@ spec:
               target:
                 group: helm.toolkit.fluxcd.io
                 kind: HelmRelease
+                annotationSelector: "!clusterfuck.bo0tzz.me/own-upgrade-strategy"
             - patch: |-
                 apiVersion: source.toolkit.fluxcd.io/v1
                 kind: OCIRepository
