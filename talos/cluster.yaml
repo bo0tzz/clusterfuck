@@ -47,6 +47,7 @@ config:
   imageGCHighThresholdPercent: 60
   imageGCLowThresholdPercent: 50
   imageMaximumGCAge: 168h
+  maxPods: 200
   serializeImagePulls: false
 ---
 apiVersion: v1alpha1
