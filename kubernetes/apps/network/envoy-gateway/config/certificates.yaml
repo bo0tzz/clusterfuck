@@ -22,7 +22,6 @@ spec:
   dnsNames:
     - "zijlein.de"
     - "*.zijlein.de"
-    - "*.next.zijlein.de" # TODO: Remove after migration is complete
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer

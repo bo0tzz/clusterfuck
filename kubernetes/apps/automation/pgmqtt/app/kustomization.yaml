@@ -15,8 +15,6 @@ patches:
       - op: remove
         path: /spec/bootstrap/recovery
       - op: remove
-        path: /spec/bootstrap/initdb/import
-      - op: remove
         path: /spec/plugins
   - target:
       group: postgresql.cnpg.io

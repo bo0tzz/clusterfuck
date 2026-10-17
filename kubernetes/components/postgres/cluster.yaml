@@ -20,12 +20,6 @@ spec:
     initdb:
       database: ${APP}
       owner: ${APP}
-      import:
-        type: microservice
-        databases:
-          - placeholder
-        source:
-          externalCluster: old-cluster
     recovery:
       source: backups
       database: ${APP}
@@ -37,14 +31,6 @@ spec:
         parameters:
           barmanObjectName: ${APP}
           serverName: ${APP}
-    - name: old-cluster
-      connectionParameters:
-        host: 192.168.4.105
-        user: importer
-        dbname: postgres
-      password:
-        name: old-cluster-migrator
-        key: password
   plugins:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true

@@ -13,5 +13,3 @@ patches:
     patch: |-
       - op: remove
         path: /spec/bootstrap/recovery
-      - op: remove
-        path: /spec/bootstrap/initdb/import
