@@ -33,7 +33,6 @@ spec:
   components:
     - ../../../../components/postgres
     - ../../../../components/volsync
-    - ../../../../components/gpu
   dependsOn:
     - name: immich-bucket
     - name: cnpg-barman-cloud
@@ -46,25 +45,6 @@ spec:
       VOLSYNC_STORAGECLASS: ssd-fs
       VOLSYNC_ACCESSMODES: ReadWriteMany
       VOLSYNC_COPY_METHOD: Direct
-      GPU_CEL: 'device.attributes["gpu.intel.com"].pciId == "0x46a6"'
     substituteFrom:
       - kind: Secret
         name: immich
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: immich-ml-gpu
-spec:
-  interval: 1h
-  path: ./kubernetes/apps/immich/immich/ml-gpu
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  components:
-    - ../../../../components/gpu
-  postBuild:
-    substitute:
-      APP: immich-ml

@@ -1,0 +1,20 @@
+---
+# One VF shared by the server (media engines, transcoding) and machine learning (compute), instead of the gpu
+# component's per-pod template.
+apiVersion: resource.k8s.io/v1
+kind: ResourceClaim
+metadata:
+  name: immich-gpu
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  devices:
+    requests:
+      - name: gpu
+        exactly:
+          deviceClassName: gpu.intel.com
+          selectors:
+            - cel:
+                expression: device.attributes["gpu.intel.com"].type == "vf"
+            - cel:
+                expression: device.attributes["gpu.intel.com"].pciId == "0xe212"

@@ -6,6 +6,7 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./database.yaml
+  - ./resourceclaim.yaml
 patches:
   - target:
       group: postgresql.cnpg.io

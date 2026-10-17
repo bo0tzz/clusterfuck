@@ -22,7 +22,7 @@ spec:
     substitute:
       APP: frigate
       BUCKET: frigate
-      GPU_CEL: 'device.attributes["gpu.intel.com"].pciId == "0x46a6"'
+      GPU_CEL: 'device.attributes["gpu.intel.com"].pciId == "0xe212"'
       # Frigate 0.17 runs as root and writes /config/.jwt_secret mode 0600;
       # mover needs uid 0 to read it. Non-root support is planned for 0.19.
       VOLSYNC_PUID: "0"

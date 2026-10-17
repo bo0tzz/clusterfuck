@@ -13,10 +13,9 @@ spec:
           exactly:
             deviceClassName: gpu.intel.com
             selectors:
-              # Never claim a parent PF — always leave it to its VFs.
-              # TODO: switch to `type == "vf"` (driver >=0.11.0) once every GPU is SR-IOV'd (incl. the B50s); today this also covers bare non-SR-IOV GPUs.
+              # Never claim a whole GPU, only its VFs.
               - cel:
-                  expression: device.attributes["gpu.intel.com"].sriov == false
+                  expression: device.attributes["gpu.intel.com"].type == "vf"
               # Default `1==1` is a CEL always-true expression. A naive default
               # of `true` doesn't survive kustomize: the YAML serializer drops
               # the single quotes, Flux substitute replaces `${GPU_CEL:=true}`
