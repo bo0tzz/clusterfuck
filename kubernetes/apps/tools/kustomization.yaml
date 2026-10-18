@@ -9,3 +9,4 @@ resources:
   - namespace.yaml
   - stirling-pdf/ks.yaml
   - spoolman/ks.yaml
+  - labelabelabel/ks.yaml
