@@ -18,7 +18,7 @@ spec:
           main:
             image:
               repository: ghcr.io/bo0tzz/labelabelabel
-              tag: main@sha256:127bfdd3c1cdffba7a80228f2d1ad320b3ffbddb1db306b4b0ffc11a22e9d326
+              tag: 0.1.0@sha256:96cb5de219f1baeb7d50ad1eb8f1706d131067c6161bfb0d8ad741fead3beb95
             env:
               PRINTER_HOST: 192.168.178.109
             probes:
@@ -28,10 +28,10 @@ spec:
                 enabled: true
             resources:
               requests:
-                cpu: 10m
-                memory: 256Mi
+                cpu: 20m
+                memory: 192Mi
               limits:
-                memory: 1Gi
+                memory: 384Mi
     defaultPodOptions:
       securityContext:
         runAsUser: 1000
