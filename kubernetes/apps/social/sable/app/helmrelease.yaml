@@ -18,11 +18,12 @@ spec:
     controllers:
       sable:
         replicas: 2
+        strategy: RollingUpdate
         containers:
           app:
             image:
               repository: git.sable.moe/sableclient/sable-next
-              tag: "2.0.3@sha256:2d269671c54f1ddfbe22db28405f8c13039be145444b3211bc156b18672c44c1"
+              tag: "2.0.3@sha256:f53b10df59324463daff7ed743935d93f69b78ca7936fb11bdfc965cd0dfe179"
             probes:
               liveness: &probe
                 enabled: true
