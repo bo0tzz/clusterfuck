@@ -80,12 +80,6 @@ spec:
             memory: 4Gi
           limits:
             memory: 4Gi
-        mds:
-          requests:
-            cpu: 100m
-            memory: 1Gi
-          limits:
-            memory: 2Gi
         exporter:
           requests:
             cpu: 10m
@@ -198,9 +192,9 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 1536Mi
-              limits:
                 memory: 2Gi
+              limits:
+                memory: 4Gi
         storageClass:
           enabled: true
           isDefault: false
