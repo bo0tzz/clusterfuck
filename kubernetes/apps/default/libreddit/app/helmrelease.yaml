@@ -15,8 +15,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/silvenga/redlib
-              tag: latest@sha256:5b7b92744ca153c75bef1f5b6b5ffb6985a230c91019d722a88ec758b15f502d
+              repository: ghcr.io/bo0tzz/redlib
+              tag: latest@sha256:418b00fcf25c31c7d83b5b2098f17ad00d8322c58fb1c19646d3ab2e223ca160
             probes:
               liveness: &probes
                 enabled: true
