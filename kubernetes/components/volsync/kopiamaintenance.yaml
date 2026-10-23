@@ -1,0 +1,11 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: KopiaMaintenance
+metadata:
+  name: ${APP}
+spec:
+  repository:
+    repository: ${APP}-kopia-config
+  trigger:
+    schedule: ${VOLSYNC_MAINTENANCE_SCHEDULE:=0 5 * * *}
+  cacheCapacity: ${VOLSYNC_CACHE_CAPACITY:=2Gi}
