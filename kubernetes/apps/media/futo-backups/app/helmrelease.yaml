@@ -1,0 +1,74 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: futo-backups
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: futo-backups
+    namespace: media
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/futo-org/backups/standalone
+              tag: "v1.8.1@sha256:ebf0098e7ce869af2be2208673977717316bbb76703b949f2573f2ee95d39db3"
+            env:
+              TZ: Europe/Amsterdam
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              runAsNonRoot: true
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 22676
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 50m
+                memory: 512Mi
+              limits:
+                memory: 4Gi
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 22676
+    route:
+      main:
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - futo-backups.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 22676
+    persistence:
+      data:
+        existingClaim: futo-backups-data
+        globalMounts:
+          - path: /data
+      cache:
+        existingClaim: futo-backups-cache
+        globalMounts:
+          - path: /cache
+      media:
+        existingClaim: media-library
+        globalMounts:
+          - path: /target/media-library
+            readOnly: true

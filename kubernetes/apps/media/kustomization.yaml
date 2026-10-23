@@ -14,3 +14,4 @@ resources:
   - recyclarr/ks.yaml
   - seerr/ks.yaml
   - maintainerr/ks.yaml
+  - futo-backups/ks.yaml
