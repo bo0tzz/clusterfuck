@@ -10,6 +10,13 @@ spec:
     name: bo0kkeeper
     namespace: paperwork
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       main:
         replicas: 1
@@ -32,6 +39,8 @@ spec:
               WISE_PROFILE_ID: "55534210"
               WISE_TARGET_RECIPIENT_ID: "828454270"
               PAPERLESS_BASE_URL: https://paperless.bo0tzz.me
+              EXTRACT_MODEL_URI: hf:mradermacher/NuExtract-2.0-4B-GGUF/NuExtract-2.0-4B.Q4_K_M.gguf
+              EXTRACT_MODEL_DIR: /models
               ENABLE_BANKING_REDIRECT_URI: https://bo0kkeeper.bo0tzz.me/api/banking/auth/callback
               DB_URL:
                 valueFrom:
@@ -65,7 +74,14 @@ spec:
                 cpu: 50m
                 memory: 640Mi
               limits:
-                memory: 1Gi
+                memory: 3Gi
+    persistence:
+      models:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        globalMounts:
+          - path: /models
     service:
       main:
         controller: main
