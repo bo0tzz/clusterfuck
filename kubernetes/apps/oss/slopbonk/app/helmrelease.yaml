@@ -17,7 +17,7 @@ spec:
           main:
             image:
               repository: ghcr.io/bo0tzz/slopbonk
-              tag: 0.5.0@sha256:ec854208300188ad7fec0b941c1ed763d767843fc6f6f31c647e31b31fd77ae9
+              tag: 0.5.1@sha256:38db1bc7c31e74afd43a862b7981efafc7d0e657a44adc9f0ed284f57251f871
               pullPolicy: IfNotPresent
             env:
               TZ: Europe/Amsterdam
