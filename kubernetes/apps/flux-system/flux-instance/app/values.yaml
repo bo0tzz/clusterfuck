@@ -27,7 +27,7 @@ instance:
         target:
           kind: Deployment
           name: (kustomize-controller|helm-controller|source-controller)
-      - # Resource requests and limits — helm + kustomize do heavy chart/build work
+      - # Resource requests and limits — helm, kustomize and source do heavy chart/build/fetch work
         patch: |
           apiVersion: apps/v1
           kind: Deployment
@@ -46,8 +46,8 @@ instance:
                         memory: 1Gi
         target:
           kind: Deployment
-          name: (helm-controller|kustomize-controller)
-      - # Resource requests and limits — source + notification are light
+          name: (helm-controller|kustomize-controller|source-controller)
+      - # Resource requests and limits — notification is light
         patch: |
           apiVersion: apps/v1
           kind: Deployment
@@ -66,7 +66,7 @@ instance:
                         memory: 256Mi
         target:
           kind: Deployment
-          name: (source-controller|notification-controller)
+          name: notification-controller
       - patch: |
           - op: add
             path: /spec/template/spec/priorityClassName

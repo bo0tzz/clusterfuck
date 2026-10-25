@@ -38,9 +38,9 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 40Mi
-        limits:
           memory: 80Mi
+        limits:
+          memory: 160Mi
     certController:
       priorityClassName: infra
       resources:

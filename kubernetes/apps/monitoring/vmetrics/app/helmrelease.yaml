@@ -32,7 +32,7 @@ spec:
             cpu: 100m
             memory: 4Gi
           limits:
-            memory: 6Gi
+            memory: 8Gi
 
     vmagent:
       spec:
