@@ -1,0 +1,65 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: descheduler
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: descheduler
+  interval: 1h
+  values:
+    kind: CronJob
+    schedule: "0 * * * *"
+    startingDeadlineSeconds: 300
+    activeDeadlineSeconds: 600
+    priorityClassName: infra
+    resources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
+    deschedulerPolicy:
+      maxNoOfPodsToEvictPerNode: 5
+      profiles:
+        - name: default
+          pluginConfig:
+            - name: DefaultEvictor
+              args:
+                priorityThreshold:
+                  name: database
+                nodeFit: true
+                podProtections:
+                  defaultDisabled:
+                    - PodsWithLocalStorage
+                  extraEnabled:
+                    - PodsWithResourceClaims
+            - name: RemoveDuplicates
+            - name: RemovePodsViolatingNodeAffinity
+              args:
+                nodeAffinityType:
+                  - requiredDuringSchedulingIgnoredDuringExecution
+            - name: RemovePodsViolatingNodeTaints
+            - name: RemovePodsViolatingInterPodAntiAffinity
+            - name: RemovePodsViolatingTopologySpreadConstraint
+            - name: LowNodeUtilization
+              args:
+                thresholds:
+                  cpu: 40
+                  memory: 40
+                  pods: 40
+                targetThresholds:
+                  cpu: 70
+                  memory: 65
+                  pods: 60
+          plugins:
+            balance:
+              enabled:
+                - RemoveDuplicates
+                - RemovePodsViolatingTopologySpreadConstraint
+                - LowNodeUtilization
+            deschedule:
+              enabled:
+                - RemovePodsViolatingNodeTaints
+                - RemovePodsViolatingNodeAffinity
+                - RemovePodsViolatingInterPodAntiAffinity
