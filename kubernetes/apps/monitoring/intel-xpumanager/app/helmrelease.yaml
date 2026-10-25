@@ -25,8 +25,6 @@ spec:
       claims:
         - name: xpumd
     gpuAccess: dra
-    # Not on janky: xpumd v2's L0 sysman fails on its B50's 256 MiB BAR, and there's no window
-    # above 4 GiB to grow it into. dusty's is grown by the DRA kubelet plugin's rebar init container.
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -34,7 +32,7 @@ spec:
             - matchExpressions:
                 - key: kubernetes.io/hostname
                   operator: In
-                  values: [tiny, dusty]
+                  values: [tiny, dusty, wonky]
     prometheus:
       monitor: true
     # Chart 2.0.0-rc.0 configures the `prometheus` exporter but does not include it in any
