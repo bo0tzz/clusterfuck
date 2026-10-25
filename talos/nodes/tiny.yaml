@@ -1,4 +1,7 @@
 ---
+machine:
+  type: controlplane
+---
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 installer:

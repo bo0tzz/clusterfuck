@@ -16,10 +16,16 @@ dir = "talos"
 usage = 'arg "<node>"'
 shell = "bash -c"
 run = """
-talosctl machineconfig patch cluster.yaml \
-  -p @controlplane.yaml \
-  -p @<(sops -d talsecret.sops.yaml | yq --from-file secrets.yq) \
-  -p @nodes/$usage_node.yaml
+node="$usage_node"
+if [ "$(yq eval 'select(di == 0) | .machine.type' nodes/$node.yaml)" = controlplane ]; then
+  talosctl machineconfig patch cluster.yaml -p @controlplane.yaml \
+    -p @<(sops -d talsecret.sops.yaml | yq --from-file secrets.yq) \
+    -p @nodes/$node.yaml
+else
+  talosctl machineconfig patch cluster.yaml \
+    -p @<(sops -d talsecret.sops.yaml | yq --from-file secrets-worker.yq) \
+    -p @nodes/$node.yaml
+fi
 """
 
 [tasks."talos:apply"]

@@ -1,6 +1,4 @@
 ---
-machine:
-  type: controlplane
 cluster:
   etcd:
     extraArgs:
