@@ -40,6 +40,8 @@ spec:
                     port: 8096
               readiness: *probes
     defaultPodOptions:
+      annotations:
+        descheduler.alpha.kubernetes.io/prefer-no-eviction: ""
       resourceClaims:
         - name: gpu
           resourceClaimTemplateName: ${APP}-gpu

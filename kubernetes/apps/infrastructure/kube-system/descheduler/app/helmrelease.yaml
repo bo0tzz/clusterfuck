@@ -29,6 +29,14 @@ spec:
                 priorityThreshold:
                   name: database
                 nodeFit: true
+                minPodAge: 1h
+                noEvictionPolicy: Mandatory
+                labelSelector:
+                  matchExpressions:
+                    - key: batch.kubernetes.io/job-name
+                      operator: DoesNotExist
+                    - key: actions.github.com/scale-set-name
+                      operator: DoesNotExist
                 podProtections:
                   defaultDisabled:
                     - PodsWithLocalStorage
@@ -42,16 +50,16 @@ spec:
             - name: RemovePodsViolatingNodeTaints
             - name: RemovePodsViolatingInterPodAntiAffinity
             - name: RemovePodsViolatingTopologySpreadConstraint
+            - name: RemoveFailedPods
+              args:
+                minPodLifetimeSeconds: 3600
             - name: LowNodeUtilization
               args:
+                useDeviationThresholds: true
                 thresholds:
-                  cpu: 40
-                  memory: 40
-                  pods: 40
+                  memory: 5
                 targetThresholds:
-                  cpu: 70
-                  memory: 65
-                  pods: 60
+                  memory: 5
           plugins:
             balance:
               enabled:
@@ -63,3 +71,4 @@ spec:
                 - RemovePodsViolatingNodeTaints
                 - RemovePodsViolatingNodeAffinity
                 - RemovePodsViolatingInterPodAntiAffinity
+                - RemoveFailedPods
