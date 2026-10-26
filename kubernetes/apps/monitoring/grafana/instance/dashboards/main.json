@@ -1356,7 +1356,8 @@
                 "value": null
               }
             ]
-          }
+          },
+          "noValue": "No active health checks"
         },
         "overrides": [
           {
@@ -1473,7 +1474,7 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "max by(daemon, hostname) (label_replace(ceph_daemon_socket_up, \"daemon\", \"$1\", \"ceph_daemon\", \"ceph-(.*)\"))",
+          "expr": "max by(daemon, hostname) (label_replace(ceph_daemon_socket_up, \"daemon\", \"$1\", \"ceph_daemon\", \"ceph-(.*)\")) and on(daemon) max by(daemon) (label_replace(ceph_osd_metadata or ceph_mon_metadata or ceph_mds_metadata, \"daemon\", \"$1\", \"ceph_daemon\", \"(.*)\"))",
           "refId": "A",
           "format": "table",
           "instant": true
