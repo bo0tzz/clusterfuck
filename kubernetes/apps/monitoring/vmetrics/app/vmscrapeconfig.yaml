@@ -15,6 +15,10 @@ spec:
     - sourceLabels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
       regex: "true"
       action: keep
+    # pod SD yields a target per container port; all get rewritten to the annotated port below
+    - sourceLabels: [__meta_kubernetes_pod_container_port_number, __meta_kubernetes_pod_annotation_prometheus_io_port]
+      action: keep_if_equal
+      if: '{__meta_kubernetes_pod_annotation_prometheus_io_port=~".+"}'
     - sourceLabels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
       regex: (.+)
       targetLabel: __metrics_path__
