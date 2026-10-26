@@ -33,9 +33,6 @@ spec:
         exporter: infra-node
       cleanupPolicy:
         wipeDevicesFromOtherClusters: true
-      csi:
-        readAffinity:
-          enabled: true
       network:
         connections:
           requireMsgr2: true
