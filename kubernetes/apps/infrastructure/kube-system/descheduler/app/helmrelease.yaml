@@ -57,7 +57,7 @@ spec:
               args:
                 useDeviationThresholds: true
                 thresholds:
-                  memory: 5
+                  memory: 10
                 targetThresholds:
                   memory: 5
           plugins:
