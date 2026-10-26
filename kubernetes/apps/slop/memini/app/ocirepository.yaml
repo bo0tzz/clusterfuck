@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: memini
+spec:
+  interval: 1h
+  url: oci://registry.erwanleboucher.dev/eleboucher/charts/memini
+  ref:
+    tag: v0.7.37
+    digest: sha256:5ccd80f24a075d502f2e05b564e3a3bd0ee436e37927835df5efb851b8d72498

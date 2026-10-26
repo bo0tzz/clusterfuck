@@ -1,0 +1,15 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: memini
+spec:
+  name: memini
+  owner: memini
+  cluster:
+    name: memini
+  extensions:
+    - name: vector
+      ensure: present
+    - name: vchord
+      ensure: present

@@ -1,0 +1,102 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ovms
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: ovms
+  values:
+    controllers:
+      ovms:
+        containers:
+          app:
+            image:
+              repository: docker.io/openvino/model_server
+              tag: 2026.4.1-gpu@sha256:a928903fe429f1e3e27107cc45932d30d95febfd2d1159dc50869c3eac76fc58
+            args:
+              - --source_model
+              - OpenVINO/Qwen3-Embedding-0.6B-fp16-ov
+              - --model_name
+              - Qwen3-Embedding-0.6B
+              - --model_repository_path
+              - /models
+              - --task
+              - embeddings
+              - --pooling
+              - LAST
+              - --target_device
+              - GPU
+              - --rest_port
+              - "8000"
+            env:
+              HF_HOME: /models/.cache
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              claims:
+                - name: gpu
+              requests:
+                cpu: 50m
+                memory: 1Gi
+              limits:
+                memory: 3Gi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /v2/health/live
+                    port: 8000
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /v2/health/ready
+                    port: 8000
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /v2/health/live
+                    port: 8000
+                  failureThreshold: 60
+                  periodSeconds: 5
+    defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: ${APP}-gpu
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 5000
+        runAsGroup: 5000
+        fsGroup: 5000
+        seccompProfile:
+          type: RuntimeDefault
+    service:
+      ovms:
+        controller: ovms
+        ports:
+          http:
+            port: 8000
+    persistence:
+      models:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: ssd-block
+        globalMounts:
+          - path: /models
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

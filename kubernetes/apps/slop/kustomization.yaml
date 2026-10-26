@@ -9,3 +9,5 @@ components:
 resources:
   - namespace.yaml
   - ./kritika/ks.yaml
+  - ./memini/ks.yaml
+  - ./ovms/ks.yaml

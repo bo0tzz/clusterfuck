@@ -1,0 +1,68 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: memini
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: memini
+  values:
+    controllers:
+      main:
+        type: deployment
+        strategy: RollingUpdate
+        pod:
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+        containers:
+          main:
+            env:
+              MEMINI_BACKEND: postgres
+              MEMINI_POSTGRES_DSN:
+                valueFrom:
+                  secretKeyRef:
+                    name: memini-app
+                    key: uri
+              MEMINI_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: memini-secret
+                    key: MEMINI_API_KEY
+              MEMINI_EMBED_BASE_URL: http://ovms.slop.svc.cluster.local:8000/v3
+              MEMINI_EMBED_MODEL: Qwen3-Embedding-0.6B
+              MEMINI_EMBED_DIMS: "1024"
+              MEMINI_EMBED_QUERY_PREFIX: "Instruct: Given a user query, retrieve relevant memories that answer it\nQuery:"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 512Mi
+
+    # CNPG already owns a ServiceAccount named after the cluster
+    serviceAccount:
+      main:
+        enabled: false
+
+    persistence:
+      data:
+        enabled: false
+
+    route:
+      ui:
+        enabled: true
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        hostnames:
+          - memini.bo0tzz.me
+
+    serviceMonitor:
+      main:
+        enabled: true
+
+    prometheusRule:
+      enabled: true
