@@ -1,0 +1,123 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: kritika
+spec:
+  name: kritika
+  owner: kritika
+  cluster:
+    name: kritika
+  extensions:
+    - name: vector
+      ensure: present
+    - name: vchord
+      ensure: present
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: DatabaseRole
+metadata:
+  name: kritika-app
+spec:
+  cluster:
+    name: kritika
+  name: kritika_app
+  login: true
+  passwordSecret:
+    name: kritika-db-app
+  databaseRoleReclaimPolicy: retain
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: DatabaseRole
+metadata:
+  name: kritika-runner
+spec:
+  cluster:
+    name: kritika
+  name: kritika_runner
+  login: true
+  passwordSecret:
+    name: kritika-db-runner
+  databaseRoleReclaimPolicy: retain
+---
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Password
+metadata:
+  name: kritika-db
+spec:
+  length: 32
+  digits: 8
+  symbols: 0
+  noUpper: false
+  allowRepeat: true
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: kritika-db-owner
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: kubernetes-local
+  target:
+    name: kritika-db-owner
+    template:
+      data:
+        uri: "postgres://{{ .username }}:{{ .password }}@kritika-rw.slop.svc.cluster.local:5432/kritika?sslmode=require&connect_timeout=10"
+  data:
+    - secretKey: username
+      remoteRef:
+        key: kritika-app
+        property: username
+    - secretKey: password
+      remoteRef:
+        key: kritika-app
+        property: password
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: kritika-db-app
+spec:
+  refreshPolicy: CreatedOnce
+  target:
+    name: kritika-db-app
+    template:
+      type: kubernetes.io/basic-auth
+      metadata:
+        labels:
+          cnpg.io/reload: "true"
+      data:
+        username: kritika_app
+        password: "{{ .password }}"
+        uri: "postgres://kritika_app:{{ .password }}@kritika-rw.slop.svc.cluster.local:5432/kritika?sslmode=require&connect_timeout=10"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: Password
+          name: kritika-db
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: kritika-db-runner
+spec:
+  refreshPolicy: CreatedOnce
+  target:
+    name: kritika-db-runner
+    template:
+      type: kubernetes.io/basic-auth
+      metadata:
+        labels:
+          cnpg.io/reload: "true"
+      data:
+        username: kritika_runner
+        password: "{{ .password }}"
+        uri: "postgres://kritika_runner:{{ .password }}@kritika-rw.slop.svc.cluster.local:5432/kritika?sslmode=require&connect_timeout=10"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: Password
+          name: kritika-db

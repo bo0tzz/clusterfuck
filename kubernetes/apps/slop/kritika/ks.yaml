@@ -1,0 +1,45 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kritika-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/slop/kritika/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: kritika
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kritika
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/slop/kritika/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/postgres-single
+  dependsOn:
+    - name: kritika-bucket
+    - name: cnpg-barman-cloud
+      namespace: operators
+  postBuild:
+    substitute:
+      APP: kritika
+      BUCKET: kritika
+    substituteFrom:
+      - kind: Secret
+        name: kritika

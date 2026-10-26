@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: kritika
+spec:
+  interval: 1h
+  url: oci://ghcr.io/home-operations/charts/kritika
+  ref:
+    tag: "0.0.106"
+    digest: sha256:45e618bc6357de5223327ea51a1e3ab66b016f31478dd5476ef45d68e7059f9f

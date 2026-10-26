@@ -1,0 +1,80 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kritika
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: kritika
+  values:
+    config:
+      webUrl: https://kritika.bo0tzz.me
+      auth:
+        admin:
+          password: { env: ADMIN_PASSWORD }
+      apps:
+        github:
+          accounts: [bo0tzz]
+          clientId: { env: GITHUB_APP_CLIENT_ID }
+          privateKey: { env: GITHUB_APP_PRIVATE_KEY }
+          webhookSecret: { env: GITHUB_APP_WEBHOOK_SECRET }
+      providers:
+        plan:
+          type: chatgpt
+      review:
+        model: plan/~sol-latest
+
+    envFrom:
+      - secretRef:
+          name: kritika-secret
+
+    database:
+      owner:
+        existingSecret: kritika-db-owner
+      app:
+        existingSecret: kritika-db-app
+      runner:
+        existingSecret: kritika-db-runner
+
+    # CNPG already owns a ServiceAccount named after the cluster
+    serviceAccount:
+      name: kritika-serve
+
+    runner:
+      podTemplate:
+        spec:
+          hostUsers: false
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128Mi
+            limits:
+              memory: 1Gi
+
+    httpRoute:
+      enabled: true
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+      hostnames:
+        - kritika.bo0tzz.me
+
+    networkPolicy:
+      type: cilium
+      postgres:
+        podSelector:
+          cnpg.io/cluster: kritika
+
+    monitoring:
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
+      dashboards:
+        enabled: true
+        grafanaOperator:
+          enabled: true
+          matchLabels:
+            dashboards: grafana
