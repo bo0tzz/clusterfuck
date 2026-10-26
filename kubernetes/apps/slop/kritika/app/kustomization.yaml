@@ -13,7 +13,7 @@ patches:
       kind: Cluster
     patch: |-
       - op: remove
-        path: /spec/bootstrap/recovery
+        path: /spec/bootstrap/initdb
       - op: add
         path: /spec/postgresql/shared_preload_libraries/-
         value: vchord.so
