@@ -7,8 +7,8 @@ spec:
   interval: 1h
   url: oci://ghcr.io/opf/helm-charts/openproject
   ref:
-    tag: "13.15.1"
-    digest: sha256:eb2137e2aa7e49ddaf79c89f20397eae7b802b2e4952ea69ce62914c321e2322
+    tag: "13.16.0"
+    digest: sha256:8f7b2457ca8114d8b1ca02a552bc96b918de3653e2cb2741593a0ad1b58a4639
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
