@@ -33,6 +33,7 @@ spec:
   components:
     - ../../../../components/postgres
     - ../../../../components/volsync
+    - ../../../../components/gpu
   dependsOn:
     - name: immich-bucket
     - name: cnpg-barman-cloud
@@ -43,6 +44,7 @@ spec:
       BUCKET: immich
       VOLSYNC_CAPACITY: 1Ti
       VOLSYNC_STORAGECLASS: ssd-fs
+      GPU_CEL: 'device.attributes["gpu.intel.com"].pciId == "0xe212"'
       VOLSYNC_ACCESSMODES: ReadWriteMany
       VOLSYNC_COPY_METHOD: Direct
     substituteFrom:

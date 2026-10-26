@@ -80,7 +80,7 @@ spec:
       defaultPodOptions:
         resourceClaims:
           - name: gpu
-            resourceClaimName: immich-gpu
+            resourceClaimTemplateName: ${APP}-gpu
       controllers:
         main:
           containers:
@@ -109,7 +109,7 @@ spec:
       defaultPodOptions:
         resourceClaims:
           - name: gpu
-            resourceClaimName: immich-gpu
+            resourceClaimTemplateName: ${APP}-gpu
       controllers:
         main:
           strategy: Recreate
