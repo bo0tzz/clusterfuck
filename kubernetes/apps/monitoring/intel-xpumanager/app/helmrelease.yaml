@@ -32,7 +32,7 @@ spec:
             - matchExpressions:
                 - key: kubernetes.io/hostname
                   operator: In
-                  values: [tiny, dusty, wonky]
+                  values: [dusty, wonky]
     prometheus:
       monitor: true
     # Chart 2.0.0-rc.0 configures the `prometheus` exporter but does not include it in any

@@ -5,7 +5,7 @@ machine:
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 installer:
-  image: factory.talos.dev/metal-installer/374ca253808b19d013e41028ca4246d3d4fc3be92c19f5dafcb4aa2f39625c1a:v1.14.4
+  image: factory.talos.dev/metal-installer/759b2b21175fec663f0a9559999d094ba661fe0687e45aac674c944a871ac652:v1.14.4
 provisioning:
   diskSelector:
     match: 'disk.serial == "23294BEE1C17"'
@@ -33,8 +33,3 @@ addresses:
   - address: 10.0.10.14/24
 routes:
   - gateway: 10.0.10.1
----
-apiVersion: v1alpha1
-kind: UdevRulesConfig
-rules:
-  - 'ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{device}=="0x46a6", ATTR{sriov_numvfs}="4"'
