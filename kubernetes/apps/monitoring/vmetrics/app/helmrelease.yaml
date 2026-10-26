@@ -13,8 +13,8 @@ spec:
       spec:
         priorityClassName: database
         retentionPeriod: "2y"
-        # NFD adds ~90 node labels which the kubelet/cadvisor scrapes labelmap
-        # onto every series; raise from the default 30 so they aren't dropped.
+        # kubelet/cadvisor scrapes labelmap every node label onto every series;
+        # raise from the default 30 so they aren't dropped.
         extraArgs:
           maxLabelsPerTimeseries: "120"
         storage:
@@ -256,6 +256,20 @@ spec:
     grafana:
       enabled: false
       forceDeployDatasource: true
+
+    kubelet:
+      vmScrape:
+        spec:
+          # chart defaults restated (lists replace) + drop NFD and Talos-extension node labels
+          relabelConfigs:
+            - action: labelmap
+              regex: __meta_kubernetes_node_label_(.+)
+            - action: labeldrop
+              regex: (feature_node_kubernetes_io|extensions_talos_dev)_.+
+            - sourceLabels: [__metrics_path__]
+              targetLabel: metrics_path
+            - targetLabel: job
+              replacement: kubelet
 
     kubeEtcd:
       endpoints:
