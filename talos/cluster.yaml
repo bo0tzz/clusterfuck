@@ -55,6 +55,7 @@ kind: SysctlConfig
 params:
   fs.inotify.max_user_instances: '8192'
   fs.inotify.max_user_watches: '1048576'
+  user.max_user_namespaces: '11255'
 ---
 apiVersion: v1alpha1
 kind: CRICustomizationConfig
