@@ -18,6 +18,11 @@
       pinDigests: false,
     },
     {
+      description: "agent-sandbox chart puts image.tag in a label — appending @sha256 makes it invalid",
+      matchPackageNames: ["registry.k8s.io/agent-sandbox/agent-sandbox-controller"],
+      pinDigests: false,
+    },
+    {
       description: "Flux Group",
       groupName: "flux",
       matchPackageNames: ["/\\bflux/"],

@@ -14,7 +14,7 @@ spec:
       name: operators
     image:
       repository: registry.k8s.io/agent-sandbox/agent-sandbox-controller
-      tag: v1.0.8@sha256:e1d96312487eba7d8f001e848a9d4e644b7deea8c2a4564ccc318abb729be731
+      tag: v1.0.8
     controller:
       cacheLabelSelectors: true
     resources:
