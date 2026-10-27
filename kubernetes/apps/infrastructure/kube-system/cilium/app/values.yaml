@@ -81,6 +81,8 @@ rollOutCiliumPods: true
 
 envoy:
   enabled: false
+envoyConfig:
+  enabled: true
 
 prometheus:
   enabled: true
