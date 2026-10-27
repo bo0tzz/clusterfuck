@@ -1,0 +1,35 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: sloppod
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: sloppod
+  oidc:
+    provider:
+      issuer: https://auth.bo0tzz.me/application/o/sloppod/
+    clientIDRef:
+      name: sloppod-oidc
+    clientSecret:
+      name: sloppod-oidc
+    redirectURL: https://sloppod.bo0tzz.me/oauth2/callback
+    logoutPath: /oauth2/sign_out
+    scopes:
+      - openid
+      - profile
+      - email
+      - offline_access
+    forwardAccessToken: true
+    refreshToken: true
+  jwt:
+    providers:
+      - name: authentik
+        issuer: https://auth.bo0tzz.me/application/o/sloppod/
+        remoteJWKS:
+          uri: https://auth.bo0tzz.me/application/o/sloppod/jwks/
+        claimToHeaders:
+          - claim: preferred_username
+            header: X-Forwarded-User

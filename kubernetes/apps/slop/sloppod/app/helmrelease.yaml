@@ -1,0 +1,15 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sloppod
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: sloppod
+  interval: 1h
+  values:
+    database:
+      existingSecret: sloppod-db-app
+    masterKey:
+      existingSecret: sloppod-secret

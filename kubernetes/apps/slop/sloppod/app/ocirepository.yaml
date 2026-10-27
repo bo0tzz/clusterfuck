@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: sloppod
+spec:
+  interval: 1h
+  url: oci://ghcr.io/bo0tzz/charts/sloppod
+  ref:
+    tag: 0.1.0
+    digest: sha256:98c1f13fc7b9709e241edf55798175621430b363d43fd8d306b62197cd048695

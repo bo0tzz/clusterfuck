@@ -1,0 +1,45 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: sloppod-bucket
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/slop/sloppod/bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/bucket
+  postBuild:
+    substitute:
+      BUCKET: sloppod
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: sloppod
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/slop/sloppod/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  components:
+    - ../../../../components/postgres-single
+  dependsOn:
+    - name: sloppod-bucket
+    - name: cnpg-barman-cloud
+      namespace: operators
+  postBuild:
+    substitute:
+      APP: sloppod-db
+      BUCKET: sloppod
+    substituteFrom:
+      - kind: Secret
+        name: sloppod
