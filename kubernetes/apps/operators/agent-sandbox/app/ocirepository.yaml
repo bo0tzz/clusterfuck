@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: agent-sandbox
+spec:
+  interval: 1h
+  url: oci://ghcr.io/home-operations/charts-mirror/agent-sandbox
+  ref:
+    tag: 1.0.8
+    digest: sha256:e96e64c4af76c217e92bc6bd63f3d82cf376c9091071a3476965d61c99f37252

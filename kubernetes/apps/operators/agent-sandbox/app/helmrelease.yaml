@@ -1,0 +1,35 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: agent-sandbox
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: agent-sandbox
+  interval: 1h
+  values:
+    namespace:
+      create: false
+      name: operators
+    image:
+      repository: registry.k8s.io/agent-sandbox/agent-sandbox-controller
+      tag: v1.0.8@sha256:e1d96312487eba7d8f001e848a9d4e644b7deea8c2a4564ccc318abb729be731
+    controller:
+      cacheLabelSelectors: true
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: agent-sandbox-controller
+            patch: |
+              - op: add
+                path: /spec/template/spec/priorityClassName
+                value: infra

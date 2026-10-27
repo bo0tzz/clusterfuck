@@ -5,6 +5,7 @@ namespace: operators
 
 resources:
   - namespace.yaml
+  - ./agent-sandbox/ks.yaml
   - ./cloudnative-pg/ks.yaml
   - ./cnpg-barman-cloud/ks.yaml
   - ./external-secrets/ks.yaml
