@@ -4,8 +4,7 @@ kind: OCIRepository
 metadata:
   name: sloppod
 spec:
-  interval: 1h
+  interval: 1m
   url: oci://ghcr.io/bo0tzz/charts/sloppod
   ref:
-    tag: 0.1.1
-    digest: sha256:8f1391c812f494d82ef451c116539d7475ca15e364b52d8b4bf45f66e068d172
+    semver: ">=0.1.1-0"
