@@ -75,7 +75,7 @@ spec:
         rules:
           - backendRefs:
               - identifier: main
-                port: 8086
+                port: 8096
     persistence:
       config:
         existingClaim: jellyfin-config
