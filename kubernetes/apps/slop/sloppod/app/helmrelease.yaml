@@ -13,3 +13,8 @@ spec:
       existingSecret: sloppod-db-app
     masterKey:
       existingSecret: sloppod-secret
+    resources:
+      requests:
+        memory: 512Mi
+      limits:
+        memory: 2Gi
