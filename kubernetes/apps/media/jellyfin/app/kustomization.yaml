@@ -6,3 +6,5 @@ resources:
   - helmrelease.yaml
   - pvc.yaml
   - httproute-next.yaml
+  - secret.sops.yaml
+  - securitypolicy.yaml

@@ -66,6 +66,16 @@ spec:
           - backendRefs:
               - identifier: main
                 port: 8096
+      external:
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        hostnames:
+          - jellyfin-external.bo0tzz.me
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 8086
     persistence:
       config:
         existingClaim: jellyfin-config

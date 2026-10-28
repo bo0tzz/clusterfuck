@@ -1,0 +1,23 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: jellyfin
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: jellyfin-external
+  oidc:
+    provider:
+      issuer: https://auth.bo0tzz.me/application/o/jellyfin-external/
+    clientIDRef:
+      name: jellyfin-oidc
+    clientSecret:
+      name: jellyfin-oidc
+    redirectURL: https://jellyfin-external.bo0tzz.me/oauth2/callback
+    logoutPath: /oauth2/sign_out
+    scopes:
+      - openid
+      - profile
+      - email
