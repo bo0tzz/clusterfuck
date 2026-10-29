@@ -20,6 +20,8 @@ spec:
             env:
               VM_INSTANCE_ENTRYPOINT: http://vmsingle-victoria-metrics-k8s-stack.monitoring.svc.cluster.local:8428
               VM_INSTANCE_TYPE: single
+              # upstream defaults + documentation (~500Mi in-memory index)
+              MCP_DISABLED_TOOLS: export,flags,metric_relabel_debug,downsampling_filters_debug,retention_filters_debug,test_rules,documentation
               MCP_SERVER_MODE: http
               MCP_LISTEN_ADDR: :8080
               MCP_LOG_FORMAT: json
