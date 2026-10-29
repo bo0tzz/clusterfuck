@@ -37,7 +37,7 @@ spec:
     route:
       main:
         parentRefs:
-          - name: envoy-internal
+          - name: envoy-external
             namespace: network
         hostnames:
           - pdf.bo0tzz.me
