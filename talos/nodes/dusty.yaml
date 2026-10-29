@@ -37,6 +37,5 @@ routes:
 apiVersion: v1alpha1
 kind: UdevRulesConfig
 rules:
-  # Talos writes this after xe has bound, then replays `add`; the rebar rescan re-fires `bind`.
-  # sriov_totalvfs only exists on the PF.
-  - 'ACTION=="add|bind", SUBSYSTEM=="pci", DRIVER=="xe", ATTR{vendor}=="0x8086", ATTR{device}=="0xe212", ATTR{sriov_totalvfs}=="?*", ATTR{sriov_numvfs}="3"'
+  # Not on add: VFs made before the rebar rescan leave no room for the VF BAR. sriov_totalvfs only exists on the PF.
+  - 'ACTION=="bind", SUBSYSTEM=="pci", DRIVER=="xe", ATTR{vendor}=="0x8086", ATTR{device}=="0xe212", ATTR{sriov_totalvfs}=="?*", ATTR{sriov_numvfs}="3"'
