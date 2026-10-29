@@ -11,4 +11,5 @@ resources:
   - ./kritika/ks.yaml
   - ./memini/ks.yaml
   - ./ovms/ks.yaml
+  - ./victoria-mcp/ks.yaml
   - ./sloppod/ks.yaml
