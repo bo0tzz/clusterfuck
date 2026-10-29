@@ -1,0 +1,25 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: stirling-pdf
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: stirling-pdf
+  oidc:
+    provider:
+      issuer: https://auth.bo0tzz.me/application/o/stirling-pdf/
+    clientIDRef:
+      name: stirling-pdf-oidc
+    clientSecret:
+      name: stirling-pdf-oidc
+    redirectURL: https://pdf.bo0tzz.me/oauth2/callback
+    logoutPath: /oauth2/sign_out
+    scopes:
+      - openid
+      - profile
+      - email
+      - offline_access
+    refreshToken: true

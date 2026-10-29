@@ -4,3 +4,5 @@ namespace: tools
 resources:
   - ocirepository.yaml
   - helmrelease.yaml
+  - securitypolicy.yaml
+  - oidc-secret.sops.yaml
