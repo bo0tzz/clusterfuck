@@ -41,7 +41,7 @@ filesystem:
 ---
 apiVersion: v1alpha1
 kind: KubeletConfig
-image: ghcr.io/siderolabs/kubelet:v1.37.1@sha256:3777bdaaa352e1f425dff9d8868a970923c66d0629bad16f935c41018a83d9d8
+image: ghcr.io/siderolabs/kubelet:v1.37.2@sha256:d80d3843530cfae376a0814f73bcc4ac70e32bc157de777b38a90f33b82d1111
 defaultRuntimeSeccompProfileEnabled: true
 config:
   imageGCHighThresholdPercent: 60
