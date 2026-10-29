@@ -7,5 +7,5 @@ spec:
   interval: 1h
   url: oci://ghcr.io/home-operations/charts-mirror/agent-sandbox
   ref:
-    tag: 1.0.8
-    digest: sha256:e96e64c4af76c217e92bc6bd63f3d82cf376c9091071a3476965d61c99f37252
+    tag: 1.0.9
+    digest: sha256:50c2da4bac30708c23bbb8c52111cca848fb165f10327ff5643f8b2da872379b
