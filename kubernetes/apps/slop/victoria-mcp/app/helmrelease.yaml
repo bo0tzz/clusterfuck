@@ -44,6 +44,11 @@ spec:
                 memory: 32Mi
               limits:
                 memory: 256Mi
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
       logs:
         strategy: RollingUpdate
         containers:
@@ -58,6 +63,7 @@ spec:
               MCP_LOG_FORMAT: json
             probes: *probes
             resources: *resources
+            securityContext: *securityContext
     defaultPodOptions:
       securityContext:
         runAsUser: 1000
