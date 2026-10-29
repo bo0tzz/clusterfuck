@@ -5,7 +5,7 @@ machine:
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 installer:
-  image: factory.talos.dev/metal-installer/759b2b21175fec663f0a9559999d094ba661fe0687e45aac674c944a871ac652:v1.14.4
+  image: factory.talos.dev/metal-installer/759b2b21175fec663f0a9559999d094ba661fe0687e45aac674c944a871ac652:v1.14.5
 provisioning:
   diskSelector:
     match: 'disk.serial == "23294BEE1C17"'
