@@ -51,6 +51,10 @@ spec:
       targetPath: authentik.postgresql.name
   values:
     server:
+      replicas: 2
+      pdb:
+        enabled: true
+        maxUnavailable: 1
       metrics:
         enabled: true
         serviceMonitor:
@@ -77,10 +81,6 @@ spec:
         use_ssl: true
     postgresql:
       enabled: false
-    redis:
-      enabled: true
-      global:
-        storageClass: ssd-block
     prometheus:
       rules:
         enabled: true
