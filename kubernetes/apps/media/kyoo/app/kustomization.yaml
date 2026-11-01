@@ -5,7 +5,6 @@ resources:
   - ocirepository.yaml
   - helmrelease.yaml
   - httproute.yaml
-  - securitypolicy.yaml
   - secret.sops.yaml
 patches:
   - target:

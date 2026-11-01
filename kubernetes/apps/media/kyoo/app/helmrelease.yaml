@@ -18,7 +18,6 @@ spec:
           passwordKey: password
     kyoo:
       address: https://kyoo.bo0tzz.me
-      middlewareRootURL: https://kyoo.bo0tzz.me
       transcoderAcceleration: disabled
       auth:
         guestClaims: ""
@@ -42,7 +41,7 @@ spec:
           readOnly: true
       baseMountPath: /media
     traefikproxy:
-      enabled: false
+      enabled: true
     api:
       kyoo_api:
         resources:
