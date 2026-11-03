@@ -52,46 +52,41 @@ spec:
     configMaps:
       settings:
         data:
-          # Every deployment-configurable key is pinned so none of it is editable in the UI.
-          # An empty message means memos' built-in defaults.
-          memos-instance-setting-general.json: |
+          settings.json: |
             {
-              "key": "GENERAL",
-              "generalSetting": {
-                "disallowPasswordAuth": true,
-                "weekStartDayOffset": 1
-              }
-            }
-          # First DB init seeds PUBLIC whenever MEMOS_INSTANCE_URL is set.
-          memos-instance-setting-access.json: |
-            {
-              "key": "ACCESS",
-              "accessSetting": {
-                "accessMode": "INSTANCE_ACCESS_MODE_PRIVATE"
-              }
-            }
-          # Default is LOCAL, which would land attachments on the emptyDir.
-          memos-instance-setting-storage.json: |
-            {
-              "key": "STORAGE",
-              "storageSetting": {
-                "storageType": "DATABASE"
-              }
-            }
-          memos-instance-setting-memo-related.json: |
-            {
-              "key": "MEMO_RELATED",
-              "memoRelatedSetting": {}
-            }
-          memos-instance-setting-notification.json: |
-            {
-              "key": "NOTIFICATION",
-              "notificationSetting": {}
-            }
-          memos-instance-setting-ai.json: |
-            {
-              "key": "AI",
-              "aiSetting": {}
+              "instanceSettings": [
+                {
+                  "name": "instance/settings/GENERAL",
+                  "generalSetting": {
+                    "disallowPasswordAuth": true,
+                    "weekStartDayOffset": 1
+                  }
+                },
+                {
+                  "name": "instance/settings/ACCESS",
+                  "accessSetting": {
+                    "accessMode": "INSTANCE_ACCESS_MODE_PRIVATE"
+                  }
+                },
+                {
+                  "name": "instance/settings/STORAGE",
+                  "storageSetting": {
+                    "storageType": "DATABASE"
+                  }
+                },
+                {
+                  "name": "instance/settings/USAGE_LIMITS",
+                  "usageLimitsSetting": {
+                    "limits": [
+                      {
+                        "allUsers": true,
+                        "memoContentBytes": "8192",
+                        "uploadBytes": "33554432"
+                      }
+                    ]
+                  }
+                }
+              ]
             }
     persistence:
       data:
@@ -108,7 +103,7 @@ spec:
               - secret:
                   name: memos-idp
         globalMounts:
-          - path: /etc/secrets
+          - path: /etc/memos/config
             readOnly: true
     service:
       main:
