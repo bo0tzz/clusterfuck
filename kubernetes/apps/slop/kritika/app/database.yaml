@@ -27,17 +27,6 @@ spec:
     name: kritika-db-app
   databaseRoleReclaimPolicy: retain
 ---
-apiVersion: postgresql.cnpg.io/v1
-kind: DatabaseRole
-metadata:
-  name: kritika-runner
-spec:
-  cluster:
-    name: kritika
-  name: kritika_runner
-  login: true
-  databaseRoleReclaimPolicy: retain
----
 apiVersion: generators.external-secrets.io/v1alpha1
 kind: Password
 metadata:
