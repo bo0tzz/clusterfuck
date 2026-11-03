@@ -35,8 +35,6 @@ spec:
         existingSecret: kritika-db-owner
       app:
         existingSecret: kritika-db-app
-      runner:
-        existingSecret: kritika-db-runner
 
     # CNPG already owns a ServiceAccount named after the cluster
     serviceAccount:
