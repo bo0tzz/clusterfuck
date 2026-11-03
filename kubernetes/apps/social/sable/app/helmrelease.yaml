@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: git.sable.moe/sableclient/sable-next
-              tag: "2.3.1@sha256:64d3a3b3b954dfa9a1387b1e25373e05786dac0a75702366a936ee45d7e5aff5"
+              tag: "2.3.2@sha256:d323fda578b3904aac8b1b0e63de89d22a14a4df0ad13fa5072980e290d212fe"
             probes:
               liveness: &probe
                 enabled: true
