@@ -7,10 +7,12 @@ data:
   config.yaml: |
     general:
       appUrl: "https://share.zijlein.de"
+
+    security:
       secureCookies: "true"
+      allowRegistration: "false"
 
     share:
-      allowRegistration: "false"
       maxExpiration: "30 days"
 
     oauth:
