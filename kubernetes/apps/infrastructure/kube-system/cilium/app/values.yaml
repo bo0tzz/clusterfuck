@@ -75,7 +75,7 @@ resources:
     cpu: 100m
     memory: 512Mi
   limits:
-    memory: 768Mi
+    memory: 1Gi
 
 rollOutCiliumPods: true
 
