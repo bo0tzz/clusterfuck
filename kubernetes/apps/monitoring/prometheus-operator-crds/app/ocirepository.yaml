@@ -6,6 +6,6 @@ metadata:
 spec:
   interval: 15m
   ref:
-    tag: 33.0.0
-    digest: sha256:d41532bff932049406a30d56205b85929ec8d7ede7f1f284c82557d4a9de1d12
+    tag: 33.0.1
+    digest: sha256:9283b5d9c55273add321251e664acd7a161591e32246ca0469f8d9fc8eb56e3e
   url: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
