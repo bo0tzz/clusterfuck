@@ -1,0 +1,10 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: litellm-operator
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: litellm-operator
+  interval: 1h

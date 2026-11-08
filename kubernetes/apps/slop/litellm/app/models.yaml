@@ -1,0 +1,17 @@
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: deepseek-v4-1-flash
+spec:
+  modelName: deepseek-v4.1-flash
+  params:
+    model: openrouter/deepseek/deepseek-v4.1-flash
+    apiKeyRef:
+      name: litellm-secret
+      key: OPENROUTER_API_KEY
+  info:
+    maxInputTokens: 1048576
+    supportsFunctionCalling: true
+    supportsPromptCaching: true
+    supportsVision: true

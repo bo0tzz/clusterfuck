@@ -1,0 +1,29 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: litellm-operator
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/slop/litellm/operator
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: litellm
+spec:
+  dependsOn:
+    - name: litellm-operator
+  interval: 1h
+  path: ./kubernetes/apps/slop/litellm/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system

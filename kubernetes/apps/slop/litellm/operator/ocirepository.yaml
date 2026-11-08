@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: litellm-operator
+spec:
+  interval: 1h
+  url: oci://ghcr.io/home-operations/charts/litellm-operator
+  ref:
+    tag: "0.0.26"
+    digest: sha256:2e988d8029fac1ec29bdeebec3d66c25f867dde5d1488c64ef37875036a3b84c

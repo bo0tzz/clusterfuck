@@ -1,0 +1,28 @@
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMProxy
+metadata:
+  name: litellm
+spec:
+  image: ghcr.io/berriai/litellm-non_root:v1.108.3@sha256:36e4ec234cf279efa525f229417d8443499464f796d25f19ac5847cd7f16d316
+  env:
+    - name: LITELLM_MASTER_KEY
+      valueFrom:
+        secretKeyRef:
+          name: litellm-secret
+          key: LITELLM_MASTER_KEY
+  resources:
+    requests:
+      cpu: 50m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
+  podSecurityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL

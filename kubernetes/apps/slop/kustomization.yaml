@@ -13,3 +13,4 @@ resources:
   - ./ovms/ks.yaml
   - ./victoria-mcp/ks.yaml
   - ./sloppod/ks.yaml
+  - ./litellm/ks.yaml
