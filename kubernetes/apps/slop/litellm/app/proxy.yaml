@@ -5,12 +5,21 @@ metadata:
   name: litellm
 spec:
   image: ghcr.io/berriai/litellm-non_root:v1.108.3@sha256:36e4ec234cf279efa525f229417d8443499464f796d25f19ac5847cd7f16d316
+  apiAccess:
+    masterKeyRef:
+      name: litellm-secret
+      key: LITELLM_MASTER_KEY
   env:
     - name: LITELLM_MASTER_KEY
       valueFrom:
         secretKeyRef:
           name: litellm-secret
           key: LITELLM_MASTER_KEY
+    - name: DATABASE_URL
+      valueFrom:
+        secretKeyRef:
+          name: litellm-db-app
+          key: uri
   resources:
     requests:
       cpu: 50m

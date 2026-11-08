@@ -20,6 +20,8 @@ metadata:
 spec:
   dependsOn:
     - name: litellm-operator
+    - name: cloudnative-pg
+      namespace: operators
   interval: 1h
   path: ./kubernetes/apps/slop/litellm/app
   prune: true

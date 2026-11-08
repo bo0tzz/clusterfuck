@@ -4,5 +4,6 @@ kind: Kustomization
 namespace: slop
 resources:
   - ./secret.sops.yaml
+  - ./database.yaml
   - ./proxy.yaml
   - ./models.yaml
