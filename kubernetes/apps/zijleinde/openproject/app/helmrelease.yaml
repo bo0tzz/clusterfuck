@@ -57,7 +57,7 @@ spec:
   values:
     image:
       repository: openproject/openproject
-      tag: "17.9.6-slim@sha256:817640f6637157903846ac79808fe0333b279ae6cddf3c57fe4bea6ff98b56d1"
+      tag: "17.9.7-slim@sha256:4e978557b4009dfdcdab6f18acd1aa9348a2c41ce5cd50c3d535e4c093a5c505"
       imagePullPolicy: IfNotPresent
 
     ingress:
