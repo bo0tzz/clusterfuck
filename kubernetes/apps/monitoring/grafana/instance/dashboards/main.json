@@ -163,7 +163,7 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "ceph_health_status",
+          "expr": "max(ceph_health_status)",
           "refId": "A",
           "legendFormat": ""
         }
@@ -842,7 +842,7 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "(node_hwmon_temp_celsius * on(instance,chip,sensor) group_left() node_hwmon_sensor_label{label=~\"Package id 0|Tctl\"}) * on(instance) group_left(nodename) node_uname_info",
+          "expr": "max by(nodename) ((node_hwmon_temp_celsius * on(instance,chip,sensor) group_left() node_hwmon_sensor_label{label=~\"Package id 0|Tctl\"}) * on(instance) group_left(nodename) node_uname_info)",
           "refId": "A",
           "legendFormat": "{{nodename}}"
         }
@@ -893,7 +893,7 @@
             "type": "prometheus",
             "uid": "VictoriaMetrics"
           },
-          "expr": "smartctl_device_temperature{temperature_type=\"current\"}",
+          "expr": "max by(nodename, device) (smartctl_device_temperature{temperature_type=\"current\"})",
           "refId": "A",
           "legendFormat": "{{nodename}} {{device}}"
         }
