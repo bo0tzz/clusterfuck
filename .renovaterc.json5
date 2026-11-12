@@ -23,6 +23,12 @@
       pinDigests: false,
     },
     {
+      description: "floating python tag is rebuilt constantly — each digest bump rolls the GPU kubelet plugin",
+      matchPackageNames: ["docker.io/library/python"],
+      matchUpdateTypes: ["digest"],
+      enabled: false,
+    },
+    {
       description: "Flux Group",
       groupName: "flux",
       matchPackageNames: ["/\\bflux/"],
