@@ -20,6 +20,14 @@ spec:
         secretKeyRef:
           name: litellm-db-app
           key: uri
+  livenessProbe:
+    httpGet:
+      path: /health/liveliness
+      port: 4000
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
   resources:
     requests:
       cpu: 50m
