@@ -253,6 +253,12 @@ spec:
         limits:
           memory: 64Mi
 
+    defaultRules:
+      rules:
+        # Talos talks to the API with short-lived admin certs by design
+        KubeClientCertificateExpiration:
+          enabled: false
+
     grafana:
       enabled: false
       forceDeployDatasource: true
