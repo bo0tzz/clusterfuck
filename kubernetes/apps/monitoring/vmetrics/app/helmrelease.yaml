@@ -260,12 +260,12 @@ spec:
     kubelet:
       vmScrape:
         spec:
-          # chart defaults restated (lists replace) + drop NFD and Talos-extension node labels
+          # chart defaults restated (lists replace) + drop NFD, Talos-extension and KubeVirt node labels
           relabelConfigs:
             - action: labelmap
               regex: __meta_kubernetes_node_label_(.+)
             - action: labeldrop
-              regex: (feature_node_kubernetes_io|extensions_talos_dev)_.+
+              regex: (feature_node_kubernetes_io|extensions_talos_dev|(.+_node_)?kubevirt_io)_.+
             - sourceLabels: [__metrics_path__]
               targetLabel: metrics_path
             - targetLabel: job

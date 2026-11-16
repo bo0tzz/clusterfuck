@@ -26,6 +26,12 @@ spec:
     vector:
       enabled: true
       podPriorityClassName: infra-node
+      customConfig:
+        sources:
+          k8s:
+            # KubeVirt and NFD put hundreds of labels on every node
+            node_annotation_fields:
+              node_labels: ""
       resources:
         requests:
           cpu: 25m
