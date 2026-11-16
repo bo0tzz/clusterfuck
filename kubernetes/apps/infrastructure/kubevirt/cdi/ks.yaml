@@ -1,0 +1,19 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cdi
+spec:
+  healthCheckExprs:
+    - apiVersion: cdi.kubevirt.io/v1beta1
+      kind: CDI
+      current: status.phase == 'Deployed'
+  interval: 1h
+  path: ./kubernetes/apps/infrastructure/kubevirt/cdi/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  timeout: 15m
+  wait: true

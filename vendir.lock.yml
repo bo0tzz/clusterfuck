@@ -1,0 +1,15 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - githubRelease:
+      tag: v1.9.1
+      url: https://api.github.com/repos/kubevirt/kubevirt/releases/410719431
+    path: .
+  path: kubernetes/apps/infrastructure/kubevirt/kubevirt/app/upstream
+- contents:
+  - githubRelease:
+      tag: v1.66.1
+      url: https://api.github.com/repos/kubevirt/containerized-data-importer/releases/383658881
+    path: .
+  path: kubernetes/apps/infrastructure/kubevirt/cdi/app/upstream
+kind: LockConfig

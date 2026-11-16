@@ -37,6 +37,10 @@ spec:
                       operator: DoesNotExist
                     - key: actions.github.com/scale-set-name
                       operator: DoesNotExist
+                    - key: kubevirt.io
+                      operator: NotIn
+                      values:
+                        - virt-launcher
                 podProtections:
                   defaultDisabled:
                     - PodsWithLocalStorage

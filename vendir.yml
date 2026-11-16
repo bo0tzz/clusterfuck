@@ -1,0 +1,22 @@
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+  - path: kubernetes/apps/infrastructure/kubevirt/kubevirt/app/upstream
+    contents:
+      - path: .
+        githubRelease:
+          slug: kubevirt/kubevirt
+          tag: v1.9.1
+          assetNames:
+            - kubevirt-operator.yaml
+          disableAutoChecksumValidation: true
+  - path: kubernetes/apps/infrastructure/kubevirt/cdi/app/upstream
+    contents:
+      - path: .
+        githubRelease:
+          slug: kubevirt/containerized-data-importer
+          tag: v1.66.1
+          assetNames:
+            - cdi-operator.yaml
+          disableAutoChecksumValidation: true

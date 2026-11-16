@@ -1,0 +1,15 @@
+---
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: CDI
+metadata:
+  name: cdi
+spec:
+  # pruning this CR would otherwise delete every DataVolume and its PVC
+  uninstallStrategy: BlockUninstallIfWorkloadsExist
+  config:
+    featureGates:
+      - HonorWaitForFirstConsumer
+    podResourceRequirements:
+      limits:
+        memory: 2Gi
+    scratchSpaceStorageClass: local-path

@@ -8,10 +8,15 @@
   automerge: true,
   automergeType: "pr",
   platformAutomerge: true,
-  ignorePaths: ["**/*.sops.*"],
+  ignorePaths: ["**/*.sops.*", "**/upstream/**"],
   rebaseWhen: "conflicted",
   pinDigests: true,
   packageRules: [
+    {
+      description: "GitHub's auto-merge would merge a bump whose vendir sync failed; Renovate's own automerge waits for a green branch",
+      matchManagers: ["vendir"],
+      platformAutomerge: false,
+    },
     {
       description: "helmfile version is a single field — appending @sha256 can't be applied",
       matchManagers: ["helmfile"],
