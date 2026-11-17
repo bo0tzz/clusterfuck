@@ -7,5 +7,5 @@ spec:
   interval: 1h
   url: oci://ghcr.io/home-operations/charts/litellm-operator
   ref:
-    tag: "0.0.27"
-    digest: sha256:1b3cf73d76afd1dbb94bf5ea51b9d15a98028b948e5b91ef2cc7df76cd2e8b9d
+    tag: "0.0.28"
+    digest: sha256:c0ce3957f0b7e12abd80536cd7103e7807d0d748ad4373eb651870ea986ece12
