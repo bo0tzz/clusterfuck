@@ -1,6 +1,10 @@
 ---
 machine:
   type: controlplane
+  kernel:
+    modules:
+      - name: vfio_pci
+      - name: vfio_iommu_type1
 ---
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
