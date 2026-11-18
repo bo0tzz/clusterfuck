@@ -14,3 +14,4 @@ resources:
   - vaultwarden/ks.yaml
   - memos/ks.yaml
   - minecraft/ks.yaml
+  - windows/ks.yaml

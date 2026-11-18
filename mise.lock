@@ -143,6 +143,53 @@ checksum_source = "mise-versions"
 url = "https://github.com/home-operations/flate/releases/download/v0.6.5/flate_0.6.5_windows_amd64.zip"
 url_api = "https://api.github.com/repos/home-operations/flate/releases/assets/541337344"
 
+[[tools."github:kubevirt/kubevirt"]]
+version = "1.9.1"
+backend = "github:kubevirt/kubevirt"
+specifiers = ["v1.9.1"]
+
+[tools."github:kubevirt/kubevirt"."platforms.linux-arm64"]
+checksum = "sha256:12a26aa4f1088594eeafb76b209e1c9752fa6a10d968b6c98364f96f6c1ecbc5"
+checksum_source = "mise-versions"
+url = "https://github.com/kubevirt/kubevirt/releases/download/v1.9.1/virtctl-v1.9.1-linux-arm64"
+url_api = "https://api.github.com/repos/kubevirt/kubevirt/releases/assets/634094306"
+
+[tools."github:kubevirt/kubevirt"."platforms.linux-arm64-musl"]
+checksum = "sha256:12a26aa4f1088594eeafb76b209e1c9752fa6a10d968b6c98364f96f6c1ecbc5"
+checksum_source = "mise-versions"
+url = "https://github.com/kubevirt/kubevirt/releases/download/v1.9.1/virtctl-v1.9.1-linux-arm64"
+url_api = "https://api.github.com/repos/kubevirt/kubevirt/releases/assets/634094306"
+
+[tools."github:kubevirt/kubevirt"."platforms.linux-x64"]
+checksum = "sha256:c289393c8186a258653594605f5199b4c171a3131e6e409ed204a96b491b782a"
+checksum_source = "mise-versions"
+url = "https://github.com/kubevirt/kubevirt/releases/download/v1.9.1/virtctl-v1.9.1-linux-amd64"
+url_api = "https://api.github.com/repos/kubevirt/kubevirt/releases/assets/634094303"
+
+[tools."github:kubevirt/kubevirt"."platforms.linux-x64-musl"]
+checksum = "sha256:c289393c8186a258653594605f5199b4c171a3131e6e409ed204a96b491b782a"
+checksum_source = "mise-versions"
+url = "https://github.com/kubevirt/kubevirt/releases/download/v1.9.1/virtctl-v1.9.1-linux-amd64"
+url_api = "https://api.github.com/repos/kubevirt/kubevirt/releases/assets/634094303"
+
+[tools."github:kubevirt/kubevirt"."platforms.macos-arm64"]
+checksum = "sha256:91a331acb7e07eeeefdd2378910c500d60269b12f183fba17eac12109f4b8717"
+checksum_source = "mise-versions"
+url = "https://github.com/kubevirt/kubevirt/releases/download/v1.9.1/virtctl-v1.9.1-darwin-arm64"
+url_api = "https://api.github.com/repos/kubevirt/kubevirt/releases/assets/634094307"
+
+[tools."github:kubevirt/kubevirt"."platforms.macos-x64"]
+checksum = "sha256:dd414cea44975f573f3e635937df766942423ec79b64e29cb91826fcc63b8056"
+checksum_source = "mise-versions"
+url = "https://github.com/kubevirt/kubevirt/releases/download/v1.9.1/virtctl-v1.9.1-darwin-amd64"
+url_api = "https://api.github.com/repos/kubevirt/kubevirt/releases/assets/634094301"
+
+[tools."github:kubevirt/kubevirt"."platforms.windows-x64"]
+checksum = "sha256:61b4973367501bb92f9832385bdb725bc603e58630772c4eba3a5fa92a31f4c8"
+checksum_source = "mise-versions"
+url = "https://github.com/kubevirt/kubevirt/releases/download/v1.9.1/virtctl-v1.9.1-windows-amd64.exe"
+url_api = "https://api.github.com/repos/kubevirt/kubevirt/releases/assets/634094480"
+
 [[tools.helm]]
 version = "4.3.2"
 backend = "aqua:helm/helm"

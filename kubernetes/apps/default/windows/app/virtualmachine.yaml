@@ -1,0 +1,58 @@
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: windows
+spec:
+  runStrategy: Always
+  preference:
+    kind: VirtualMachineClusterPreference
+    name: windows.10.virtio
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: windows
+    spec:
+      terminationGracePeriodSeconds: 240
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: windows-gpu
+      domain:
+        cpu:
+          sockets: 1
+          cores: 4
+        memory:
+          guest: 8Gi
+        clock:
+          timezone: Europe/Amsterdam
+        firmware:
+          bootloader:
+            efi:
+              secureBoot: false
+        features:
+          hyperv:
+            vendorid:
+              vendorid: GenuineIntel
+        devices:
+          gpus:
+            - name: gpu
+              claimName: gpu
+              requestName: gpu
+          disks:
+            - name: root
+              disk:
+                bus: scsi
+          inputs:
+            - name: tablet
+              type: tablet
+              bus: usb
+          interfaces:
+            - name: default
+              masquerade: {}
+      networks:
+        - name: default
+          pod: {}
+      volumes:
+        - name: root
+          persistentVolumeClaim:
+            claimName: windows
