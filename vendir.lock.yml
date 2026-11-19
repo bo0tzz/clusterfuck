@@ -2,8 +2,8 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - githubRelease:
-      tag: v1.9.1
-      url: https://api.github.com/repos/kubevirt/kubevirt/releases/410719431
+      tag: v1.10.0
+      url: https://api.github.com/repos/kubevirt/kubevirt/releases/450418926
     path: .
   path: kubernetes/apps/infrastructure/kubevirt/kubevirt/app/upstream
 - contents:
