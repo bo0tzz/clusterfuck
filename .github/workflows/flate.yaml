@@ -44,7 +44,7 @@ jobs:
         run: |
           out="$(flate diff all \
             --path ./kubernetes/flux/cluster \
-            --allow-missing-secrets \
+            --allow-missing-kinds Secret \
             --output github)"
           {
             echo 'diff<<EOF'

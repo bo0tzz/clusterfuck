@@ -82,4 +82,4 @@ description = "Format kubernetes manifests"
 
 [tasks."kube:diff"]
 description = "Diff kubernetes resources against main"
-run = "flate diff all --path ./kubernetes/flux/cluster"
+run = "flate diff all --path ./kubernetes/flux/cluster --allow-missing-kinds Secret"
