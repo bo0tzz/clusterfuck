@@ -1,0 +1,19 @@
+name: Talos Factory
+
+on:
+  pull_request:
+    paths:
+      - talos/nodes/*.yaml
+
+jobs:
+  prebuild:
+    name: Talos Factory - Prebuild Installers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - run: |
+          yq -N 'select(.kind == "UnattendedInstallConfig") | .installer.image' talos/nodes/*.yaml \
+            | xargs -P0 -I{} skopeo inspect --raw docker://{} >/dev/null
