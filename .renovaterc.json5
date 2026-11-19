@@ -78,6 +78,14 @@
       minimumGroupSize: 2,
     },
     {
+      description: "KubeVirt Group",
+      groupName: "kubevirt",
+      matchPackageNames: ["/kubevirt/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
       description: "Envoy Group",
       groupName: "envoy",
       matchDatasources: ["docker"],
