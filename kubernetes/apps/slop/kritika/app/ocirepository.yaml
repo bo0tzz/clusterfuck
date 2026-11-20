@@ -7,5 +7,5 @@ spec:
   interval: 1h
   url: oci://ghcr.io/home-operations/charts/kritika
   ref:
-    tag: "0.0.121"
-    digest: sha256:b594cde1122c02133ca0296b76db2e1b0207a0098042387f855414fd9a281aed
+    tag: "0.0.122"
+    digest: sha256:a2b98c138ffad35d41dd77d98786ad8d1b963b09f6e6320588fc73cbc6ae9819
