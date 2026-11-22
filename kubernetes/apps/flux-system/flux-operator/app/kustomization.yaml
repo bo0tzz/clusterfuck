@@ -5,7 +5,7 @@ namespace: flux-system
 resources:
   - ./helmrelease.yaml
   - ./ocirepository.yaml
-configMapgenerator:
+configMapGenerator:
   - name: operator-values
     files:
       - ./values.yaml

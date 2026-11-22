@@ -6,7 +6,7 @@ resources:
   - ./ocirepository.yaml
   - ./lbipam.yaml
   - ./dashboards.yaml
-configMapgenerator:
+configMapGenerator:
   - name: cilium-values
     files:
       - ./values.yaml

@@ -9,7 +9,7 @@ resources:
   - ./httproute.yaml
   - ./webhook-token.sops.yaml
   - ./dashboards.yaml
-configMapgenerator:
+configMapGenerator:
   - name: instance-values
     files:
       - ./values.yaml
