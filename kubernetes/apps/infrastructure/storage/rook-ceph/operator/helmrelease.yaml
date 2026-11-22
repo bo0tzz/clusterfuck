@@ -13,6 +13,8 @@ spec:
       enabled: true
 
     priorityClassName: system-cluster-critical
+    csi:
+      createCsiOperatorResources: true
     ceph-csi-operator:
       controllerManager:
         priorityClassName: infra

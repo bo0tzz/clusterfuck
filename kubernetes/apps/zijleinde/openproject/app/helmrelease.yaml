@@ -168,6 +168,8 @@ spec:
         limits:
           cpu: null
           memory: 384Mi
+      service:
+        type: ClusterIP
 
     metrics:
       enabled: true
