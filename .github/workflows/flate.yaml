@@ -20,6 +20,7 @@ jobs:
         with:
           patterns: |
             kubernetes/**/*
+            .yayamlls.yaml
             mise.toml
             mise.lock
             .github/workflows/flate.yaml
@@ -69,10 +70,49 @@ jobs:
           header: ${{ github.event.pull_request.number }}/flate
           message: ${{ steps.diff.outputs.diff }}
 
+  validate:
+    if: ${{ needs.filter.outputs.changed-files != '[]' }}
+    needs: filter
+    name: Flate - Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup tools
+        uses: jdx/mise-action@924e7c586e33d7d4bae9c14e26c5d22e2beb6e78 # v5.3.0
+        with:
+          install_args: github:home-operations/flate github:home-operations/yayamlls
+
+      - name: Cache flate
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/flate
+          key: flate-${{ github.job }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: flate-${{ github.job }}-
+
+      - name: Validate sources
+        shell: bash
+        run: |
+          yayamlls validate kubernetes/apps kubernetes/flux \
+          | sed -E 's/^([^:]+):([0-9]+):([0-9]+): (.*)$/::error file=\1,line=\2,col=\3::\4/'
+
+      - name: Validate rendered
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: |
+          # k8s-schemas has upstream volsync CRDs, not the perfectra1n fork's kopia mover
+          flate build all \
+            --skip-kinds Secret,CustomResourceDefinition,ReplicationSource,ReplicationDestination \
+          | yayamlls validate --root . /dev/stdin
+
   success:
     if: ${{ !cancelled() }}
     needs:
       - diff
+      - validate
     name: Flate - Success
     runs-on: ubuntu-latest
     steps:

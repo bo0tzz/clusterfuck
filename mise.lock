@@ -143,6 +143,53 @@ checksum_source = "mise-versions"
 url = "https://github.com/home-operations/flate/releases/download/v0.8.0/flate_0.8.0_windows_amd64.zip"
 url_api = "https://api.github.com/repos/home-operations/flate/releases/assets/768880022"
 
+[[tools."github:home-operations/yayamlls"]]
+version = "0.3.3"
+backend = "github:home-operations/yayamlls"
+specifiers = ["0.3.3"]
+
+[tools."github:home-operations/yayamlls"."platforms.linux-arm64"]
+checksum = "sha256:cb73f2120b51df7eb15808b0398900b99586b68a3d9d3ef3cca2cc5a466e2cdd"
+checksum_source = "mise-versions"
+url = "https://github.com/home-operations/yayamlls/releases/download/0.3.3/yayamlls_0.3.3_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/home-operations/yayamlls/releases/assets/695237314"
+
+[tools."github:home-operations/yayamlls"."platforms.linux-arm64-musl"]
+checksum = "sha256:cb73f2120b51df7eb15808b0398900b99586b68a3d9d3ef3cca2cc5a466e2cdd"
+checksum_source = "mise-versions"
+url = "https://github.com/home-operations/yayamlls/releases/download/0.3.3/yayamlls_0.3.3_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/home-operations/yayamlls/releases/assets/695237314"
+
+[tools."github:home-operations/yayamlls"."platforms.linux-x64"]
+checksum = "sha256:d715388dedd1b374a9357006c74703bbf72e807845b52d10784d72c477435954"
+checksum_source = "mise-versions"
+url = "https://github.com/home-operations/yayamlls/releases/download/0.3.3/yayamlls_0.3.3_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/home-operations/yayamlls/releases/assets/695237316"
+
+[tools."github:home-operations/yayamlls"."platforms.linux-x64-musl"]
+checksum = "sha256:d715388dedd1b374a9357006c74703bbf72e807845b52d10784d72c477435954"
+checksum_source = "mise-versions"
+url = "https://github.com/home-operations/yayamlls/releases/download/0.3.3/yayamlls_0.3.3_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/home-operations/yayamlls/releases/assets/695237316"
+
+[tools."github:home-operations/yayamlls"."platforms.macos-arm64"]
+checksum = "sha256:d1023656da187e2317840daf80da4d409fa80467c1fa5bec12c05e66b5398000"
+checksum_source = "mise-versions"
+url = "https://github.com/home-operations/yayamlls/releases/download/0.3.3/yayamlls_0.3.3_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/home-operations/yayamlls/releases/assets/695237317"
+
+[tools."github:home-operations/yayamlls"."platforms.macos-x64"]
+checksum = "sha256:c490e260118cd25421659a4ef20add17bc24601f3a7e47f9e1404b1f5a816a10"
+checksum_source = "mise-versions"
+url = "https://github.com/home-operations/yayamlls/releases/download/0.3.3/yayamlls_0.3.3_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/home-operations/yayamlls/releases/assets/695237312"
+
+[tools."github:home-operations/yayamlls"."platforms.windows-x64"]
+checksum = "sha256:f04a5877212a65c8376493d62d50a847d25b1057edd0cc1fc30815c0ff82e8b7"
+checksum_source = "mise-versions"
+url = "https://github.com/home-operations/yayamlls/releases/download/0.3.3/yayamlls_0.3.3_windows_amd64.zip"
+url_api = "https://api.github.com/repos/home-operations/yayamlls/releases/assets/695237380"
+
 [[tools."github:kubevirt/kubevirt"]]
 version = "1.10.0"
 backend = "github:kubevirt/kubevirt"

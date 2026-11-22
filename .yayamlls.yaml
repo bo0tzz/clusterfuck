@@ -1,0 +1,3 @@
+---
+# SchemaStore fileMatch globs (cluster.yaml, *template.yaml) shadow apiVersion/kind detection
+catalog: false
