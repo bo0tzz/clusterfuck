@@ -12,6 +12,12 @@ vendir = "0.47.0"
 "github:home-operations/flate" = "v0.8.0"
 "github:kubevirt/kubevirt" = { version = "v1.10.0", bin = "virtctl" }
 
+[env]
+FLATE_PATH = "{{config_root}}/kubernetes/flux/cluster"
+FLATE_ALLOW_MISSING_KINDS = "Secret"
+# Charts pick API versions from Helm capabilities, which flate can't discover
+FLATE_API_VERSIONS = "gateway.networking.k8s.io/v1/HTTPRoute"
+
 [tasks."talos:render"]
 description = "Render the full machine config for a node to stdout"
 dir = "talos"
@@ -82,4 +88,4 @@ description = "Format kubernetes manifests"
 
 [tasks."kube:diff"]
 description = "Diff kubernetes resources against main"
-run = "flate diff all --path ./kubernetes/flux/cluster --allow-missing-kinds Secret"
+run = "flate diff all"

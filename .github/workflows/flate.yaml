@@ -20,6 +20,8 @@ jobs:
         with:
           patterns: |
             kubernetes/**/*
+            mise.toml
+            mise.lock
             .github/workflows/flate.yaml
 
   diff:
@@ -34,18 +36,22 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Setup flate
-        uses: home-operations/flate/action@4e07f351352d235a335e5a1f0a088eab7ec40997 # v0.8.0
+      - name: Setup tools
+        uses: jdx/mise-action@924e7c586e33d7d4bae9c14e26c5d22e2beb6e78 # v5.3.0
         with:
-          cache: true
+          install_args: github:home-operations/flate
+
+      - name: Cache flate
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/flate
+          key: flate-${{ github.job }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: flate-${{ github.job }}-
 
       - name: Run flate diff
         id: diff
         run: |
-          out="$(flate diff all \
-            --path ./kubernetes/flux/cluster \
-            --allow-missing-kinds Secret \
-            --output github)"
+          out="$(flate diff all --output github)"
           {
             echo 'diff<<EOF'
             if [[ -n "$out" ]]; then
