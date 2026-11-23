@@ -398,49 +398,49 @@ url_api = "https://api.github.com/repos/siderolabs/talos/releases/assets/6784709
 provenance = "cosign"
 
 [[tools.usage]]
-version = "7.4.0"
+version = "7.4.1"
 backend = "packslip:github.com/jdx/usage"
-specifiers = ["7.4.0"]
+specifiers = ["7.4.1"]
 
 [tools.usage."platforms.linux-arm64"]
-checksum = "sha256:63ec67fd6bc8c54ad9e2775e95d6eea565565a30568d65c75be8423b3dd842ea"
-url = "https://github.com/jdx/usage/releases/download/v7.4.0/usage-aarch64-unknown-linux-gnu.tar.gz"
+checksum = "sha256:c2a8631b5c0601580a3d0908ac1dfddcee5e45f27f35981bf9f09c653c7608cd"
+url = "https://github.com/jdx/usage/releases/download/v7.4.1/usage-aarch64-unknown-linux-gnu.tar.gz"
 signer = "sigstore-oidc:https://github.com/jdx/usage/.github/workflows/publish-cli.yml"
 repository_ids = { repository = "677629099" }
 
 [tools.usage."platforms.linux-arm64-musl"]
-checksum = "sha256:2b522480691d6af6bb2a96de28cf9edbd90af3a52195cefe0d19217c18652c4a"
-url = "https://github.com/jdx/usage/releases/download/v7.4.0/usage-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:9683435e8c77ed19413e10556e2ad4e97a2e780c59ef7408992eba4b631c3403"
+url = "https://github.com/jdx/usage/releases/download/v7.4.1/usage-aarch64-unknown-linux-musl.tar.gz"
 signer = "sigstore-oidc:https://github.com/jdx/usage/.github/workflows/publish-cli.yml"
 repository_ids = { repository = "677629099" }
 
 [tools.usage."platforms.linux-x64"]
-checksum = "sha256:c66011f163619cf3946182498eedd16966bf3d32a6c6cf28c73c8034dfe467d6"
-url = "https://github.com/jdx/usage/releases/download/v7.4.0/usage-x86_64-unknown-linux-gnu.tar.gz"
+checksum = "sha256:4d21ce353b671d4aa4bbf4bb2719ae15c9a82d6d2268516d24f7eb5dd061533d"
+url = "https://github.com/jdx/usage/releases/download/v7.4.1/usage-x86_64-unknown-linux-gnu.tar.gz"
 signer = "sigstore-oidc:https://github.com/jdx/usage/.github/workflows/publish-cli.yml"
 repository_ids = { repository = "677629099" }
 
 [tools.usage."platforms.linux-x64-musl"]
-checksum = "sha256:223f8819cc26543ffcc11161659497450c6bdbe947ad8580b70183dac4c9d182"
-url = "https://github.com/jdx/usage/releases/download/v7.4.0/usage-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:5b2ff85406de4a7e13ccac16f26a40df86b9e85ab6d96b098a4b725eeef889d7"
+url = "https://github.com/jdx/usage/releases/download/v7.4.1/usage-x86_64-unknown-linux-musl.tar.gz"
 signer = "sigstore-oidc:https://github.com/jdx/usage/.github/workflows/publish-cli.yml"
 repository_ids = { repository = "677629099" }
 
 [tools.usage."platforms.macos-arm64"]
-checksum = "sha256:606dbdda615111940c6b39e1cb64dbf4871839304146e8e40e7302312be095d6"
-url = "https://github.com/jdx/usage/releases/download/v7.4.0/usage-universal-apple-darwin.tar.gz"
+checksum = "sha256:c10054cc2649a25c9a88522f8c891166f3a3151fe2cd1b20ebde3194a938ae91"
+url = "https://github.com/jdx/usage/releases/download/v7.4.1/usage-universal-apple-darwin.tar.gz"
 signer = "sigstore-oidc:https://github.com/jdx/usage/.github/workflows/publish-cli.yml"
 repository_ids = { repository = "677629099" }
 
 [tools.usage."platforms.macos-x64"]
-checksum = "sha256:606dbdda615111940c6b39e1cb64dbf4871839304146e8e40e7302312be095d6"
-url = "https://github.com/jdx/usage/releases/download/v7.4.0/usage-universal-apple-darwin.tar.gz"
+checksum = "sha256:c10054cc2649a25c9a88522f8c891166f3a3151fe2cd1b20ebde3194a938ae91"
+url = "https://github.com/jdx/usage/releases/download/v7.4.1/usage-universal-apple-darwin.tar.gz"
 signer = "sigstore-oidc:https://github.com/jdx/usage/.github/workflows/publish-cli.yml"
 repository_ids = { repository = "677629099" }
 
 [tools.usage."platforms.windows-x64"]
-checksum = "sha256:a0bc6718039bbb4289e19981a2cf82a7e1d8509eb426cb27fcb90c0dc34d8b66"
-url = "https://github.com/jdx/usage/releases/download/v7.4.0/usage-x86_64-pc-windows-msvc.zip"
+checksum = "sha256:ee863aa1a1173fa84dbaa9707f52c14fcc3115e283eb6b842979cc5a38ba6fc8"
+url = "https://github.com/jdx/usage/releases/download/v7.4.1/usage-x86_64-pc-windows-msvc.zip"
 signer = "sigstore-oidc:https://github.com/jdx/usage/.github/workflows/publish-cli.yml"
 repository_ids = { repository = "677629099" }
 
