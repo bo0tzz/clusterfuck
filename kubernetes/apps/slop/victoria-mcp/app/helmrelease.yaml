@@ -16,7 +16,7 @@ spec:
           main:
             image:
               repository: ghcr.io/victoriametrics/mcp-victoriametrics
-              tag: v1.20.2@sha256:bcbf84f945d6efb03fb8b2d2ccc3294420dccdc0b445752dce96f02619416dfe
+              tag: v1.22.0@sha256:d304060eaf2e104e6c90e6b68c71a0cac668b7c6aa9fedaa5b35023eaabbaa99
             env:
               VM_INSTANCE_ENTRYPOINT: http://vmsingle-victoria-metrics-k8s-stack.monitoring.svc.cluster.local:8428
               VM_INSTANCE_TYPE: single
