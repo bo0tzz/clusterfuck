@@ -15,7 +15,7 @@ spec:
           main:
             image:
               repository: ghcr.io/futo-org/backups/standalone
-              tag: "v1.21.0@sha256:e157d34a137838301d0dc0cb2c562b8f00ff46997900a73233b43cfbfdda140f"
+              tag: "v1.22.0@sha256:5963614e202749340e7ffc9456ead0aadfc2ef11950b3da4fa57698dcc2efcde"
             env:
               TZ: Europe/Amsterdam
             securityContext:
