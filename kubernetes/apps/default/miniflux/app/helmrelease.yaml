@@ -41,6 +41,21 @@ spec:
             envFrom:
               - secretRef:
                   name: miniflux-secret
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /liveness
+                    port: &port 8080
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /readiness
+                    port: *port
             resources:
               requests:
                 cpu: 25m

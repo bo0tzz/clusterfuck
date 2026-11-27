@@ -23,14 +23,20 @@ spec:
               runAsGroup: 568
               runAsNonRoot: true
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /
+                    path: /api/health/live
                     port: &port 6246
-              readiness: *probes
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health/ready
+                    port: *port
             resources:
               requests:
                 cpu: 25m
