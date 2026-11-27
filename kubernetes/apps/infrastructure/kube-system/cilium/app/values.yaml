@@ -51,6 +51,7 @@ loadBalancer:
   algorithm: maglev
   mode: dsr
   dsrDispatch: opt
+  serviceTopology: true
 k8sClientRateLimit:
   qps: 10
   burst: 20
