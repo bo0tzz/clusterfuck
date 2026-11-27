@@ -23,6 +23,9 @@ spec:
               runAsUser: 568
               runAsGroup: 568
               runAsNonRoot: true
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             probes:
               liveness: &probes
                 enabled: true
@@ -68,3 +71,5 @@ spec:
         existingClaim: media-library
         globalMounts:
           - path: /media
+      tmp:
+        type: emptyDir

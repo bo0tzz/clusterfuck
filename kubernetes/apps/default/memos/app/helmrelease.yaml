@@ -43,6 +43,10 @@ spec:
                     port: &port 5230
                   periodSeconds: 10
               readiness: *probe
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 25m
@@ -105,6 +109,8 @@ spec:
         globalMounts:
           - path: /etc/memos/config
             readOnly: true
+      tmp:
+        type: emptyDir
     service:
       main:
         controller: main

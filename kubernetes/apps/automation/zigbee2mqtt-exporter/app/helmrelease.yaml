@@ -44,6 +44,10 @@ spec:
                   secretKeyRef:
                     name: zigbee2mqtt-exporter-mqtt-credentials
                     key: password
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
@@ -63,3 +67,6 @@ spec:
           - port: http
             interval: 30s
             path: /metrics
+    persistence:
+      tmp:
+        type: emptyDir

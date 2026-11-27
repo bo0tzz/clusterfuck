@@ -26,6 +26,10 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 20m
@@ -63,3 +67,5 @@ spec:
         size: 1Gi
         globalMounts:
           - path: /data
+      tmp:
+        type: emptyDir

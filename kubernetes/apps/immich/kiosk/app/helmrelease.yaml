@@ -30,6 +30,9 @@ spec:
               TZ: Europe/Amsterdam
               LANG: nl_NL
               GOMEMLIMIT: 115MiB
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m

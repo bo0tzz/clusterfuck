@@ -28,6 +28,9 @@ spec:
               runAsUser: 568
               runAsGroup: 568
               runAsNonRoot: true
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             probes:
               liveness: &probes
                 enabled: true
@@ -69,3 +72,5 @@ spec:
         existingClaim: prowlarr-config
         globalMounts:
           - path: /config
+      tmp:
+        type: emptyDir

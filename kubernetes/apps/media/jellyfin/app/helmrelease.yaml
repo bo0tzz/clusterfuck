@@ -22,6 +22,9 @@ spec:
               runAsUser: 568
               runAsGroup: 568
               runAsNonRoot: true
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               claims:
                 - name: gpu
@@ -96,3 +99,5 @@ spec:
                 subPath: tmp
               - path: /transcode
                 subPath: transcode
+              - path: /var/tmp
+                subPath: var-tmp

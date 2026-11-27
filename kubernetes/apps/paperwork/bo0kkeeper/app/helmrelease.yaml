@@ -69,6 +69,10 @@ spec:
                     port: *port
                   initialDelaySeconds: 5
                   periodSeconds: 10
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 50m
@@ -82,6 +86,8 @@ spec:
         size: 5Gi
         globalMounts:
           - path: /models
+      tmp:
+        type: emptyDir
     service:
       main:
         controller: main

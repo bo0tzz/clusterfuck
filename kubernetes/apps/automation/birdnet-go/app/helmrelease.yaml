@@ -31,6 +31,10 @@ spec:
               # Point HOME at the (writable) config volume; the entrypoint then
               # symlinks $HOME/.config/birdnet-go -> /config and settings load.
               HOME: /config
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 memory: 384Mi
@@ -48,6 +52,8 @@ spec:
             subPath: config
           - path: /data
             subPath: data
+      tmp:
+        type: emptyDir
     route:
       main:
         parentRefs:

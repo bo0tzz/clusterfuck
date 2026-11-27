@@ -43,6 +43,10 @@ spec:
                     path: /api/health
                     port: &port 3000
                   periodSeconds: 10
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 50m
@@ -66,3 +70,6 @@ spec:
           - backendRefs:
               - identifier: main
                 port: *port
+    persistence:
+      tmp:
+        type: emptyDir

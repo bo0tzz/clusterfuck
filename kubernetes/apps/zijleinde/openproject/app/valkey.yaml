@@ -25,6 +25,13 @@ spec:
               - 96mb
               - --maxmemory-policy
               - allkeys-lru
+            securityContext:
+              runAsUser: 999
+              runAsGroup: 999
+              runAsNonRoot: true
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 5m
@@ -37,3 +44,8 @@ spec:
         ports:
           redis:
             port: 6379
+    persistence:
+      data:
+        type: emptyDir
+        globalMounts:
+          - path: /data

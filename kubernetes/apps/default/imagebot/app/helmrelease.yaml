@@ -29,6 +29,9 @@ spec:
               runAsUser: 568
               runAsGroup: 568
               runAsNonRoot: true
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 20m
@@ -44,6 +47,8 @@ spec:
         existingClaim: imagebot
         globalMounts:
           - path: /data
+      tmp:
+        type: emptyDir
     podMonitor:
       main:
         controller:

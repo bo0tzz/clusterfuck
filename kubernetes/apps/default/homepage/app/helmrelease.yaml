@@ -18,6 +18,10 @@ spec:
               repository: ghcr.io/bo0tzz/homepage
               tag: main@sha256:2d63b6f34608ff9c550a15c8ea59fb397973fe1bccf360299d803810490e0858
               pullPolicy: Always
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 20m
@@ -41,3 +45,6 @@ spec:
           - backendRefs:
               - identifier: main
                 port: 4000
+    persistence:
+      tmp:
+        type: emptyDir

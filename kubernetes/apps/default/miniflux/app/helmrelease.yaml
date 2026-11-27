@@ -56,6 +56,10 @@ spec:
                   httpGet:
                     path: /readiness
                     port: *port
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 25m
@@ -79,3 +83,6 @@ spec:
           - backendRefs:
               - identifier: main
                 port: 8080
+    persistence:
+      tmp:
+        type: emptyDir

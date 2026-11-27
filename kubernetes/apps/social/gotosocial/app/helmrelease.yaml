@@ -44,6 +44,10 @@ spec:
                   secretKeyRef:
                     name: gotosocial-app
                     key: uri
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 50m
@@ -61,6 +65,8 @@ spec:
         existingClaim: gotosocial
         globalMounts:
           - path: /storage
+      tmp:
+        type: emptyDir
     route:
       main:
         parentRefs:

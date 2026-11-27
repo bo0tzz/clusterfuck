@@ -25,6 +25,9 @@ spec:
             env:
               PHANPY_WEBSITE: phanpy.bo0.tz
               PHANPY_DEFAULT_INSTANCE: gts.bo0.tz
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m

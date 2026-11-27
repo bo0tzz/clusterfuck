@@ -34,6 +34,9 @@ spec:
               runAsUser: 568
               runAsGroup: 568
               runAsNonRoot: true
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
     defaultPodOptions:
       priorityClassName: batch
       securityContext:
@@ -52,3 +55,5 @@ spec:
         size: 1Gi
         globalMounts:
           - path: /config
+      tmp:
+        type: emptyDir

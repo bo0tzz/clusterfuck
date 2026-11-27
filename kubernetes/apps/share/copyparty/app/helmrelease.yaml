@@ -28,6 +28,9 @@ spec:
             env:
               TZ: Europe/Amsterdam
               PYTHONUNBUFFERED: "1"
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 50m

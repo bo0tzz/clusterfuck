@@ -47,6 +47,10 @@ spec:
                   httpGet:
                     path: /alive
                     port: *port
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 25m
@@ -64,6 +68,8 @@ spec:
         existingClaim: vaultwarden
         globalMounts:
           - path: /config
+      tmp:
+        type: emptyDir
     route:
       main:
         parentRefs:

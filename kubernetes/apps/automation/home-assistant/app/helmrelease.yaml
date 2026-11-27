@@ -28,6 +28,10 @@ spec:
               tag: "2026.11.3@sha256:96c244d8aa3586026bb8d4fdc0dcf9b34f348874a1ea5060942356cf181177bc"
             env:
               TZ: Europe/Amsterdam
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 100m
@@ -45,6 +49,13 @@ spec:
         existingClaim: home-assistant
         globalMounts:
           - path: /config
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
+          - path: /var/tmp
+            subPath: var-tmp
     route:
       main:
         parentRefs:
