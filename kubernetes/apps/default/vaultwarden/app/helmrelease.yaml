@@ -22,7 +22,7 @@ spec:
         containers:
           main:
             image:
-              repository: vaultwarden/server
+              repository: ghcr.io/dani-garcia/vaultwarden
               tag: 1.37.5-alpine@sha256:bbe684a02d6b0db54256ff88eac9754f4519284a7b26314afc241fd7d0918191
             env:
               SIGNUPS_ALLOWED: "false"
