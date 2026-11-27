@@ -32,6 +32,7 @@ spec:
               GTS_HOST: gts.bo0.tz
               GTS_ACCOUNT_DOMAIN: bo0.tz
               GTS_ADVANCED_RATE_LIMIT_REQUESTS: "0"
+              GTS_TRUSTED_PROXIES: 10.244.0.0/16
               GTS_STORAGE_LOCAL_BASE_PATH: /storage
               GTS_SEMAPHORE_URL: https://phanpy.bo0.tz
               GTS_LANDING_PAGE_USER: "me"
