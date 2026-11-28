@@ -271,49 +271,49 @@ checksum = "sha256:03af0db72f7ba1108065365a21e2a9e581a6fdf9fd8191156373e17aab75e
 url = "https://get.helm.sh/helm-v4.3.2-windows-amd64.tar.gz"
 
 [[tools.helmfile]]
-version = "1.8.5"
+version = "1.8.6"
 backend = "packslip:github.com/helmfile/helmfile"
-specifiers = ["1.8.5"]
+specifiers = ["1.8.6"]
 
 [tools.helmfile."platforms.linux-arm64"]
-checksum = "sha256:023b28a0630b60b392407f107b336502d11fec7e901dc631cfff7d2cc86a80c2"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.8.5/helmfile_1.8.5_linux_arm64.tar.gz"
+checksum = "sha256:99badd01aeff4e0478e925f2d10c3307a4e9ce0630033c4a77629bdcaf27760d"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.6/helmfile_1.8.6_linux_arm64.tar.gz"
 signer = "sigstore-oidc:https://github.com/helmfile/helmfile/.github/workflows/releaser.yaml"
 repository_ids = { repository = "474521466" }
 
 [tools.helmfile."platforms.linux-arm64-musl"]
-checksum = "sha256:023b28a0630b60b392407f107b336502d11fec7e901dc631cfff7d2cc86a80c2"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.8.5/helmfile_1.8.5_linux_arm64.tar.gz"
+checksum = "sha256:99badd01aeff4e0478e925f2d10c3307a4e9ce0630033c4a77629bdcaf27760d"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.6/helmfile_1.8.6_linux_arm64.tar.gz"
 signer = "sigstore-oidc:https://github.com/helmfile/helmfile/.github/workflows/releaser.yaml"
 repository_ids = { repository = "474521466" }
 
 [tools.helmfile."platforms.linux-x64"]
-checksum = "sha256:e10344a4e6121689265c8fbe8ce96977b4722a9f953db862014a08b99938c333"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.8.5/helmfile_1.8.5_linux_amd64.tar.gz"
+checksum = "sha256:2018c1c2a9a5f113f298565ad65199bde2a9c8f9b417a5237d998e55a8fd157b"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.6/helmfile_1.8.6_linux_amd64.tar.gz"
 signer = "sigstore-oidc:https://github.com/helmfile/helmfile/.github/workflows/releaser.yaml"
 repository_ids = { repository = "474521466" }
 
 [tools.helmfile."platforms.linux-x64-musl"]
-checksum = "sha256:e10344a4e6121689265c8fbe8ce96977b4722a9f953db862014a08b99938c333"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.8.5/helmfile_1.8.5_linux_amd64.tar.gz"
+checksum = "sha256:2018c1c2a9a5f113f298565ad65199bde2a9c8f9b417a5237d998e55a8fd157b"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.6/helmfile_1.8.6_linux_amd64.tar.gz"
 signer = "sigstore-oidc:https://github.com/helmfile/helmfile/.github/workflows/releaser.yaml"
 repository_ids = { repository = "474521466" }
 
 [tools.helmfile."platforms.macos-arm64"]
-checksum = "sha256:aa8c5e0c0ebb331e5a3eacbe3ee4bacd45f8a0c6ef361a79dea23b7bf4c4a76f"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.8.5/helmfile_1.8.5_darwin_arm64.tar.gz"
+checksum = "sha256:1f36688ab92407f2eaf0fdd2f2daeefadc202d62790e56f629c833c794c751e8"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.6/helmfile_1.8.6_darwin_arm64.tar.gz"
 signer = "sigstore-oidc:https://github.com/helmfile/helmfile/.github/workflows/releaser.yaml"
 repository_ids = { repository = "474521466" }
 
 [tools.helmfile."platforms.macos-x64"]
-checksum = "sha256:4a3919de8d4401a0e3ab751a4f15806c0b72561c1045eebe0c9ad91d90f90021"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.8.5/helmfile_1.8.5_darwin_amd64.tar.gz"
+checksum = "sha256:78bc66043b6706675b23facc0cfb36d9a2930d63ac0368e9664c49a199c5bdb0"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.6/helmfile_1.8.6_darwin_amd64.tar.gz"
 signer = "sigstore-oidc:https://github.com/helmfile/helmfile/.github/workflows/releaser.yaml"
 repository_ids = { repository = "474521466" }
 
 [tools.helmfile."platforms.windows-x64"]
-checksum = "sha256:37b7014bbcd2abc5bd8508b39812f7125d3bd0f70717fe578ae99cee7cc36b4e"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.8.5/helmfile_1.8.5_windows_amd64.tar.gz"
+checksum = "sha256:14ee9efcb0b7ae431d40ea5cdbe52a45975ed5035c968c6f57ae55ddfd21049c"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.6/helmfile_1.8.6_windows_amd64.tar.gz"
 signer = "sigstore-oidc:https://github.com/helmfile/helmfile/.github/workflows/releaser.yaml"
 repository_ids = { repository = "474521466" }
 
